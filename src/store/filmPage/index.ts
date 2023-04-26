@@ -6,4 +6,4 @@ export const filmPageReducer = combineReducers({
   film: filmReducer,
 });
 
-export { fetchFilmAsync } from './filmSlice'
+export * from './filmSlice'

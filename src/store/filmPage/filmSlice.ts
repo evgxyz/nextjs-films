@@ -37,7 +37,10 @@ const filmSlice = createSlice({
   initialState: defaultFilmState,
 
   reducers: {
-    fetchFilm: () => {},
+    setFilm: (state, action: PayloadAction<Film>) => {
+      state.film = action.payload;
+      state.status = 'ok';
+    },
   },
 
   extraReducers: builder => {
@@ -64,6 +67,8 @@ const filmSlice = createSlice({
         }
       )
   }
-})
+});
 
 export const filmReducer = filmSlice.reducer;
+
+export const { setFilm } = filmSlice.actions;

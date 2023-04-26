@@ -1,7 +1,7 @@
 
 import Head from 'next/head'
 import { siteName } from '@/config'
-import { Header } from '@/components/general/Header/Header'
+import { Header } from '@/components/general/Header'
 import styles from './MainLayout.module.scss'
 
 interface MainLayoutProps {

@@ -1,4 +1,8 @@
 
+export function isString(obj: any) {
+  return Object.prototype.toString.call(obj) === '[object String]';
+}
+
 export function isIntStr(str: string) {
   return /^\d+$/.test(str);
 }

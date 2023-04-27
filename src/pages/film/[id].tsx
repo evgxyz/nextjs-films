@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import { ApiStatus } from '@/types/apiTypes'
 import { Film, FilmId } from '@/types/filmTypes';
 import { setFilm, fetchFilmAsync } from '@/store/filmPage';
-import { isIntStr } from '@/utils'
+import { isString, isIntStr } from '@/utils'
 import { apiFetchFilm } from '@/api/filmApi'
 import { useEffect } from 'react';
 
@@ -48,9 +48,10 @@ const defaultFilm: Film = {
 
 FilmPage.getInitialProps = async function (ctx) {
   console.log('call getInitialProps, req url:', ctx.req?.url);
+  //const appDispatch = useAppDispatch();
   if (ctx.req) { 
-    if (typeof ctx.query.id === 'string') {
-      let filmId = parseInt(ctx.query.id);
+    if (isString(ctx.query.id)) {
+      let filmId = parseInt(ctx.query.id as string);
       return await apiFetchFilm(filmId);
     } else {
       return ({ apiStatus: ApiStatus.NOT_FOUND })

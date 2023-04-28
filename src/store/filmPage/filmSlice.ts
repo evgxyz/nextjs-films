@@ -34,6 +34,7 @@ export const fetchFilmAsync =
 
 const filmSlice = createSlice({
   name: 'film',
+
   initialState: defaultFilmState,
 
   reducers: {
@@ -72,3 +73,4 @@ const filmSlice = createSlice({
 export const filmReducer = filmSlice.reducer;
 
 export const { setFilm } = filmSlice.actions;
+

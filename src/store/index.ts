@@ -10,6 +10,7 @@ import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import { filmPageReducer } from './filmPage';
 
 const combinedReducer = combineReducers({
+  // auth: authReducer,
   // mainPage: mainPageReducer,
   // filmsPage: filmsPageReducer,
   filmPage: filmPageReducer,

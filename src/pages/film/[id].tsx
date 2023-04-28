@@ -1,37 +1,20 @@
 
-import { NextPage, NextPageContext } from 'next'
-import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
+import { NextPage, GetServerSideProps } from 'next'
 import { useRouter } from 'next/router';
-import { useAppDispatch, useAppSelector } from '@/store';
-import { ApiStatus } from '@/types/apiTypes'
+import { wrapper, useAppDispatch, useAppSelector } from '@/store';
+import { ApiStatus, LoadStatus } from '@/types/resultTypes'
 import { Film, FilmId } from '@/types/filmTypes';
-import { setFilm, fetchFilmAsync } from '@/store/filmPage';
+import { setFilmState, fetchFilmAsync } from '@/store/filmPage';
 import { isString, isIntStr } from '@/utils'
 import { apiFetchFilm } from '@/api/filmApi'
 import { useEffect } from 'react';
 
-interface FilmPageProps {
-  apiStatus?: ApiStatus,
-  film?: Film | undefined,
-}
-
-const FilmPage: NextPage<FilmPageProps> = function (props) {
+const FilmPage: NextPage = function () {
   
   const router = useRouter();
   console.log('router:', JSON.stringify(router));
 
   const filmPage = useAppSelector(state => state.filmPage);
-  const appDispatch = useAppDispatch();
-
-  console.log('FilmPage props:', JSON.stringify(props));
-
-  useEffect(() => {
-    if (props?.film) {
-      appDispatch(setFilm(props.film))
-    } else {
-      appDispatch(fetchFilmAsync(3))
-    }
-  }, []);
 
   return (
     <>
@@ -46,9 +29,20 @@ const defaultFilm: Film = {
   title: ''
 }
 
-FilmPage.getInitialProps = async function (ctx) {
+export const getServerSideProps = wrapper.getServerSideProps(store => async (ctx) => {
+
+  if (isString(ctx.query.id)) {
+    let filmId = parseInt(ctx.query.id as string);
+    store.dispatch(fetchFilmAsync(filmId));
+  }
+
+  return { props: {} }
+});
+
+/* FilmPage.getInitialProps = async function (ctx) {
   console.log('call getInitialProps, req url:', ctx.req?.url);
-  //const appDispatch = useAppDispatch();
+  const appDispatch = useAppDispatch();
+  
   if (ctx.req) { 
     if (isString(ctx.query.id)) {
       let filmId = parseInt(ctx.query.id as string);
@@ -59,6 +53,6 @@ FilmPage.getInitialProps = async function (ctx) {
   } 
   else
     return {};
-}
+} */
 
 export default FilmPage;

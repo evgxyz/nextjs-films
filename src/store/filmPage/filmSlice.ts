@@ -1,33 +1,33 @@
 
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { ApiStatus, LoadStatus } from '@/types/resultTypes'
 import { Film, FilmId } from '@/types/filmTypes'
-import { ApiStatus } from '@/types/apiTypes'
 import { apiFetchFilm } from '@/api/filmApi'
 
 interface FilmState {
   film: Film,
-  status: string
+  loadStatus: LoadStatus,
 }
 
 export const defaultFilm: Film = { 
-  id: 0, 
+  id: 0,
   title: ''
 }
 
 const defaultFilmState: FilmState = {
   film: defaultFilm,
-  status: ''
+  loadStatus: LoadStatus.INIT,
 }
 
 export const fetchFilmAsync = 
-  createAsyncThunk<Film, FilmId, {rejectValue: string}>(
-    'film/getFilmAsync',
+  createAsyncThunk<Film, FilmId, {rejectValue: ApiStatus}>(
+    'film/fetchFilmAsync',
     async function (filmId, ThunkAPI) {
-      const {apiStatus, film} = await apiFetchFilm(filmId);
+      const { apiStatus, film } = await apiFetchFilm(filmId);
       if (apiStatus === ApiStatus.OK && film) {
         return ThunkAPI.fulfillWithValue(film)
       } else {
-        return ThunkAPI.rejectWithValue(`error`)
+        return ThunkAPI.rejectWithValue(apiStatus)
       } 
     }
 )
@@ -38,9 +38,8 @@ const filmSlice = createSlice({
   initialState: defaultFilmState,
 
   reducers: {
-    setFilm: (state, action: PayloadAction<Film>) => {
-      state.film = action.payload;
-      state.status = 'ok';
+    setFilmState: (state, action: PayloadAction<FilmState>) => {
+      state = action.payload;
     },
   },
 
@@ -50,21 +49,21 @@ const filmSlice = createSlice({
         fetchFilmAsync.pending, 
         (state) => {
           state.film = defaultFilm,
-          state.status = 'loading'
+          state.loadStatus = LoadStatus.LOADING
         }
       )
       .addCase(
         fetchFilmAsync.fulfilled, 
         (state, action) => {
           state.film = action.payload,
-          state.status = 'ok'
+          state.loadStatus = LoadStatus.OK
         }
       )
       .addCase(
         fetchFilmAsync.rejected, 
         (state, action) => {
           state.film = defaultFilm,
-          state.status = action.payload ?? 'error'
+          state.loadStatus = LoadStatus.ERROR
         }
       )
   }
@@ -72,5 +71,5 @@ const filmSlice = createSlice({
 
 export const filmReducer = filmSlice.reducer;
 
-export const { setFilm } = filmSlice.actions;
+export const { setFilmState } = filmSlice.actions;
 

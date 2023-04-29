@@ -6,7 +6,7 @@ import {
   ThunkAction,
 } from '@reduxjs/toolkit'
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
-import { createWrapper, HYDRATE } from 'next-redux-wrapper';
+import { createWrapper, HYDRATE } from '@/lib/next-redux-wrapper';
 import { filmPageReducer } from './filmPage';
 
 const combinedReducer = combineReducers({

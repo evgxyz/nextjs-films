@@ -1,6 +1,6 @@
 
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
-import { ApiStatus, LoadStatus } from '@/types/resultTypes'
+import { ApiStatus, LoadStatus } from '@/types'
 import { Film, FilmId } from '@/types/filmTypes'
 import { apiFetchFilm } from '@/api/filmApi'
 
@@ -55,7 +55,6 @@ const filmSlice = createSlice({
       .addCase(
         fetchFilmAsync.fulfilled, 
         (state, action) => {
-          console.log('fetchFilmAsync.fulfilled')
           state.film = action.payload,
           state.loadStatus = LoadStatus.OK
         }

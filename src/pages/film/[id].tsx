@@ -1,13 +1,12 @@
 
-import { NextPage, GetServerSideProps } from 'next'
+import { NextPage } from 'next'
 import { useRouter } from 'next/router';
 import { wrapper, useAppDispatch, useAppSelector } from '@/store';
-import { ApiStatus, LoadStatus } from '@/types/resultTypes'
+import { ApiStatus, LoadStatus } from '@/types'
 import { Film, FilmId } from '@/types/filmTypes';
 import { setFilmState, fetchFilmAsync } from '@/store/filmPage';
 import { isString, isIntStr } from '@/utils'
-import { apiFetchFilm } from '@/api/filmApi'
-import { useEffect } from 'react';
+import { MainLayout } from '@/components/layouts/MainLayout';
 
 const FilmPage: NextPage = function () {
   
@@ -17,10 +16,10 @@ const FilmPage: NextPage = function () {
   const filmPage = useAppSelector(state => state.filmPage);
 
   return (
-    <>
+    <MainLayout title={filmPage.film.film.title}>
       <h1>Film</h1>
       <pre>{JSON.stringify(filmPage.film)}</pre>
-    </>
+    </MainLayout>
   )
 }
 
@@ -28,18 +27,6 @@ const defaultFilm: Film = {
   id: 0, 
   title: ''
 }
-
-/* export const getServerSideProps = wrapper.getServerSideProps(store => async(ctx) => {
-
-  if (isString(ctx.query.id)) {
-    let filmId = parseInt(ctx.query.id as string);
-    const res = await store.dispatch(fetchFilmAsync(filmId));
-    return { props: {} }
-  } 
-  else {
-    return { notFound: true }
-  }
-}); */
 
 FilmPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {
 
@@ -52,7 +39,20 @@ FilmPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {
     }
   }
 
-  return {}
+  return {};
+
 });
+
+/* export const getServerSideProps = wrapper.getServerSideProps(store => async(ctx) => {
+
+  if (isString(ctx.query.id)) {
+    let filmId = parseInt(ctx.query.id as string);
+    const res = await store.dispatch(fetchFilmAsync(filmId));
+    return { props: {} }
+  } 
+  else {
+    return { notFound: true }
+  }
+}); */
 
 export default FilmPage;

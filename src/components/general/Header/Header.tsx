@@ -1,12 +1,12 @@
 
-//import { NavLine } from '@/components/NavLine'
+import { MainMenu } from '@/components/general/MainMenu'
 import styles from './Header.module.scss'
 
 export function Header() {
   return (
     <div className={styles.header}>
-      header
-      {/* <NavLine /> */}
+      <div>header</div>
+      <div><MainMenu /></div>
     </div>
   )
 }

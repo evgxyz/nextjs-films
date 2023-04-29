@@ -1,5 +1,5 @@
 
-export enum HTTPResult {
+export enum ReqStatus {
   OK = 'OK',
   NOT_FOUND = 'NOT_FOUND',
   ERROR = 'ERROR',

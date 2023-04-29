@@ -1,5 +1,5 @@
 
-import { MainLayout } from '@/components/general/MainLayout/MainLayout'
+import { MainLayout } from '@/components/layouts/MainLayout/MainLayout'
 
 export default function About() {
   return (

@@ -1,13 +1,21 @@
 
-import Link from 'next/link'
-import { MainLayout } from '@/components/general/MainLayout'
+import Link from 'next/link';
+import { MainLayout } from '@/components/layouts/MainLayout';
+import { range } from '@/utils'
 
 export default function Index() {
   return (
     <MainLayout title={'Index page'}>
-      <h1>Hello! This is test commit for dev branch</h1>
+      <h1>Hello!</h1>
+      <p><Link href='/films'>Films</Link></p>
       <p><Link href='/about'>About</Link></p>
-      <p><Link href='/film/[id]' as={'/film/3'}>Film</Link></p>
+      <ul>
+        {
+          range(1, 3).map(i => 
+            <li key={i}><Link href={`/film/${i}`}>{`Film ${i}`}</Link></li>
+          )
+        }
+      </ul>
     </MainLayout>
   )
 }

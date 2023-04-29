@@ -1,5 +1,5 @@
 
-import { ApiStatus } from '@/types/resultTypes';
+import { ApiStatus } from '@/types';
 import { Film, FilmId } from '@/types/filmTypes';
 import { filmsAll } from '@/data/filmsAll';
 

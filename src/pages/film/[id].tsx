@@ -29,30 +29,30 @@ const defaultFilm: Film = {
   title: ''
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async (ctx) => {
+/* export const getServerSideProps = wrapper.getServerSideProps(store => async(ctx) => {
 
   if (isString(ctx.query.id)) {
     let filmId = parseInt(ctx.query.id as string);
-    store.dispatch(fetchFilmAsync(filmId));
+    const res = await store.dispatch(fetchFilmAsync(filmId));
+    return { props: {} }
+  } 
+  else {
+    return { notFound: true }
+  }
+}); */
+
+FilmPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {
+
+  if (isString(ctx.query.id)) {
+    let filmId = parseInt(ctx.query.id as string);
+    if (ctx.req) {
+      await store.dispatch(fetchFilmAsync(filmId));
+    } else {
+      store.dispatch(fetchFilmAsync(filmId));
+    }
   }
 
-  return { props: {} }
+  return {}
 });
-
-/* FilmPage.getInitialProps = async function (ctx) {
-  console.log('call getInitialProps, req url:', ctx.req?.url);
-  const appDispatch = useAppDispatch();
-  
-  if (ctx.req) { 
-    if (isString(ctx.query.id)) {
-      let filmId = parseInt(ctx.query.id as string);
-      return await apiFetchFilm(filmId);
-    } else {
-      return ({ apiStatus: ApiStatus.NOT_FOUND })
-    }
-  } 
-  else
-    return {};
-} */
 
 export default FilmPage;

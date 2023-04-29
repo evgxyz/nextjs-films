@@ -55,6 +55,7 @@ const filmSlice = createSlice({
       .addCase(
         fetchFilmAsync.fulfilled, 
         (state, action) => {
+          console.log('fetchFilmAsync.fulfilled')
           state.film = action.payload,
           state.loadStatus = LoadStatus.OK
         }

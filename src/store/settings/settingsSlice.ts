@@ -2,18 +2,18 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { Lang, defaultLang } from '@/units/lang'
 
-interface ConfigState {
+interface SettingsState {
   lang: Lang,
 }
 
-const defaultConfigState = {
+const defaultSettingsState = {
   lang: defaultLang,
 }
 
-export const configSlice = createSlice({
-  name: 'configState',
+export const settingsSlice = createSlice({
+  name: 'settingsState',
 
-  initialState: defaultConfigState,
+  initialState: defaultSettingsState,
 
   reducers: {
     setLang: (state, action: PayloadAction<Lang>) => {
@@ -22,5 +22,5 @@ export const configSlice = createSlice({
   },
 });
 
-export const { setLang } = configSlice.actions;
+export const { setLang } = settingsSlice.actions;
 

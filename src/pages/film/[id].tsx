@@ -1,7 +1,6 @@
 
 import { NextPage } from 'next'
-import { useRouter } from 'next/router';
-import { wrapper, useAppDispatch, useAppSelector } from '@/store';
+import { wrapper, useAppSelector } from '@/store';
 import { 
   PageStatus, 
   ReqStatus, 
@@ -9,10 +8,8 @@ import {
   reqErrorToHttpCode,
 } from '@/units/status';
 import { langStr } from '@/units/lang'
-import { Film, FilmId } from '@/units/films';
-import { setFilmState, fetchFilmAsync } from '@/store/filmPage';
-import { isString, isIntStr } from '@/units/utils';
-import { MainLayout } from '@/components/layouts/MainLayout';
+import { fetchFilmAsync } from '@/store/filmPage';
+import { isString } from '@/units/utils';
 import { MessagePage } from '@/components/general/MessagePage';
 import { FilmPage } from '@/components/special/films/FilmPage';
 

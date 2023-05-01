@@ -2,16 +2,15 @@
 import { 
   combineReducers, 
   configureStore, 
-  Action,
-  ThunkAction,
-} from '@reduxjs/toolkit'
+  Action, ThunkAction,
+} from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import { createWrapper, HYDRATE } from '@/lib/next-redux-wrapper';
-import { configReducer } from './config';
+import { settingsReducer } from './settings';
 import { filmPageReducer } from './filmPage';
 
 const combinedReducer = combineReducers({
-  config: configReducer,
+  settings: settingsReducer,
   // auth: authReducer,
   // mainPage: mainPageReducer,
   // filmsPage: filmsPageReducer,

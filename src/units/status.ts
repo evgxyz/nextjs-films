@@ -2,7 +2,7 @@
 export enum PageStatus {
   NONE = 'NONE',
   OK = 'OK',
-  NOT_FOUND = 'NOT_FOUND',
+  WRONG_URL = 'WRONG_URL',
   ERROR = 'ERROR',
 }
 
@@ -14,7 +14,7 @@ export enum ReqStatus {
   ERROR = 'ERROR',
 }
 
-export function isReqStatusError(reqStatus: ReqStatus) {
+export function isReqError(reqStatus: ReqStatus) {
   const errorReqStatusArr = [
     ReqStatus.NOT_FOUND,
     ReqStatus.ERROR
@@ -22,7 +22,7 @@ export function isReqStatusError(reqStatus: ReqStatus) {
   return errorReqStatusArr.includes(reqStatus);
 }
 
-export function reqStatusToHttpCode(reqStatus: ReqStatus) {
+export function reqErrorToHttpCode(reqStatus: ReqStatus) {
   switch (reqStatus) {
     case ReqStatus.NOT_FOUND: 
       return 404;
@@ -30,16 +30,5 @@ export function reqStatusToHttpCode(reqStatus: ReqStatus) {
       return 500;
     default: 
       return 200;
-  }
-}
-
-export function reqStatusToPageStatus(reqStatus: ReqStatus) {
-  switch (reqStatus) {
-    case ReqStatus.NOT_FOUND: 
-      return PageStatus.NOT_FOUND;
-    case ReqStatus.ERROR: 
-      return PageStatus.ERROR;
-    default: 
-      return PageStatus.OK;
   }
 }

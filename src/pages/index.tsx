@@ -9,6 +9,7 @@ export default function Index() {
       <h1>Hello!</h1>
       <p><Link href='/films'>Films</Link></p>
       <p><Link href='/about'>About</Link></p>
+      <p><Link href='/film/abc'>Wrong</Link></p>
       <ul>
         {
           range(1, 5).map(i => 

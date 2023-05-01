@@ -7,9 +7,11 @@ import {
 } from '@reduxjs/toolkit'
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import { createWrapper, HYDRATE } from '@/lib/next-redux-wrapper';
+import { configReducer } from './config';
 import { filmPageReducer } from './filmPage';
 
 const combinedReducer = combineReducers({
+  config: configReducer,
   // auth: authReducer,
   // mainPage: mainPageReducer,
   // filmsPage: filmsPageReducer,

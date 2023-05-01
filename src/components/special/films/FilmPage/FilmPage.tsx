@@ -6,10 +6,11 @@ import styles from './FilmPage.module.scss'
 export function FilmPage() {
 
   const { filmState } = useAppSelector(state => state.filmPage);
+  const { film } = filmState;
 
   return (
-    <MainLayout title={filmState.film.title}>
-      <h1>{filmState.film.title}</h1>
+    <MainLayout title={film.title}>
+      <h1>{film.title}</h1>
       <pre>{JSON.stringify(filmState)}</pre>
     </MainLayout>
   )

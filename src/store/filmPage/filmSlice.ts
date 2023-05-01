@@ -1,12 +1,12 @@
 
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
-import { ApiStatus, LoadStatus } from '@/types'
-import { Film, FilmId } from '@/types/filmTypes'
+import { ReqStatus } from '@/units/status'
+import { Film, FilmId } from '@/units/films'
 import { apiFetchFilm } from '@/api/filmApi'
 
 interface FilmState {
   film: Film,
-  loadStatus: LoadStatus,
+  reqStatus: ReqStatus,
 }
 
 export const defaultFilm: Film = { 
@@ -16,24 +16,24 @@ export const defaultFilm: Film = {
 
 const defaultFilmState: FilmState = {
   film: defaultFilm,
-  loadStatus: LoadStatus.INIT,
+  reqStatus: ReqStatus.NONE,
 }
 
 export const fetchFilmAsync = 
-  createAsyncThunk<Film, FilmId, {rejectValue: ApiStatus}>(
-    'film/fetchFilmAsync',
+  createAsyncThunk<Film, FilmId, {rejectValue: ReqStatus}>(
+    'filmState/fetchFilmAsync',
     async function (filmId, ThunkAPI) {
-      const { apiStatus, film } = await apiFetchFilm(filmId);
-      if (apiStatus === ApiStatus.OK && film) {
+      const { reqStatus, film } = await apiFetchFilm(filmId);
+      if (reqStatus === ReqStatus.OK && film) {
         return ThunkAPI.fulfillWithValue(film)
       } else {
-        return ThunkAPI.rejectWithValue(apiStatus)
+        return ThunkAPI.rejectWithValue(reqStatus)
       } 
     }
 )
 
-const filmSlice = createSlice({
-  name: 'film',
+export const filmSlice = createSlice({
+  name: 'filmState',
 
   initialState: defaultFilmState,
 
@@ -48,28 +48,26 @@ const filmSlice = createSlice({
       .addCase(
         fetchFilmAsync.pending, 
         (state) => {
-          state.film = defaultFilm,
-          state.loadStatus = LoadStatus.LOADING
+          state.film = defaultFilm;
+          state.reqStatus = ReqStatus.LOADING;
         }
       )
       .addCase(
         fetchFilmAsync.fulfilled, 
         (state, action) => {
-          state.film = action.payload,
-          state.loadStatus = LoadStatus.OK
+          state.film = action.payload;
+          state.reqStatus = ReqStatus.OK;
         }
       )
       .addCase(
         fetchFilmAsync.rejected, 
         (state, action) => {
-          state.film = defaultFilm,
-          state.loadStatus = LoadStatus.ERROR
+          state.film = defaultFilm;
+          state.reqStatus = action.payload ?? ReqStatus.ERROR;
         }
       )
   }
 });
-
-export const filmReducer = filmSlice.reducer;
 
 export const { setFilmState } = filmSlice.actions;
 

@@ -1,7 +1,7 @@
 
 import Link from 'next/link';
 import { MainLayout } from '@/components/layouts/MainLayout';
-import { range } from '@/utils'
+import { range } from '@/units/utils'
 
 export default function Index() {
   return (
@@ -11,7 +11,7 @@ export default function Index() {
       <p><Link href='/about'>About</Link></p>
       <ul>
         {
-          range(1, 3).map(i => 
+          range(1, 5).map(i => 
             <li key={i}><Link href={`/film/${i}`}>{`Film ${i}`}</Link></li>
           )
         }

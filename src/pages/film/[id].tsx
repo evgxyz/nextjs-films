@@ -2,57 +2,80 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router';
 import { wrapper, useAppDispatch, useAppSelector } from '@/store';
-import { ApiStatus, LoadStatus } from '@/types'
-import { Film, FilmId } from '@/types/filmTypes';
+import { 
+  PageStatus, 
+  ReqStatus, 
+  isReqStatusError, 
+  reqStatusToHttpCode,
+  reqStatusToPageStatus 
+} from '@/units/status';
+import { Film, FilmId } from '@/units/films';
 import { setFilmState, fetchFilmAsync } from '@/store/filmPage';
-import { isString, isIntStr } from '@/utils'
+import { isString, isIntStr } from '@/units/utils';
 import { MainLayout } from '@/components/layouts/MainLayout';
+import { MessagePage } from '@/components/general/MessagePage';
+import { FilmPage } from '@/components/special/films/FilmPage';
 
-const FilmPage: NextPage = function () {
-  
-  const router = useRouter();
-  console.log('router:', JSON.stringify(router));
-
-  const filmPage = useAppSelector(state => state.filmPage);
-
-  return (
-    <MainLayout title={filmPage.film.film.title}>
-      <h1>Film</h1>
-      <pre>{JSON.stringify(filmPage.film)}</pre>
-    </MainLayout>
-  )
+interface FilmNextPageProps {
+  pageStatus?: PageStatus
 }
 
-const defaultFilm: Film = { 
-  id: 0, 
-  title: ''
+const FilmNextPage: NextPage = function({ pageStatus }: FilmNextPageProps) {
+
+  switch (pageStatus) {
+    case PageStatus.NOT_FOUND:
+      return <MessagePage type={'ERROR'} title={'Not found'} />
+    case PageStatus.ERROR:
+      return <MessagePage type={'ERROR'} title={'Error'} />
+  }
+
+  if (pageStatus?.valueOf() === PageStatus.NOT_FOUND || )
+
+  const reqStatus = useAppSelector(state => state.filmPage.filmState.reqStatus);
+
+  switch (reqStatus) {
+    case ReqStatus.LOADING:
+      return <MessagePage type={'INFO'} title={'Loading...'} />
+    case ReqStatus.NOT_FOUND:
+      return <MessagePage type={'ERROR'} title={'Not found'} />
+    case ReqStatus.ERROR:
+      return <MessagePage type={'ERROR'} title={'Error'} />
+  }
+
+  return <FilmPage />
 }
 
-FilmPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {
+FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {
 
+  let validQuery = false;
+  let filmId = NaN;
   if (isString(ctx.query.id)) {
-    let filmId = parseInt(ctx.query.id as string);
-    if (ctx.req) {
-      await store.dispatch(fetchFilmAsync(filmId));
-    } else {
-      store.dispatch(fetchFilmAsync(filmId));
+    filmId = parseInt(ctx.query.id as string);
+    if (isFinite(filmId) && filmId > 0) {
+      validQuery = true;
     }
   }
 
-  return {};
+  if (!validQuery) {
+    ctx.res && (ctx.res.statusCode = 404);
+    return { pageStatus: PageStatus.NOT_FOUND }
+  }
+  
+  if (ctx.req) { // on server 
+    await store.dispatch(fetchFilmAsync(filmId));
+
+    const reqStatus = store.getState().filmPage.filmState.reqStatus;
+    if (isReqStatusError(reqStatus)) {
+      ctx.res && (ctx.res.statusCode = reqStatusToHttpCode(reqStatus));
+      return { pageStatus: reqStatusToPageStatus(reqStatus) };
+    }
+  } 
+  else { // on client
+    store.dispatch(fetchFilmAsync(filmId));
+  }
+
+  return {}
 
 });
 
-/* export const getServerSideProps = wrapper.getServerSideProps(store => async(ctx) => {
-
-  if (isString(ctx.query.id)) {
-    let filmId = parseInt(ctx.query.id as string);
-    const res = await store.dispatch(fetchFilmAsync(filmId));
-    return { props: {} }
-  } 
-  else {
-    return { notFound: true }
-  }
-}); */
-
-export default FilmPage;
+export default FilmNextPage;

@@ -1,9 +1,9 @@
 
 import { combineReducers } from 'redux'
-import { filmReducer } from './filmSlice'
+import { filmSlice } from './filmSlice'
 
 export const filmPageReducer = combineReducers({
-  film: filmReducer,
+  [filmSlice.name]: filmSlice.reducer,
 });
 
 export * from './filmSlice'

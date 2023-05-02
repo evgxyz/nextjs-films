@@ -1,21 +1,26 @@
 
 import { NextPage } from 'next';
+//import cookies from 'js-cookie';
 import { wrapper, useAppSelector } from '@/store';
-import { cookies } from 'next/headers';
 import { MainLayout } from '@/components/layouts/MainLayout/MainLayout';
 
-const AboutNextPage: NextPage = function() {
+interface AboutNextPageProps {
+  cookies?: string
+}
+
+const AboutNextPage: NextPage<AboutNextPageProps> = function(props) {
   return (
     <MainLayout title={'About'}>
       <h1>About</h1>
+      <div>{JSON.stringify(props.cookies)}</div>
     </MainLayout>
   )
 }
 
 AboutNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {
   if (ctx.req) { // on server 
-    const cookieStore = cookies();
-    console.log(cookieStore.get('settings'));
+    const cookies = ctx.req.headers.cookie;
+    return { cookies }
   } 
   else { // on client
     

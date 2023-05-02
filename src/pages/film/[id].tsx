@@ -1,5 +1,6 @@
 
-import { NextPage } from 'next'
+import { NextPage } from 'next';
+import { GetServerSideProps } from "next";
 import { wrapper, useAppSelector } from '@/store';
 import { 
   PageStatus, 
@@ -73,5 +74,36 @@ FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) =
   return {};
 
 });
+
+/* export const getServerSideProps = wrapper.getServerSideProps(store => async(ctx) => {
+
+  let valid = false;
+  let filmId = 0;
+  if (isString(ctx.query.id)) {
+    filmId = parseInt(ctx.query.id as string);
+    if (isFinite(filmId) && filmId > 0) {
+      valid = true;
+    }
+  }
+
+  if (!valid) {
+    ctx.res && (ctx.res.statusCode = 404);
+    return { props: { pageStatus: PageStatus.WRONG_URL } };
+  }
+  
+  if (ctx.req) { // on server 
+    await store.dispatch(fetchFilmAsync(filmId));
+    const reqStatus = store.getState().filmPage.filmState.reqStatus;
+    if (isReqError(reqStatus)) {
+      ctx.res && (ctx.res.statusCode = reqErrorToHttpCode(reqStatus));
+    }
+  } 
+  else { // on client
+    store.dispatch(fetchFilmAsync(filmId));
+  }
+
+  return { props: { pageStatus: PageStatus.OK } };
+
+}); */
 
 export default FilmNextPage;

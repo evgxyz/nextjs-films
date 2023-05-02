@@ -8,7 +8,7 @@ export enum Lang {
   EN = 'EN',
 }
 
-export const langs = Object.keys(Lang) as Lang[];
+export const langsAll = Object.keys(Lang) as Lang[];
 
 const langDict = {
   [Lang.RU]: langDictRU,
@@ -18,7 +18,11 @@ const langDict = {
 export const langDefault = Lang.RU;
 export type LangStrKey = keyof typeof langDictRU;
 
-export function langStr(key: LangStrKey, lang?: Lang) {
+export function isLang(str: string) {
+  return langsAll.includes(str as Lang);
+}
+
+export function locstr(key: LangStrKey, lang?: Lang) {
   if (!lang) {
     lang = useAppSelector(state => state.settings.lang);
     lang ??= langDefault;

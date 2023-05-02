@@ -19,19 +19,6 @@ const filmStateDefault: FilmState = {
   reqStatus: ReqStatus.NONE,
 }
 
-export const fetchFilmAsync = 
-  createAsyncThunk<Film, FilmId, {rejectValue: ReqStatus}>(
-    'filmState/fetchFilmAsync',
-    async function (filmId, ThunkAPI) {
-      const { reqStatus, film } = await apiFetchFilm(filmId);
-      if (reqStatus === ReqStatus.OK && film) {
-        return ThunkAPI.fulfillWithValue(film)
-      } else {
-        return ThunkAPI.rejectWithValue(reqStatus)
-      } 
-    }
-)
-
 export const filmSlice = createSlice({
   name: 'filmState',
 
@@ -67,7 +54,20 @@ export const filmSlice = createSlice({
         }
       )
   }
-});
+})
+
+export const fetchFilmAsync = 
+  createAsyncThunk<Film, FilmId, {rejectValue: ReqStatus}>(
+    'filmState/fetchFilmAsync',
+    async function (filmId, ThunkAPI) {
+      const { reqStatus, film } = await apiFetchFilm(filmId);
+      if (reqStatus === ReqStatus.OK && film) {
+        return ThunkAPI.fulfillWithValue(film)
+      } else {
+        return ThunkAPI.rejectWithValue(reqStatus)
+      } 
+    }
+)
 
 export const { setFilmState } = filmSlice.actions;
 

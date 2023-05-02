@@ -4,6 +4,8 @@ const langDictRU = {
   NOT_FOUND: 'Не найдено',
   LOADING: 'Загрузка...',
   ERROR: 'Ошибка',
+
+  SELECT_LANG: 'Выберете язык',
   FILM: 'Фильм',
 }
 

@@ -1,26 +1,52 @@
 
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { Lang, langDefault } from '@/units/lang'
+import { Lang, langDefault } from '@/units/locale';
 
-interface SettingsState {
+interface Settings {
   lang: Lang,
 }
 
-const settingsStateDefault = {
+const settingsDefault: Settings = {
   lang: langDefault,
 }
 
 export const settingsSlice = createSlice({
-  name: 'settingsState',
+  name: 'settings',
 
-  initialState: settingsStateDefault,
+  initialState: settingsDefault,
 
   reducers: {
+    setSettings: (state, action: PayloadAction<Settings>) => {
+      state = action.payload;
+    },
+
     setLang: (state, action: PayloadAction<Lang>) => {
       state.lang = action.payload;
     },
   },
+
+  /* extraReducers: builder => {
+    builder
+      .addCase(
+        initSettingsAsync.fulfilled, 
+        (state, action) => {
+         
+        }
+      )
+  } */
 });
 
+/* export const initSettingsAsync = 
+  createAsyncThunk(
+    'settings/initSettingsAsync',
+    async function () {
+    }
+)
+
+function saveSettings(settings: Settings) {
+  localStorage.setItem('settings', JSON.stringify(settings));
+} */
+
 export const { setLang } = settingsSlice.actions;
+
 

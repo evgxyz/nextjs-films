@@ -4,6 +4,9 @@ const langDictEN = {
   NOT_FOUND: 'Not found',
   LOADING: 'Loading...',
   ERROR: 'Error',
+
+  SELECT_LANG: 'Select a language',
+
   FILM: 'Film',
 }
 

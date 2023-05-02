@@ -9,13 +9,13 @@ interface FilmState {
   reqStatus: ReqStatus,
 }
 
-export const defaultFilm: Film = { 
+export const filmDefault: Film = { 
   id: 0,
   title: ''
 }
 
-const defaultFilmState: FilmState = {
-  film: defaultFilm,
+const filmStateDefault: FilmState = {
+  film: filmDefault,
   reqStatus: ReqStatus.NONE,
 }
 
@@ -35,7 +35,7 @@ export const fetchFilmAsync =
 export const filmSlice = createSlice({
   name: 'filmState',
 
-  initialState: defaultFilmState,
+  initialState: filmStateDefault,
 
   reducers: {
     setFilmState: (state, action: PayloadAction<FilmState>) => {
@@ -48,7 +48,7 @@ export const filmSlice = createSlice({
       .addCase(
         fetchFilmAsync.pending, 
         (state) => {
-          state.film = defaultFilm;
+          state.film = filmDefault;
           state.reqStatus = ReqStatus.LOADING;
         }
       )
@@ -62,7 +62,7 @@ export const filmSlice = createSlice({
       .addCase(
         fetchFilmAsync.rejected, 
         (state, action) => {
-          state.film = defaultFilm;
+          state.film = filmDefault;
           state.reqStatus = action.payload ?? ReqStatus.ERROR;
         }
       )

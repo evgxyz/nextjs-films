@@ -7,6 +7,8 @@ const langDictEN = {
 
   SELECT_LANG: 'Select a language',
 
+  INDEX_PAGE_TITLE: 'Home page',
+
   FOOTER_SOME_TEXT: 'This is footer',
 
   FILM: 'Film',

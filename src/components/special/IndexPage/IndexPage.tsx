@@ -1,5 +1,6 @@
 
 import { useAppSelector } from '@/store';
+import { locstr } from '@/units/locale';
 import { MainLayout } from '@/components/layouts/MainLayout';
 import Link from 'next/link';
 import { range } from '@/units/utils';
@@ -9,9 +10,11 @@ export function IndexPage() {
 
   const lang = useAppSelector(state => state.settings.lang);
 
+  const pageTitle = locstr('INDEX_PAGE_TITLE', lang);
+
   return (
-    <MainLayout title={'Index page'}>
-      <h1>Hello!</h1>
+    <MainLayout title={pageTitle}>
+      <h1>{pageTitle}</h1>
       <p><Link href='/films'>Films</Link></p>
       <p><Link href='/about'>About</Link></p>
       <p><Link href='/film/abc'>Wrong url</Link></p>

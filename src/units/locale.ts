@@ -22,10 +22,6 @@ export function isLang(str: string) {
   return langsAll.includes(str as Lang);
 }
 
-export function locstr(key: LangStrKey, lang?: Lang) {
-  if (!lang) {
-    lang = useAppSelector(state => state.settings.lang);
-    lang ??= langDefault;
-  }
+export function locstr(key: LangStrKey, lang: Lang = Lang.RU) {
   return langDict[lang]?.[key] ?? langDict[langDefault]?.[key] ?? '?';
 }

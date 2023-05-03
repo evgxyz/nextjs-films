@@ -1,8 +1,13 @@
 
-import Link from 'next/link'
-import styles from './MainMenu.module.scss'
+import { useAppSelector } from '@/store';
+import { locstr } from '@/units/locale';
+import Link from 'next/link';
+import styles from './MainMenu.module.scss';
 
 export function MainMenu() {
+
+  const lang = useAppSelector(state => state.settings.lang);
+  
   return (
     <div className={styles.mainMenu}>
       <p>

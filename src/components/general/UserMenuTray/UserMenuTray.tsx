@@ -1,8 +1,8 @@
 
 import { useAppSelector, useAppDispatch } from '@/store';
+import { Lang, isLang, langsAll, locstr } from '@/units/locale';
 import { setLang } from '@/store/settings';
-import { Lang, isLang, langsAll, locstr } from '@/units/locale'
-import styles from './UserMenuTray.module.scss'
+import styles from './UserMenuTray.module.scss';
 
 export function UserMenuTray() {
 
@@ -11,15 +11,15 @@ export function UserMenuTray() {
 
   const changeLang = function(ev: React.ChangeEvent<HTMLSelectElement>) {
     ev.preventDefault();
-    const lang = ev.target.value;
-    if (isLang(lang)) {
-      dispatch(setLang(lang as Lang))
+    const newLang = ev.target.value;
+    if (isLang(newLang)) {
+      dispatch(setLang(newLang as Lang))
     }
   }
 
   return (
     <div className={styles.userMenuTray}>
-      {locstr('SELECT_LANG') + ': '}
+      {locstr('SELECT_LANG', lang) + ': '}
       <select value={lang} onChange={changeLang}>
         {
           langsAll.map(lang => 

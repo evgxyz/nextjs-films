@@ -1,8 +1,9 @@
 
-import Head from 'next/head'
-import { siteName } from '@/config'
-import { Header } from '@/components/general/Header'
-import styles from './MainLayout.module.scss'
+import Head from 'next/head';
+import { siteName } from '@/config';
+import { Header } from '@/components/general/Header';
+import { Footer } from '@/components/general/Footer';
+import styles from './MainLayout.module.scss';
 
 interface MainLayoutProps {
   children: JSX.Element | JSX.Element[],
@@ -24,7 +25,7 @@ export function MainLayout({ children, title }: MainLayoutProps) {
         {children}
       </main>
       <footer className={styles.footer}>
-        footer
+        <Footer />
       </footer>
     </>
   )

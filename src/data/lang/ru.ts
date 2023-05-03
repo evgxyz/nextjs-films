@@ -6,6 +6,9 @@ const langDictRU = {
   ERROR: 'Ошибка',
 
   SELECT_LANG: 'Выберете язык',
+
+  FOOTER_SOME_TEXT: 'Это футер',
+
   FILM: 'Фильм',
 }
 

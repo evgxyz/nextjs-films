@@ -5,7 +5,8 @@ import {
   Action, ThunkAction,
 } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
-import { createWrapper, HYDRATE } from '@/lib/next-redux-wrapper';
+//import { createWrapper, HYDRATE } from '@/lib/next-redux-wrapper';
+import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import { settingsReducer } from './settings';
 import { filmPageReducer } from './filmPage';
 
@@ -17,7 +18,7 @@ const combinedReducer = combineReducers({
   filmPage: filmPageReducer,
 });
 
-const wrapperReducer: typeof combinedReducer = (state, action) => {
+const wrapperReducer: (typeof combinedReducer) = (state, action) => {
   if (action.type === HYDRATE) {
     const nextState = {
       ...state, 

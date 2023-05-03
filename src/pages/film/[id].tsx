@@ -7,7 +7,7 @@ import {
   isReqError, 
   reqErrorToHttpCode,
 } from '@/units/status';
-import { Lang, locstr } from '@/units/locale'
+import { locstr } from '@/units/locale'
 import { fetchFilmAsync } from '@/store/filmPage';
 import { isString } from '@/units/utils';
 import { MessagePage } from '@/components/general/MessagePage';

@@ -21,6 +21,10 @@ const FilmNextPage: NextPage = function({ pageStatus }: FilmNextPageProps) {
   const lang = useAppSelector(state => state.settings.lang);
   const reqStatus = useAppSelector(state => state.filmPage.filmState.reqStatus);
 
+  if (pageStatus === PageStatus.WRONG_URL) {
+    return <MessagePage type={'ERROR'} title={locstr('WRONG_URL', lang)} />
+  }
+
   useEffect(() => {
     if (pageStatus === PageStatus.CLIENT) {
       const query = router.query;
@@ -34,19 +38,11 @@ const FilmNextPage: NextPage = function({ pageStatus }: FilmNextPageProps) {
         }
       }
 
-      if (!valid) {
-        pageStatus = PageStatus.WRONG_URL;
-      }
-
       if (valid) {
         dispatch(fetchFilmAsync(filmId));
       }
     }
   }, []);
-
-  if (pageStatus === PageStatus.WRONG_URL) {
-    return <MessagePage type={'ERROR'} title={locstr('WRONG_URL', lang)} />
-  }
 
   switch (reqStatus) {
     case ReqStatus.OK: {
@@ -68,10 +64,6 @@ const FilmNextPage: NextPage = function({ pageStatus }: FilmNextPageProps) {
 
 FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {
 
-  if (!ctx.req) { 
-    return { pageStatus: PageStatus.CLIENT }
-  }
-
   const query = ctx.query;
   let valid = false;
 
@@ -87,7 +79,12 @@ FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) =
     ctx.res && (ctx.res.statusCode = 404);
     return { pageStatus: PageStatus.WRONG_URL };
   }
+
+  if (!ctx.req) { 
+    return { pageStatus: PageStatus.CLIENT }
+  }
   
+  // on server
   await store.dispatch(fetchFilmAsync(filmId));
 
   const reqStatus = store.getState().filmPage.filmState.reqStatus;
@@ -100,34 +97,5 @@ FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) =
   return { pageStatus: PageStatus.OK };
 
 });
-
-/* export const getServerSideProps = wrapper.getServerSideProps(store => async(ctx) => {
-
-  console.log('call getServerSideProps:', ctx.req.cookies);
-
-  let valid = false;
-  let filmId = 0;
-  if (isString(ctx.query.id)) {
-    filmId = parseInt(ctx.query.id as string);
-    if (isFinite(filmId) && filmId > 0) {
-      valid = true;
-    }
-  }
-
-  if (!valid) {
-    ctx.res.statusCode = 404;
-    return { props: { pageStatus: PageStatus.WRONG_URL } };
-  }
-
-  await store.dispatch(fetchFilmAsync(filmId));
-
-  const reqStatus = store.getState().filmPage.filmState.reqStatus;
-  if (isReqError(reqStatus)) {
-    ctx.res.statusCode = reqErrorToHttpCode(reqStatus);
-  }
-  
-  return { props: { pageStatus: PageStatus.OK } };
-
-}); */
 
 export default FilmNextPage;

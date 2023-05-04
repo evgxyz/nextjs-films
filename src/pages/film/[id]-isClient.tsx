@@ -2,6 +2,7 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router'
 import { wrapper, useAppSelector, useAppDispatch } from '@/store';
+import { isClient } from '@/units/next';
 import { PageStatus, ReqStatus, isReqError, reqErrorToHttpCode } from '@/units/status';
 import { locstr } from '@/units/locale';
 import { fetchFilmAsync } from '@/store/filmPage';
@@ -66,7 +67,7 @@ const FilmNextPage: NextPage = function({ pageStatus }: FilmNextPageProps) {
   }
 }
 
-FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {
+/* FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {
 
   if (!ctx.req) { 
     return { pageStatus: PageStatus.CLIENT }
@@ -99,16 +100,20 @@ FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) =
   
   return { pageStatus: PageStatus.OK };
 
-});
+}); */
 
-/* export const getServerSideProps = wrapper.getServerSideProps(store => async(ctx) => {
+export const getServerSideProps = wrapper.getServerSideProps(store => async(ctx) => {
 
-  console.log('call getServerSideProps:', ctx.req.cookies);
+  console.log('url:', ctx.req.url)
+  console.log('isClient:', isClient(ctx.req.url ?? ''));
+  
+
+  const query = ctx.query;
 
   let valid = false;
   let filmId = 0;
-  if (isString(ctx.query.id)) {
-    filmId = parseInt(ctx.query.id as string);
+  if (isString(query.id)) {
+    filmId = parseInt(query.id as string);
     if (isFinite(filmId) && filmId > 0) {
       valid = true;
     }
@@ -124,10 +129,11 @@ FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) =
   const reqStatus = store.getState().filmPage.filmState.reqStatus;
   if (isReqError(reqStatus)) {
     ctx.res.statusCode = reqErrorToHttpCode(reqStatus);
+    return { props: { pageStatus: PageStatus.ERROR } };
   }
   
   return { props: { pageStatus: PageStatus.OK } };
 
-}); */
+});
 
 export default FilmNextPage;

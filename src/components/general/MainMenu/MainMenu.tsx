@@ -1,6 +1,6 @@
 
 import { useAppSelector } from '@/store';
-import { locstr } from '@/units/locale';
+import { strlang } from '@/units/lang';
 import Link from 'next/link';
 import styles from './MainMenu.module.scss';
 

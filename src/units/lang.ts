@@ -21,6 +21,6 @@ export function isLang(str: string) {
   return langsAll.includes(str as Lang);
 }
 
-export function locstr(key: LangStrKey, lang: Lang = Lang.RU) {
+export function strlang(key: LangStrKey, lang: Lang = Lang.RU) {
   return langDict[lang]?.[key] ?? langDict[langDefault]?.[key] ?? '?';
 }

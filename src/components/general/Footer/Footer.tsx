@@ -1,6 +1,6 @@
 
 import { useAppSelector } from '@/store';
-import { locstr } from '@/units/locale';
+import { strlang } from '@/units/lang';
 import styles from './Footer.module.scss'
 
 export function Footer() {
@@ -9,7 +9,7 @@ export function Footer() {
 
   return (
     <div className={styles.footer}>
-      <div>{locstr('FOOTER_SOME_TEXT', lang)}</div>
+      <div>{strlang('FOOTER_SOME_TEXT', lang)}</div>
     </div>
   )
 }

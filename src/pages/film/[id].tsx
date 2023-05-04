@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router'
 import { wrapper, useAppSelector, useAppDispatch } from '@/store';
 import { PageStatus, ReqStatus, isReqError, reqErrorToHttpCode } from '@/units/status';
-import { locstr } from '@/units/locale';
+import { strlang } from '@/units/lang';
 import { fetchFilmAsync } from '@/store/filmPage';
 import { isString } from '@/units/utils';
 import { MessagePage } from '@/components/general/MessagePage';
@@ -22,7 +22,7 @@ const FilmNextPage: NextPage = function({ pageStatus }: FilmNextPageProps) {
   const reqStatus = useAppSelector(state => state.filmPage.filmState.reqStatus);
 
   if (pageStatus === PageStatus.WRONG_URL) {
-    return <MessagePage type={'ERROR'} title={locstr('WRONG_URL', lang)} />
+    return <MessagePage type={'ERROR'} title={strlang('WRONG_URL', lang)} />
   }
 
   useEffect(() => {
@@ -49,13 +49,13 @@ const FilmNextPage: NextPage = function({ pageStatus }: FilmNextPageProps) {
       return <FilmPage />
     }
     case ReqStatus.LOADING: {
-      return <MessagePage type={'INFO'} title={locstr('LOADING', lang)} />
+      return <MessagePage type={'INFO'} title={strlang('LOADING', lang)} />
     }
     case ReqStatus.NOT_FOUND: {
-      return <MessagePage type={'ERROR'} title={locstr('NOT_FOUND', lang)} />
+      return <MessagePage type={'ERROR'} title={strlang('NOT_FOUND', lang)} />
     }
     case ReqStatus.ERROR: {
-      return <MessagePage type={'ERROR'} title={locstr('ERROR', lang)} />
+      return <MessagePage type={'ERROR'} title={strlang('ERROR', lang)} />
     }
     default:
       return null;

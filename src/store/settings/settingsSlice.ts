@@ -1,6 +1,6 @@
 
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { Lang, isLang, langDefault } from '@/units/locale';
+import { Lang, isLang, langDefault } from '@/units/lang';
 import cookie from 'js-cookie';
 
 interface Settings {

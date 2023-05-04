@@ -1,6 +1,6 @@
 
 import { useAppSelector, useAppDispatch } from '@/store';
-import { Lang, isLang, langsAll, locstr } from '@/units/locale';
+import { Lang, isLang, langsAll, strlang } from '@/units/lang';
 import { setLang } from '@/store/settings';
 import styles from './UserMenuTray.module.scss';
 
@@ -19,7 +19,7 @@ export function UserMenuTray() {
 
   return (
     <div className={styles.userMenuTray}>
-      {locstr('SELECT_LANG', lang) + ': '}
+      {strlang('SELECT_LANG', lang) + ': '}
       <select value={lang} onChange={changeLang}>
         {
           langsAll.map(lang => 

@@ -1,6 +1,6 @@
 
 import { useAppSelector } from '@/store';
-import { locstr } from '@/units/locale';
+import { strlang } from '@/units/lang';
 import { MainLayout } from '@/components/layouts/MainLayout';
 import Link from 'next/link';
 import { range } from '@/units/utils';
@@ -10,7 +10,7 @@ export function IndexPage() {
 
   const lang = useAppSelector(state => state.settings.lang);
 
-  const pageTitle = locstr('INDEX_PAGE_TITLE', lang);
+  const pageTitle = strlang('INDEX_PAGE_TITLE', lang);
 
   return (
     <MainLayout title={pageTitle}>

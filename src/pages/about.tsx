@@ -6,29 +6,19 @@ import { wrapper, useAppSelector } from '@/store';
 import { MainLayout } from '@/components/layouts/MainLayout/MainLayout';
 
 interface AboutNextPageProps {
+  id?: number,
   cookies?: string
 }
 
-const AboutNextPage: NextPage<AboutNextPageProps> = function(props) {
+const AboutNextPage: NextPage = function(props) {
   return (
     <MainLayout title={'About'}>
       <h1>About</h1>
-      <div>{'cookies:' + JSON.stringify(props.cookies)}</div>
+      <div>{'props:' + JSON.stringify(props)}</div>
       <button onClick={() => cookie.set('lang', 'RU')}>set</button>
     </MainLayout>
   )
 }
-
-AboutNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {
-  if (ctx.req) { // on server 
-    const cookie = ctx.req.headers.cookie;
-    return { cookie }
-  } 
-  else { // on client
-    cookie.set('lang', 'EN')
-  }
-  return {}
-});
 
 export default AboutNextPage;
 

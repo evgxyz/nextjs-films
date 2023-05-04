@@ -1,19 +1,20 @@
 
-import type { AppProps } from 'next/app';
+import App, { AppProps } from 'next/app';
 import { Provider as ReduxProvider } from 'react-redux';
-import App, {AppInitialProps} from 'next/app';
 import { wrapper } from '@/store';
+import Cookie from 'cookie';
+import { setSettingsFromCookies } from '@/store/settings';
 import '@/styles/global.scss';
 
 interface PageProps {
   pageProps: {
-    id: number;
+    myVal: number;
   };
 }
 
 const MyApp = ({Component, ...rest}: Omit<AppProps, 'pageProps'> & PageProps) => {
   
-  console.log('rest: ', rest);
+  //console.log('rest: ', rest);
   const {store, props} = wrapper.useWrappedStore(rest);
 
   return (
@@ -21,28 +22,32 @@ const MyApp = ({Component, ...rest}: Omit<AppProps, 'pageProps'> & PageProps) =>
       <Component {...props.pageProps} />
     </ReduxProvider>
   );
-};
+}
 
-MyApp.getInitialProps = 
-  wrapper.getInitialAppProps(store => async(appCtx) => {
+MyApp.getInitialProps = wrapper.getInitialAppProps(store => async(appCtx) => {
 
-  // to do dispatches first, before...
-  // await store.dispatch(fetchAsinc());
+  const cookie = appCtx.ctx.req?.headers.cookie;
+  //console.log('cookie:', cookie);
 
-  // ...before calling (and awaiting!!!!) the children's getInitialProps
+  if (cookie) {
+    const cookies = Cookie.parse(cookie);
+    store.dispatch(setSettingsFromCookies(cookies));
+  }
+
   const childrenGip = await App.getInitialProps(appCtx);
-  console.log('childInitialProps: ', childrenGip);
+  //console.log('childInitialProps: ', childrenGip);
 
   return {
     pageProps: {
       ...childrenGip.pageProps,
-      id: 42,
-    },
+      myVal: 123,
+    }
   };
 });
 
 export default MyApp;
 
+// legacy 
 /* function App({ Component, pageProps }: AppProps) {
   return (
     <Component {...pageProps} />

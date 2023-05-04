@@ -1,7 +1,6 @@
 
 import langDictRU from '@/data/lang/ru';
 import langDictEN from '@/data/lang/en';
-import { useAppSelector } from '@/store';
 
 export enum Lang {
   RU = 'RU',

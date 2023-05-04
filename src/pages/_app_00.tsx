@@ -12,10 +12,10 @@ interface PageProps {
   };
 }
 
-const MyApp = ({Component, ...restProps}: Omit<AppProps, 'pageProps'> & PageProps) => {
+const MyApp = ({Component, ...rest}: AppProps) => {
   
   //console.log('rest: ', rest);
-  const {store, props} = wrapper.useWrappedStore(restProps);
+  const {store, props} = wrapper.useWrappedStore(rest);
 
   return (
     <ReduxProvider store={store}>
@@ -40,7 +40,6 @@ MyApp.getInitialProps = wrapper.getInitialAppProps(store => async(appCtx) => {
   return {
     pageProps: {
       ...childrenGip.pageProps,
-      myVal: 123,
     }
   };
 });

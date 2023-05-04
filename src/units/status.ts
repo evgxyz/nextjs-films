@@ -1,6 +1,7 @@
 
 export enum PageStatus {
   NONE = 'NONE',
+  CLIENT = 'CLIENT',
   OK = 'OK',
   WRONG_URL = 'WRONG_URL',
   ERROR = 'ERROR',

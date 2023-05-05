@@ -29,21 +29,21 @@ export const filmSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(
-        fetchFilmAsync.pending, 
+        fetchFilm.pending, 
         (state) => {
           state.film = filmDefault;
           state.reqStatus = ReqStatus.LOADING;
         }
       )
       .addCase(
-        fetchFilmAsync.fulfilled, 
+        fetchFilm.fulfilled, 
         (state, action) => {
           state.film = action.payload;
           state.reqStatus = ReqStatus.OK;
         }
       )
       .addCase(
-        fetchFilmAsync.rejected, 
+        fetchFilm.rejected, 
         (state, action) => {
           state.film = filmDefault;
           state.reqStatus = action.payload ?? ReqStatus.ERROR;
@@ -52,9 +52,9 @@ export const filmSlice = createSlice({
   }
 });
 
-export const fetchFilmAsync = 
+export const fetchFilm = 
   createAsyncThunk<Film, {filmId: FilmId, lang: Lang}, {rejectValue: ReqStatus}>(
-    'filmState/fetchFilmAsync',
+    'filmState/fetchFilm',
     async function ({filmId, lang}, ThunkAPI) {
       const { reqStatus, film } = await apiFetchFilm(filmId, lang);
       if (reqStatus === ReqStatus.OK && film) {

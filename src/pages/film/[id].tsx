@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { wrapper, useAppSelector, useAppDispatch } from '@/store';
 import { PageStatus, ReqStatus, isReqError, reqErrorToHttpCode } from '@/units/status';
 import { strlang } from '@/units/lang';
-import { fetchFilmAsync } from '@/store/filmPage';
+import { fetchFilm } from '@/store/filmPage';
 import { isString } from '@/units/utils';
 import { MessagePage } from '@/components/general/MessagePage';
 import { FilmPage } from '@/components/special/films/FilmPage';
@@ -16,6 +16,8 @@ interface FilmNextPageProps {
 
 const FilmNextPage: NextPage = function({ pageStatus }: FilmNextPageProps) {
 
+  console.log('pageStatus:', pageStatus)
+
   const router = useRouter();
   const dispatch = useAppDispatch();
   const lang = useAppSelector(state => state.settings.lang);
@@ -25,24 +27,30 @@ const FilmNextPage: NextPage = function({ pageStatus }: FilmNextPageProps) {
     return <MessagePage type={'ERROR'} title={strlang('WRONG_URL', lang)} />
   }
 
-  useEffect(() => {
-    if (pageStatus === PageStatus.CLIENT) {
-      const query = router.query;
-      let valid = false;
+  const updatePage = function() {
+    console.log('updatePage');
 
-      let filmId = 0;
-      if (isString(query.id)) {
-        filmId = parseInt(query.id as string);
-        if (isFinite(filmId) && filmId > 0) {
-          valid = true;
-        }
-      }
+    const query = router.query;
+    let valid = false;
 
-      if (valid) {
-        dispatch(fetchFilmAsync({filmId, lang}));
+    let filmId = 0;
+    if (isString(query.id)) {
+      filmId = parseInt(query.id as string);
+      if (isFinite(filmId) && filmId > 0) {
+        valid = true;
       }
     }
-  }, []);
+
+    if (valid) {
+      dispatch(fetchFilm({filmId, lang}));
+    }
+  };
+
+  useEffect(() => {
+    if (pageStatus === PageStatus.CLIENT) {
+      updatePage();
+    }
+  }, [lang]);
 
   switch (reqStatus) {
     case ReqStatus.OK: {
@@ -63,6 +71,7 @@ const FilmNextPage: NextPage = function({ pageStatus }: FilmNextPageProps) {
 }
 
 FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {
+  console.log('getInitialProps');
 
   const query = ctx.query;
   let valid = false;
@@ -80,14 +89,14 @@ FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) =
     return { pageStatus: PageStatus.WRONG_URL };
   }
 
-  if (!ctx.req) { 
+  if (!ctx.req) { // if on client
     return { pageStatus: PageStatus.CLIENT }
   }
   
   // on server
   const lang = store.getState().settings.lang;
 
-  await store.dispatch(fetchFilmAsync({filmId, lang}));
+  await store.dispatch(fetchFilm({filmId, lang}));
 
   const reqStatus = store.getState().filmPage.filmState.reqStatus;
   

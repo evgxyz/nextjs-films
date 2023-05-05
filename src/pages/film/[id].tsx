@@ -39,7 +39,7 @@ const FilmNextPage: NextPage = function({ pageStatus }: FilmNextPageProps) {
       }
 
       if (valid) {
-        dispatch(fetchFilmAsync(filmId));
+        dispatch(fetchFilmAsync({filmId, lang}));
       }
     }
   }, []);
@@ -85,7 +85,9 @@ FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) =
   }
   
   // on server
-  await store.dispatch(fetchFilmAsync(filmId));
+  const lang = store.getState().settings.lang;
+
+  await store.dispatch(fetchFilmAsync({filmId, lang}));
 
   const reqStatus = store.getState().filmPage.filmState.reqStatus;
   

@@ -19,3 +19,7 @@ export function compare<T>(x: T, y: T) {
   if (x === y) return 0;
   return (x < y) ? -1 : 1;
 }
+
+export async function delay(ms: number) {
+  await new Promise(r => { setTimeout(() => r(1), ms) });
+}

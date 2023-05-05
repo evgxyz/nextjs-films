@@ -1,16 +1,47 @@
 
+import { delay } from '@/units/utils';
+import { Lang } from '@/units/lang';
 import { ReqStatus } from '@/units/status';
-import { Film, FilmId } from '@/units/films';
-import { filmsAll } from '@/data/filmsAll';
+import { Film, FilmId, Genre, Country } from '@/units/films';
+import { filmsMap, genresMap, countriesMap } from '@/data/filmData';
 
-export async function apiFetchFilm(filmId: FilmId): 
+export async function apiFetchFilm(filmId: FilmId, lang: Lang): 
   Promise<{ reqStatus: ReqStatus } & { film?: Film }> {
     console.log('call apiFetchFilm');
-    await new Promise(r => { setTimeout(() => r(1), 1500) });
-    const film = filmsAll.find(film => film.id === filmId);
-    return ( 
-      film ? 
-        { reqStatus: ReqStatus.OK, film } 
-      : { reqStatus: ReqStatus.NOT_FOUND }
-    );
+    
+    await delay(1500);
+    
+    const filmRaw = filmsMap.get(filmId);
+
+    if (!filmRaw) {
+      return { reqStatus: ReqStatus.NOT_FOUND }
+    }
+
+    const film = {
+      id: filmRaw.id,
+      
+      title: lang === Lang.EN ? filmRaw.title_en : filmRaw.title_ru,
+      
+      genres: filmRaw.genres.map(id => { 
+          const genreRaw = genresMap.get(id);
+          if (!genreRaw) return undefined;
+          return {
+            id: genreRaw.id,
+            name: lang === Lang.EN ? genreRaw.name_en : genreRaw.name_ru,
+          }
+        })
+        .filter(x => !!x) as Genre[],
+      
+      countries: filmRaw.countries.map(id => { 
+          const countryRaw = countriesMap.get(id);
+          if (!countryRaw) return undefined;
+          return {
+            id: countryRaw.id,
+            name: lang === Lang.EN ? countryRaw.name_en : countryRaw.name_ru,
+          }
+        })
+        .filter(x => !!x) as Country[],
+    }
+
+    return { reqStatus: ReqStatus.OK, film }; 
 }

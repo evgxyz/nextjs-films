@@ -1,17 +1,13 @@
 
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
-import { ReqStatus } from '@/units/status'
-import { Film, FilmId } from '@/units/films'
-import { apiFetchFilm } from '@/api/filmApi'
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { Lang } from '@/units/lang';
+import { ReqStatus } from '@/units/status';
+import { Film, FilmId, filmDefault } from '@/units/films';
+import { apiFetchFilm } from '@/api/filmApi';
 
 interface FilmState {
   film: Film,
   reqStatus: ReqStatus,
-}
-
-export const filmDefault: Film = { 
-  id: 0,
-  title: ''
 }
 
 const filmStateDefault: FilmState = {
@@ -54,20 +50,20 @@ export const filmSlice = createSlice({
         }
       )
   }
-})
+});
 
 export const fetchFilmAsync = 
-  createAsyncThunk<Film, FilmId, {rejectValue: ReqStatus}>(
+  createAsyncThunk<Film, {filmId: FilmId, lang: Lang}, {rejectValue: ReqStatus}>(
     'filmState/fetchFilmAsync',
-    async function (filmId, ThunkAPI) {
-      const { reqStatus, film } = await apiFetchFilm(filmId);
+    async function ({filmId, lang}, ThunkAPI) {
+      const { reqStatus, film } = await apiFetchFilm(filmId, lang);
       if (reqStatus === ReqStatus.OK && film) {
         return ThunkAPI.fulfillWithValue(film)
       } else {
         return ThunkAPI.rejectWithValue(reqStatus)
       } 
     }
-)
+);
 
 export const { setFilmState } = filmSlice.actions;
 

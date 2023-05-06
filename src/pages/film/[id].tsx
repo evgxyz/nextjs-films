@@ -1,21 +1,20 @@
 
 import { NextPage } from 'next';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { wrapper, useAppSelector, useAppDispatch } from '@/store';
 import { NextPageProps, GipStatus } from '@/units/next';
+import { parseIntParam } from '@/units/parseParam';
 import { ReqStatus, isReqError, reqErrorToHttpCode } from '@/units/status';
 import { strlang } from '@/units/lang';
 import { fetchFilm } from '@/store/filmPage';
-import { isString } from '@/units/utils';
 import { MessagePage } from '@/components/general/MessagePage';
 import { FilmPage } from '@/components/special/films/FilmPage';
-import { useEffect, useState } from 'react';
 
 interface FilmNextPageProps extends NextPageProps {};
 
-const FilmNextPage: NextPage<FilmNextPageProps> = function({ fromClient, gipStatus }) {
-
-  console.log('FilmNextPageProps:', {fromClient, gipStatus});
+const FilmNextPage: NextPage<FilmNextPageProps> = function({ fromServer, gipStatus }) {
+  console.log('FilmNextPage:', {fromServer, gipStatus});
 
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -28,27 +27,19 @@ const FilmNextPage: NextPage<FilmNextPageProps> = function({ fromClient, gipStat
   }
 
   function updatePage() {
-    console.log('updatePage');
-
     const query = router.query;
-    let valid = false;
+    let validParams = true;
 
-    let filmId = 0;
-    if (isString(query.id)) {
-      filmId = parseInt(query.id as string);
-      if (isFinite(filmId) && filmId > 0) {
-        valid = true;
-      }
-    }
+    const {error, value: filmId} = parseIntParam(query, 'id');
+    if (error) validParams = false;
 
-    if (valid) {
+    if (validParams) {
       dispatch(fetchFilm({filmId, lang}));
     }
   };
 
   useEffect(() => {
-    // не вызываем updatePage на сервере при первом рендеринге 
-    if (initFlag || fromClient) {
+    if (initFlag || !fromServer) { //при первом рендере на сервере не вызываем updatePage 
       updatePage();
     }
     setInitFlag(true);
@@ -75,41 +66,36 @@ const FilmNextPage: NextPage<FilmNextPageProps> = function({ fromClient, gipStat
 FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {
   console.log('getInitialProps');
 
-  const isClient = !ctx.req;
+  const isServer = !!ctx.req;
 
   const query = ctx.query;
-  let valid = false;
+  let validParams = true;
 
-  let filmId = 0;
-  if (isString(query.id)) {
-    filmId = parseInt(query.id as string);
-    if (isFinite(filmId) && filmId > 0) {
-      valid = true;
-    }
-  }
+  const {error, value: filmId} = parseIntParam(query, 'id');
+  if (error) validParams = false;
 
-  if (!valid) {
+  if (!validParams) {
     ctx.res && (ctx.res.statusCode = 404);
-    return { fromClient: isClient, gipStatus: GipStatus.WRONG_URL };
+    return { fromClient: isServer, gipStatus: GipStatus.WRONG_URL };
   }
 
-  if (isClient) { // if on client
-    return { fromClient: true, gipStatus: GipStatus.OK }
-  }
-  
-  // on server
-  const lang = store.getState().settings.lang;
+  if (isServer) { // on server
+    const lang = store.getState().settings.lang;
 
-  await store.dispatch(fetchFilm({filmId, lang}));
+    await store.dispatch(fetchFilm({filmId, lang}));
 
-  const reqStatus = store.getState().filmPage.filmState.reqStatus;
-  
-  if (isReqError(reqStatus)) {
-    ctx.res && (ctx.res.statusCode = reqErrorToHttpCode(reqStatus));
-    return { fromClient: false, gipStatus: GipStatus.ERROR };
+    const reqStatus = store.getState().filmPage.filmState.reqStatus;
+    
+    if (isReqError(reqStatus)) {
+      ctx.res && (ctx.res.statusCode = reqErrorToHttpCode(reqStatus));
+      return { fromServer: true, gipStatus: GipStatus.ERROR };
+    } else {
+      return { fromServer: true, gipStatus: GipStatus.OK };
+    }
+  } 
+  else { // on client
+    return { fromServer: false, gipStatus: GipStatus.OK }
   }
-  
-  return { fromClient: false, gipStatus: GipStatus.OK };
 });
 
 export default FilmNextPage;

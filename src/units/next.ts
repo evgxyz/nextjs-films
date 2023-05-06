@@ -7,6 +7,6 @@ export enum GipStatus {
 }
 
 export interface NextPageProps {
-  fromClient: boolean,
+  fromServer: boolean,
   gipStatus: GipStatus
 }

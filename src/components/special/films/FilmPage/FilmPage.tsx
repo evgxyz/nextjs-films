@@ -1,6 +1,6 @@
 
-import { useAppSelector } from '@/store';
-import { MainLayout } from '@/components/layouts/MainLayout'
+import {useAppSelector} from '@/store';
+import {MainLayout} from '@/components/layouts/MainLayout';
 import styles from './FilmPage.module.scss'
 
 export function FilmPage() {

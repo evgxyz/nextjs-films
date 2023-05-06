@@ -1,9 +1,9 @@
 
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { Lang } from '@/units/lang';
-import { ReqStatus } from '@/units/status';
-import { Film, FilmId, filmDefault } from '@/units/films';
-import { apiFetchFilm } from '@/api/filmApi';
+import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
+import {Lang} from '@/units/lang';
+import {ReqStatus} from '@/units/status';
+import {Film, FilmId, filmDefault} from '@/units/films';
+import {apiFetchFilm} from '@/api/filmApi';
 
 interface FilmState {
   film: Film,
@@ -56,7 +56,7 @@ export const fetchFilm =
   createAsyncThunk<Film, {filmId: FilmId, lang: Lang}, {rejectValue: ReqStatus}>(
     'filmState/fetchFilm',
     async function ({filmId, lang}, ThunkAPI) {
-      const { reqStatus, film } = await apiFetchFilm(filmId, lang);
+      const {reqStatus, film} = await apiFetchFilm(filmId, lang);
       if (reqStatus === ReqStatus.OK && film) {
         return ThunkAPI.fulfillWithValue(film)
       } else {
@@ -65,5 +65,5 @@ export const fetchFilm =
     }
 );
 
-export const { setFilmState } = filmSlice.actions;
+export const {setFilmState} = filmSlice.actions;
 

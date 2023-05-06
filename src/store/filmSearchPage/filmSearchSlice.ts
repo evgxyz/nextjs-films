@@ -1,8 +1,8 @@
 
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { ReqStatus } from '@/units/status';
-import { Film, FilmId, Genre, GenreId, Country, CountryId } from '@/units/films';
-import { apiFetchFilm } from '@/api/filmApi';
+import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
+import {ReqStatus} from '@/units/status';
+import {Film, FilmId, Genre, GenreId, Country, CountryId} from '@/units/films';
+import {apiFetchFilm} from '@/api/filmApi';
 
 interface FilmSearchFilter {
   title: string,
@@ -80,5 +80,5 @@ export const fetchFilmSearchFilter =
     }
 )
 
-export const { setFilmSearchState } = filmSearchSlice.actions;
+export const {setFilmSearchState} = filmSearchSlice.actions;
 

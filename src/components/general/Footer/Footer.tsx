@@ -1,6 +1,6 @@
 
-import { useAppSelector } from '@/store';
-import { strlang } from '@/units/lang';
+import {useAppSelector} from '@/store';
+import {strlang} from '@/units/lang';
 import styles from './Footer.module.scss'
 
 export function Footer() {

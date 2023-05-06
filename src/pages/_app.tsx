@@ -1,9 +1,9 @@
 
-import App, { AppProps } from 'next/app';
-import { Provider as ReduxProvider } from 'react-redux';
-import { wrapper } from '@/store';
+import App, {AppProps} from 'next/app';
+import {Provider as ReduxProvider} from 'react-redux';
+import {wrapper} from '@/store';
 import Cookie from 'cookie';
-import { setSettingsFromCookies } from '@/store/settings';
+import {setSettingsFromCookies} from '@/store/settings';
 import '@/styles/global.scss';
 
 interface PageProps {

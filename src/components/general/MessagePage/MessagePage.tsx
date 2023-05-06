@@ -1,5 +1,5 @@
 
-import { MainLayout } from '@/components/layouts/MainLayout'
+import {MainLayout} from '@/components/layouts/MainLayout'
 import styles from './MessagePage.module.scss'
 
 interface MessagePageProps {
@@ -8,7 +8,7 @@ interface MessagePageProps {
   text?: string,
 }
 
-export function MessagePage({ type = 'INFO', title, text }: MessagePageProps) {
+export function MessagePage({type = 'INFO', title, text}: MessagePageProps) {
   return (
     <MainLayout title={title}>
       <h1 className={styles.title}>{title}</h1>

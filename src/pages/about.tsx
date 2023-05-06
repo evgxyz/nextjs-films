@@ -1,9 +1,8 @@
 
-import { NextPage } from 'next';
+import {NextPage} from 'next';
+import {wrapper, useAppSelector} from '@/store';
 import cookie from 'js-cookie';
-
-import { wrapper, useAppSelector } from '@/store';
-import { MainLayout } from '@/components/layouts/MainLayout/MainLayout';
+import {MainLayout} from '@/components/layouts/MainLayout/MainLayout';
 
 interface AboutNextPageProps {
   id?: number,

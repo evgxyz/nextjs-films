@@ -1,7 +1,7 @@
 
-import { useAppSelector, useAppDispatch } from '@/store';
-import { Lang, isLang, langsAll, strlang } from '@/units/lang';
-import { setLang } from '@/store/settings';
+import {useAppSelector, useAppDispatch} from '@/store';
+import {Lang, isLang, langsAll, strlang} from '@/units/lang';
+import {setLang } from '@/store/settings';
 import styles from './UserMenuTray.module.scss';
 
 export function UserMenuTray() {

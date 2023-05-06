@@ -1,6 +1,6 @@
 
-import { NextPage } from 'next';
-import { IndexPage } from '@/components/special/IndexPage';
+import {NextPage} from 'next';
+import {IndexPage} from '@/components/special/IndexPage';
 
 const IndexNextPage: NextPage = function() {
   return (

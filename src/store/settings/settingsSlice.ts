@@ -1,6 +1,6 @@
 
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { Lang, isLang, langDefault } from '@/units/lang';
+import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
+import {Lang, isLang, langDefault} from '@/units/lang';
 import cookie from 'js-cookie';
 
 interface Settings {
@@ -20,7 +20,7 @@ export const settingsSlice = createSlice({
 
   reducers: {
     setSettingsFromCookies: (state, action: PayloadAction<Record<string, string>>) => {
-      const { lang } = action.payload;
+      const {lang} = action.payload;
       if (lang && isLang(lang)) {
         state.lang = lang as Lang;
       }

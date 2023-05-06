@@ -1,9 +1,9 @@
 
-import { useAppSelector } from '@/store';
-import { strlang } from '@/units/lang';
-import { MainLayout } from '@/components/layouts/MainLayout';
+import {useAppSelector} from '@/store';
+import {strlang} from '@/units/lang';
+import {MainLayout} from '@/components/layouts/MainLayout';
 import Link from 'next/link';
-import { range } from '@/units/utils';
+import {range} from '@/units/utils';
 import styles from './IndexPage.module.scss';
 
 export function IndexPage() {

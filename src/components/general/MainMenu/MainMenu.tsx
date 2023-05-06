@@ -1,6 +1,6 @@
 
-import { useAppSelector } from '@/store';
-import { strlang } from '@/units/lang';
+import {useAppSelector} from '@/store';
+import {strlang} from '@/units/lang';
 import Link from 'next/link';
 import styles from './MainMenu.module.scss';
 

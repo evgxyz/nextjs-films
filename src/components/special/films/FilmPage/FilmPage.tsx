@@ -12,7 +12,7 @@ export function FilmPage() {
     <MainLayout title={film.title}>
       <h1>{film.title}</h1>
       <div>{`lang=${lang}`}</div>
-      <pre>{JSON.stringify(filmState)}</pre>
+      <pre>{JSON.stringify(filmState, null, 2)}</pre>
     </MainLayout>
   )
 }

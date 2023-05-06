@@ -2,32 +2,32 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router'
 import { wrapper, useAppSelector, useAppDispatch } from '@/store';
-import { PageStatus, ReqStatus, isReqError, reqErrorToHttpCode } from '@/units/status';
+import { NextPageProps, GipStatus } from '@/units/next';
+import { ReqStatus, isReqError, reqErrorToHttpCode } from '@/units/status';
 import { strlang } from '@/units/lang';
 import { fetchFilm } from '@/store/filmPage';
 import { isString } from '@/units/utils';
 import { MessagePage } from '@/components/general/MessagePage';
 import { FilmPage } from '@/components/special/films/FilmPage';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-interface FilmNextPageProps {
-  pageStatus?: PageStatus
-}
+interface FilmNextPageProps extends NextPageProps {};
 
-const FilmNextPage: NextPage = function({ pageStatus }: FilmNextPageProps) {
+const FilmNextPage: NextPage<FilmNextPageProps> = function({ fromClient, gipStatus }) {
 
-  console.log('pageStatus:', pageStatus)
+  console.log('FilmNextPageProps:', {fromClient, gipStatus});
 
   const router = useRouter();
   const dispatch = useAppDispatch();
   const lang = useAppSelector(state => state.settings.lang);
   const reqStatus = useAppSelector(state => state.filmPage.filmState.reqStatus);
+  const [initFlag, setInitFlag] = useState(false);
 
-  if (pageStatus === PageStatus.WRONG_URL) {
+  if (gipStatus === GipStatus.WRONG_URL) {
     return <MessagePage type={'ERROR'} title={strlang('WRONG_URL', lang)} />
   }
 
-  const updatePage = function() {
+  function updatePage() {
     console.log('updatePage');
 
     const query = router.query;
@@ -47,9 +47,11 @@ const FilmNextPage: NextPage = function({ pageStatus }: FilmNextPageProps) {
   };
 
   useEffect(() => {
-    if (pageStatus === PageStatus.CLIENT) {
+    // не вызываем updatePage на сервере при первом рендеринге 
+    if (initFlag || fromClient) {
       updatePage();
     }
+    setInitFlag(true);
   }, [lang]);
 
   switch (reqStatus) {
@@ -73,6 +75,8 @@ const FilmNextPage: NextPage = function({ pageStatus }: FilmNextPageProps) {
 FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {
   console.log('getInitialProps');
 
+  const isClient = !ctx.req;
+
   const query = ctx.query;
   let valid = false;
 
@@ -86,11 +90,11 @@ FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) =
 
   if (!valid) {
     ctx.res && (ctx.res.statusCode = 404);
-    return { pageStatus: PageStatus.WRONG_URL };
+    return { fromClient: isClient, gipStatus: GipStatus.WRONG_URL };
   }
 
-  if (!ctx.req) { // if on client
-    return { pageStatus: PageStatus.CLIENT }
+  if (isClient) { // if on client
+    return { fromClient: true, gipStatus: GipStatus.OK }
   }
   
   // on server
@@ -102,11 +106,10 @@ FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) =
   
   if (isReqError(reqStatus)) {
     ctx.res && (ctx.res.statusCode = reqErrorToHttpCode(reqStatus));
-    return { pageStatus: PageStatus.ERROR };
+    return { fromClient: false, gipStatus: GipStatus.ERROR };
   }
   
-  return { pageStatus: PageStatus.OK };
-
+  return { fromClient: false, gipStatus: GipStatus.OK };
 });
 
 export default FilmNextPage;

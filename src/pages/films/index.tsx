@@ -13,18 +13,19 @@ import {fetchFilm} from '@/store/filmPage';
 import {MessagePage} from '@/components/general/MessagePage';
 import {FilmPage} from '@/components/special/films/FilmPage';
 
-interface FilmNextPageProps extends NextPageProps {};
+interface FilmSearchNextPageProps extends NextPageProps {};
 
-const FilmNextPage: NextPage<FilmNextPageProps> = function({fromServer, initPageStatus}) {
+const FilmSearchNextPage: NextPage<FilmSearchNextPageProps> = 
+  function({fromServer, initPageStatus}) {
   console.log('FilmNextPage:', {fromServer, initPageStatus});
+
+  const [pageStatus, setPageStatus] = useState(initPageStatus);
+  const [initFlag, setInitFlag] = useState(false);
 
   const router = useRouter();
   const dispatch = useAppDispatch();
   const lang = useAppSelector(state => state.settings.lang);
   const reqStatus = useAppSelector(state => state.filmPage.filmState.reqStatus);
-
-  const [pageStatus, setPageStatus] = useState(initPageStatus);
-  const [initFlag, setInitFlag] = useState(false);
 
   function updatePage() {
     const [valid, {filmId}] = parseFilmPageParams(router.query);
@@ -52,8 +53,9 @@ const FilmNextPage: NextPage<FilmNextPageProps> = function({fromServer, initPage
     case ReqStatus.OK: {
       return (
         <>
-        <button onClick={() => router.push('/film/xyzr', undefined, {shallow: true})}>
-          click</button>
+        <select value={}>
+          <option></option>
+        </select>
         <FilmPage />
         </>
       )
@@ -90,7 +92,8 @@ FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) =
     if (isReqError(reqStatus)) {
       ctx.res && (ctx.res.statusCode = reqErrorToHttpCode(reqStatus));
       return {fromServer: true, initPageStatus: PageStatus.ERROR};
-    } else {
+    } 
+    else {
       return {fromServer: true, initPageStatus: PageStatus.OK};
     }
   } 

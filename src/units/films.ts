@@ -20,7 +20,21 @@ export interface Film {
   countries: Country[],
 }
 
+export interface FilmSearchFilter {
+  id: FilmId,
+  title: string,
+  genres: (Genre & {selected: boolean})[],
+  countries: (Country & {selected: boolean})[],
+}
+
 export const filmDefault: Film = { 
+  id: 0,
+  title: '',
+  genres: [],
+  countries: [],
+}
+
+export const filmSearchFilterDefault: FilmSearchFilter = { 
   id: 0,
   title: '',
   genres: [],

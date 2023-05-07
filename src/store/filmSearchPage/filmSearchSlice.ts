@@ -1,10 +1,15 @@
 
 import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
+import {RootState} from '@/store';
 import {ReqStatus} from '@/units/status';
-import {Film, FilmId, Genre, GenreId, Country, CountryId} from '@/units/films';
-import {apiFetchFilm} from '@/api/filmApi';
+import {
+  Film, FilmId, Genre, GenreId, Country, CountryId,
+  filmSearchFilterDefault
+} from '@/units/films';
+import {apiFetchFilmSearchFilter} from '@/api/filmApi';
 
 interface FilmSearchFilter {
+  id: FilmId,
   title: string,
   genres: (Genre & {selected: boolean})[],
   countries: (Country & {selected: boolean})[],
@@ -16,12 +21,6 @@ interface FilmSearchState {
   filter: FilmSearchFilter,
   result: FilmSearchResult,
   reqStatus: ReqStatus,
-}
-
-const filmSearchFilterDefault: FilmSearchFilter = { 
-  title: '',
-  genres: [],
-  countries: [],
 }
 
 const filmSearchStateDefault: FilmSearchState = {
@@ -38,6 +37,10 @@ export const filmSearchSlice = createSlice({
   reducers: {
     setFilmSearchState: (state, action: PayloadAction<FilmSearchState>) => {
       state = action.payload;
+    },
+
+    setFilmSearchFilter: (state, action: PayloadAction<FilmSearchFilter>) => {
+      state.filter = action.payload;
     },
   },
 
@@ -68,17 +71,21 @@ export const filmSearchSlice = createSlice({
 })
 
 export const fetchFilmSearchFilter = 
-  createAsyncThunk<FilmSearchFilter, undefined, {rejectValue: ReqStatus}>(
+  createAsyncThunk<FilmSearchFilter, undefined, {state: RootState, rejectValue: ReqStatus}>(
     'filmSearch/fetchFilmSearchFilter',
     async function (_, ThunkAPI) {
-      const { reqStatus, filter } = await apiFetchFilmSearchFilter();
+      const lang = ThunkAPI.getState().settings.lang;
+      const {reqStatus, filter} = await apiFetchFilmSearchFilter(lang);
       if (reqStatus === ReqStatus.OK && filter) {
         return ThunkAPI.fulfillWithValue(filter)
       } else {
         return ThunkAPI.rejectWithValue(reqStatus)
       } 
     }
-)
+);
 
-export const {setFilmSearchState} = filmSearchSlice.actions;
+export const {
+  setFilmSearchState,
+  setFilmSearchFilter
+} = filmSearchSlice.actions;
 

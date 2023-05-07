@@ -1,5 +1,6 @@
 
 import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
+import {RootState} from '@/store';
 import {Lang} from '@/units/lang';
 import {ReqStatus} from '@/units/status';
 import {Film, FilmId, filmDefault} from '@/units/films';
@@ -53,9 +54,10 @@ export const filmSlice = createSlice({
 });
 
 export const fetchFilm = 
-  createAsyncThunk<Film, {filmId: FilmId, lang: Lang}, {rejectValue: ReqStatus}>(
+  createAsyncThunk<Film, {filmId: FilmId}, {state: RootState, rejectValue: ReqStatus}>(
     'filmState/fetchFilm',
-    async function ({filmId, lang}, ThunkAPI) {
+    async function ({filmId}, ThunkAPI) {
+      const lang = ThunkAPI.getState().settings.lang;
       const {reqStatus, film} = await apiFetchFilm(filmId, lang);
       if (reqStatus === ReqStatus.OK && film) {
         return ThunkAPI.fulfillWithValue(film)

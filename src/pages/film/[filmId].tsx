@@ -29,7 +29,7 @@ const FilmNextPage: NextPage<FilmNextPageProps> = function({fromServer, initPage
   function updatePage() {
     const [valid, {filmId}] = parseFilmPageParams(router.query);
     if (valid) {
-      dispatch(fetchFilm({filmId, lang}));
+      dispatch(fetchFilm({filmId}));
     } else {
       setPageStatus(PageStatus.WRONG_URL);
     }
@@ -76,9 +76,7 @@ FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) =
       return {fromServer: true, initPageStatus: PageStatus.WRONG_URL};
     }
 
-    const lang = store.getState().settings.lang;
-
-    await store.dispatch(fetchFilm({filmId, lang}));
+    await store.dispatch(fetchFilm({filmId}));
 
     const reqStatus = store.getState().filmPage.filmState.reqStatus;
     if (isReqError(reqStatus)) {

@@ -1,9 +1,12 @@
 
-import { delay } from '@/units/utils';
-import { Lang } from '@/units/lang';
-import { ReqStatus } from '@/units/status';
-import { Film, FilmId, Genre, Country } from '@/units/films';
-import { filmsMap, genresMap, countriesMap } from '@/data/filmData';
+import {delay} from '@/units/utils';
+import {Lang} from '@/units/lang';
+import {ReqStatus} from '@/units/status';
+import {
+  Film, FilmId, Genre, Country, FilmSearchFilter,
+  filmDefault, filmSearchFilterDefault
+} from '@/units/films';
+import {filmsMap, genresMap, countriesMap} from '@/data/filmData';
 
 export async function apiFetchFilm(filmId: FilmId, lang: Lang): 
   Promise<{ reqStatus: ReqStatus } & { film?: Film }> {
@@ -44,4 +47,10 @@ export async function apiFetchFilm(filmId: FilmId, lang: Lang):
     }
 
     return { reqStatus: ReqStatus.OK, film }; 
+}
+
+export async function apiFetchFilmSearchFilter(lang: Lang): 
+  Promise<{ reqStatus: ReqStatus } & { filter?: FilmSearchFilter }> {
+  console.log('call apiFetchFilmSearchFilter');
+  return { reqStatus: ReqStatus.OK, filter: filmSearchFilterDefault }
 }

@@ -1,5 +1,5 @@
 
-export enum GipStatus {
+export enum PageStatus {
   NONE = 'NONE',
   OK = 'OK',
   WRONG_URL = 'WRONG_URL',
@@ -8,5 +8,5 @@ export enum GipStatus {
 
 export interface NextPageProps {
   fromServer: boolean,
-  gipStatus: GipStatus
+  initPageStatus: PageStatus
 }

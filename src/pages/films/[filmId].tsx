@@ -42,7 +42,7 @@ const FilmNextPage: NextPage<FilmNextPageProps> = function({fromServer, initPage
       }
       setInitFlag(true);
     }
-  }, [lang]);
+  }, [router, lang]);
 
   if (pageStatus === PageStatus.WRONG_URL) {
     return <MessagePage type={'ERROR'} title={strlang('WRONG_URL', lang)} />
@@ -50,7 +50,13 @@ const FilmNextPage: NextPage<FilmNextPageProps> = function({fromServer, initPage
 
   switch (reqStatus) {
     case ReqStatus.OK: {
-      return <FilmPage />
+      return (
+        <>
+        <button onClick={() => router.push('/film/xyzr', undefined, {shallow: true})}>
+          click</button>
+        <FilmPage />
+        </>
+      )
     }
     case ReqStatus.LOADING: {
       return <MessagePage type={'INFO'} title={strlang('LOADING', lang)} />

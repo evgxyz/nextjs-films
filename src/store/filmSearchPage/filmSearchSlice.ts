@@ -4,34 +4,28 @@ import {RootState} from '@/store';
 import {ReqStatus} from '@/units/status';
 import {
   Film, FilmId, Genre, GenreId, Country, CountryId,
-  filmSearchFilterDefault
+  FilmSearchParams, filmSearchParamsDefault,
+  FilmSearchResults,
 } from '@/units/films';
-import {apiFetchFilmSearchFilter} from '@/api/filmApi';
-
-interface FilmSearchFilter {
-  id: FilmId,
-  title: string,
-  genres: (Genre & {selected: boolean})[],
-  countries: (Country & {selected: boolean})[],
-}
-
-type FilmSearchResult = Film[];
+import {apiFetchFilmSearchResults} from '@/api/filmApi';
 
 interface FilmSearchState {
-  filter: FilmSearchFilter,
-  result: FilmSearchResult,
+  //options: FilmSearchOptions,
+  params: FilmSearchParams,
+  results: FilmSearchResults,
   reqStatus: ReqStatus,
 }
 
 const filmSearchStateDefault: FilmSearchState = {
-  filter: filmSearchFilterDefault,
-  result: [],
+  //options: 
+  params: filmSearchParamsDefault,
+  results: [],
   reqStatus: ReqStatus.NONE,
 }
 
 export const filmSearchSlice = createSlice({
   name: 'filmSearch',
-
+  
   initialState: filmSearchStateDefault,
 
   reducers: {
@@ -39,39 +33,39 @@ export const filmSearchSlice = createSlice({
       state = action.payload;
     },
 
-    setFilmSearchFilter: (state, action: PayloadAction<FilmSearchFilter>) => {
-      state.filter = action.payload;
+    setFilmSearchParams: (state, action: PayloadAction<FilmSearchParams>) => {
+      state.params = action.payload;
     },
   },
 
   extraReducers: builder => {
     builder
       .addCase(
-        fetchFilmSearchFilter.pending, 
+        fetchFilmSearchResults.pending, 
         (state) => {
-          state.filter = filmSearchFilterDefault;
+          state.results = [];
           state.reqStatus = ReqStatus.LOADING;
         }
       )
       .addCase(
-        fetchFilmSearchFilter.fulfilled, 
+        fetchFilmSearchResults.fulfilled, 
         (state, action) => {
-          state.filter = action.payload;
+          state.results = action.payload;
           state.reqStatus = ReqStatus.OK;
         }
       )
       .addCase(
-        fetchFilmSearchFilter.rejected, 
+        fetchFilmSearchResults.rejected, 
         (state, action) => {
-          state.filter = filmSearchFilterDefault;
+          state.results = [];
           state.reqStatus = action.payload ?? ReqStatus.ERROR;
         }
       )
   }
 })
 
-export const fetchFilmSearchFilter = 
-  createAsyncThunk<FilmSearchFilter, undefined, {state: RootState, rejectValue: ReqStatus}>(
+/* export const fetchFilmSearchFilter = 
+  createAsyncThunk<FilmSearchFilter, void, {state: RootState, rejectValue: ReqStatus}>(
     'filmSearch/fetchFilmSearchFilter',
     async function (_, ThunkAPI) {
       const lang = ThunkAPI.getState().settings.lang;
@@ -82,10 +76,25 @@ export const fetchFilmSearchFilter =
         return ThunkAPI.rejectWithValue(reqStatus)
       } 
     }
+); */
+
+export const fetchFilmSearchResults = 
+  createAsyncThunk<FilmSearchResults, void, {state: RootState, rejectValue: ReqStatus}>(
+    'filmSearch/fetchFilmSearchResults',
+    async function (_, ThunkAPI) {
+      const lang = ThunkAPI.getState().settings.lang;
+      const params = ThunkAPI.getState().filmSearchPage.filmSearch.params;
+      const {reqStatus, results} = await apiFetchFilmSearchResults(params, lang);
+      if (reqStatus === ReqStatus.OK && results) {
+        return ThunkAPI.fulfillWithValue(results)
+      } else {
+        return ThunkAPI.rejectWithValue(reqStatus)
+      } 
+    }
 );
 
 export const {
   setFilmSearchState,
-  setFilmSearchFilter
+  setFilmSearchParams,
 } = filmSearchSlice.actions;
 

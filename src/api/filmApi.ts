@@ -3,13 +3,14 @@ import {delay} from '@/units/utils';
 import {Lang} from '@/units/lang';
 import {ReqStatus} from '@/units/status';
 import {
-  Film, FilmId, Genre, Country, FilmSearchFilter,
-  filmDefault, filmSearchFilterDefault
+  Film, FilmId, Genre, Country, FilmSearchParams, FilmSearchResults,
+  filmDefault
 } from '@/units/films';
 import {filmsMap, genresMap, countriesMap} from '@/data/filmData';
 
 export async function apiFetchFilm(filmId: FilmId, lang: Lang): 
-  Promise<{ reqStatus: ReqStatus } & { film?: Film }> {
+  Promise<{reqStatus: ReqStatus} & {film?: Film}> 
+{
     console.log('call apiFetchFilm');
     
     await delay(1500);
@@ -17,7 +18,7 @@ export async function apiFetchFilm(filmId: FilmId, lang: Lang):
     const filmRaw = filmsMap.get(filmId);
 
     if (!filmRaw) {
-      return { reqStatus: ReqStatus.NOT_FOUND }
+      return {reqStatus: ReqStatus.NOT_FOUND}
     }
 
     const film = {
@@ -46,11 +47,23 @@ export async function apiFetchFilm(filmId: FilmId, lang: Lang):
         .filter(x => !!x) as Country[],
     }
 
-    return { reqStatus: ReqStatus.OK, film }; 
+    return {reqStatus: ReqStatus.OK, film}; 
 }
 
-export async function apiFetchFilmSearchFilter(lang: Lang): 
+/* export async function apiFetchFilmSearchFilter(lang: Lang): 
   Promise<{ reqStatus: ReqStatus } & { filter?: FilmSearchFilter }> {
   console.log('call apiFetchFilmSearchFilter');
   return { reqStatus: ReqStatus.OK, filter: filmSearchFilterDefault }
+} */
+
+export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: Lang): 
+  Promise<{reqStatus: ReqStatus} & {results?: FilmSearchResults}> 
+{
+  console.log('call apiFetchFilmSearchResults');
+  const {reqStatus, film} = await apiFetchFilm(params.id, lang);
+  if (reqStatus === ReqStatus.OK && film) {
+    return {reqStatus: ReqStatus.OK, results: [film]};
+  } else {
+    return {reqStatus};
+  }
 }

@@ -74,17 +74,15 @@ const FilmSearchNextPage: NextPage<FilmSearchNextPageProps> =
   }
 }
 
-FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {
+FilmSearchNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {
   console.log('getInitialProps');
 
   if (ctx.req) { // on server
-    const [valid, {filmId}] = parseFilmPageParams(ctx.query);
+    const [valid, {filmId}] = parseFilmSearchPageParams(ctx.query);
     if (!valid) {
       ctx.res && (ctx.res.statusCode = 404);
       return {fromServer: true, initPageStatus: PageStatus.WRONG_URL};
     }
-
-    const lang = store.getState().settings.lang;
 
     await store.dispatch(fetchFilm({filmId, lang}));
 
@@ -102,7 +100,7 @@ FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) =
   }
 });
 
-function parseFilmPageParams(query: ParsedUrlQuery): [boolean, {filmId: FilmId}] {
+function parseFilmSearchPageParams(query: ParsedUrlQuery): [boolean, {filmId: FilmId}] {
   let valid = true;
 
   const [error, filmId] = parseIntParam(query, 'filmId') as [boolean, FilmId];
@@ -111,4 +109,4 @@ function parseFilmPageParams(query: ParsedUrlQuery): [boolean, {filmId: FilmId}]
   return [valid, {filmId}];
 }
 
-export default FilmNextPage;
+export default FilmSearchNextPage;

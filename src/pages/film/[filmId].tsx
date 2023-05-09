@@ -26,7 +26,7 @@ const FilmNextPage: NextPage<FilmNextPageProps> = function({fromServer, initPage
   const [pageStatus, setPageStatus] = useState(initPageStatus);
   const [initFlag, setInitFlag] = useState(false);
 
-  function updatePage() {
+  function updateState() {
     const [valid, {filmId}] = parseFilmPageParams(router.query);
     if (valid) {
       dispatch(fetchFilm({filmId}));
@@ -38,7 +38,7 @@ const FilmNextPage: NextPage<FilmNextPageProps> = function({fromServer, initPage
   useEffect(() => {
     if (pageStatus === PageStatus.OK) {
       if (initFlag || !fromServer) { 
-        updatePage();
+        updateState();
       }
       setInitFlag(true);
     }

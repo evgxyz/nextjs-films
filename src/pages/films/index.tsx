@@ -20,29 +20,39 @@ const FilmSearchNextPage: NextPage<FilmSearchNextPageProps> =
   console.log('FilmSearchNextPage:', {fromServer, initPageStatus});
 
   const [pageStatus, setPageStatus] = useState(initPageStatus);
-  const [initFlag, setInitFlag] = useState(false);
+  const [firstFlag, setFirstFlag] = useState(true); // first render?
 
   const router = useRouter();
   const dispatch = useAppDispatch();
   const lang = useAppSelector(state => state.settings.lang);
-  const reqStatus = useAppSelector(state => state.filmSearch.reqStatus);
+  const {params, reqStatus} = useAppSelector(state => state.filmSearch);
 
-  function updatePage() {
+  function initState() {
     const [error, params] = parseFilmSearchParams(router.query);
     if (!error) {
       dispatch(setFilmSearchParams(params));
       dispatch(fetchFilmSearchResults());
-    } else {
+    } 
+    else {
       setPageStatus(PageStatus.WRONG_URL);
     }
   };
 
+  function updateState() {
+    dispatch(fetchFilmSearchResults());
+  };
+
   useEffect(() => {
     if (pageStatus === PageStatus.OK) {
-      if (initFlag || !fromServer) { 
-        updatePage();
+      if (firstFlag) {
+        if (!fromServer) { 
+          initState();
+        }
+        setFirstFlag(false);
       }
-      setInitFlag(true);
+      else {
+        updateState();
+      }
     }
   }, [lang]);
 

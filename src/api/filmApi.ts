@@ -60,7 +60,7 @@ export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: 
   Promise<{reqStatus: ReqStatus} & {results?: FilmSearchResults}> 
 {
   console.log('call apiFetchFilmSearchResults');
-  const {reqStatus, film} = await apiFetchFilm(params.id, lang);
+  const {reqStatus, film} = await apiFetchFilm(params.filmId ?? 0, lang);
   if (reqStatus === ReqStatus.OK && film) {
     return {reqStatus: ReqStatus.OK, results: [film]};
   } else {

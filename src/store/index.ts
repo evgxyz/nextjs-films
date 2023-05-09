@@ -8,14 +8,14 @@ import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 //import { createWrapper, HYDRATE } from '@/lib/next-redux-wrapper';
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import { settingsReducer } from './settings';
-import { filmSearchPageReducer } from './filmSearchPage';
+import { filmSearchReducer } from './filmSearch';
 import { filmPageReducer } from './filmPage';
 
 const combinedReducer = combineReducers({
   settings: settingsReducer,
   // auth: authReducer,
   // mainPage: mainPageReducer,
-  filmSearchPage: filmSearchPageReducer,
+  filmSearch: filmSearchReducer,
   filmPage: filmPageReducer,
 });
 

@@ -35,14 +35,14 @@ export interface FilmSearchOptions {
 }
 
 export interface FilmSearchParams {
-  id: FilmId,
-  title: string,
-  genreIds: GenreId[],
-  countryIds: CountryId[],
+  filmId?: FilmId,
+  title?: string,
+  genreIds?: GenreId[],
+  countryIds?: CountryId[],
 }
 
 export const filmSearchParamsDefault: FilmSearchParams = { 
-  id: 0,
+  filmId: 0,
   title: '',
   genreIds: [],
   countryIds: [],

@@ -64,26 +64,12 @@ export const filmSearchSlice = createSlice({
   }
 })
 
-/* export const fetchFilmSearchFilter = 
-  createAsyncThunk<FilmSearchFilter, void, {state: RootState, rejectValue: ReqStatus}>(
-    'filmSearch/fetchFilmSearchFilter',
-    async function (_, ThunkAPI) {
-      const lang = ThunkAPI.getState().settings.lang;
-      const {reqStatus, filter} = await apiFetchFilmSearchFilter(lang);
-      if (reqStatus === ReqStatus.OK && filter) {
-        return ThunkAPI.fulfillWithValue(filter)
-      } else {
-        return ThunkAPI.rejectWithValue(reqStatus)
-      } 
-    }
-); */
-
 export const fetchFilmSearchResults = 
   createAsyncThunk<FilmSearchResults, void, {state: RootState, rejectValue: ReqStatus}>(
     'filmSearch/fetchFilmSearchResults',
     async function (_, ThunkAPI) {
       const lang = ThunkAPI.getState().settings.lang;
-      const params = ThunkAPI.getState().filmSearchPage.filmSearch.params;
+      const params = ThunkAPI.getState().filmSearch.params;
       const {reqStatus, results} = await apiFetchFilmSearchResults(params, lang);
       if (reqStatus === ReqStatus.OK && results) {
         return ThunkAPI.fulfillWithValue(results)

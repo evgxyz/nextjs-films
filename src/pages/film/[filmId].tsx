@@ -24,23 +24,32 @@ const FilmNextPage: NextPage<FilmNextPageProps> = function({fromServer, initPage
   const reqStatus = useAppSelector(state => state.filmPage.filmState.reqStatus);
 
   const [pageStatus, setPageStatus] = useState(initPageStatus);
-  const [initFlag, setInitFlag] = useState(false);
+  const [firstFlag, setFirstFlag] = useState(true); // first render?
 
-  function updateState() {
+  function initState() {
     const [valid, {filmId}] = parseFilmPageParams(router.query);
     if (valid) {
       dispatch(fetchFilm({filmId}));
     } else {
       setPageStatus(PageStatus.WRONG_URL);
     }
-  };
+  }
+
+  function updateState() {
+    dispatch(fetchFilm({}));
+  }
 
   useEffect(() => {
     if (pageStatus === PageStatus.OK) {
-      if (initFlag || !fromServer) { 
+      if (firstFlag) {
+        if (!fromServer) { 
+          initState();
+        }
+        setFirstFlag(false);
+      }
+      else {
         updateState();
       }
-      setInitFlag(true);
     }
   }, [lang]);
 

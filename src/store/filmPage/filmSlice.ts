@@ -32,7 +32,6 @@ export const filmSlice = createSlice({
       .addCase(
         fetchFilm.pending, 
         (state) => {
-          state.film = filmDefault;
           state.reqStatus = ReqStatus.LOADING;
         }
       )
@@ -54,11 +53,14 @@ export const filmSlice = createSlice({
 });
 
 export const fetchFilm = 
-  createAsyncThunk<Film, {filmId: FilmId}, {state: RootState, rejectValue: ReqStatus}>(
+  createAsyncThunk<Film, {filmId?: FilmId}, {state: RootState, rejectValue: ReqStatus}>(
     'filmState/fetchFilm',
     async function ({filmId}, ThunkAPI) {
       const lang = ThunkAPI.getState().settings.lang;
+      filmId ??= ThunkAPI.getState().filmPage.filmState.film.id;
+      
       const {reqStatus, film} = await apiFetchFilm(filmId, lang);
+      
       if (reqStatus === ReqStatus.OK && film) {
         return ThunkAPI.fulfillWithValue(film)
       } else {

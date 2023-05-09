@@ -59,4 +59,6 @@ export const {
   setLang 
 } = settingsSlice.actions;
 
+export const settingsReducer = settingsSlice.reducer;
+
 

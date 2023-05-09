@@ -23,7 +23,7 @@ const filmSearchStateDefault: FilmSearchState = {
   reqStatus: ReqStatus.NONE,
 }
 
-export const filmSearchSlice = createSlice({
+const filmSearchSlice = createSlice({
   name: 'filmSearch',
   
   initialState: filmSearchStateDefault,
@@ -83,4 +83,6 @@ export const {
   setFilmSearchState,
   setFilmSearchParams,
 } = filmSearchSlice.actions;
+
+export const filmSearchReducer = filmSearchSlice.reducer; 
 

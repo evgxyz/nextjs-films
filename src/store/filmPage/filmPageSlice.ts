@@ -1,28 +1,27 @@
 
 import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
 import {RootState} from '@/store';
-import {Lang} from '@/units/lang';
 import {ReqStatus} from '@/units/status';
 import {Film, FilmId, filmDefault} from '@/units/films';
 import {apiFetchFilm} from '@/api/filmApi';
 
-interface FilmState {
+interface FilmPageState {
   film: Film,
   reqStatus: ReqStatus,
 }
 
-const filmStateDefault: FilmState = {
+const filmPageStateDefault: FilmPageState = {
   film: filmDefault,
   reqStatus: ReqStatus.NONE,
 }
 
-export const filmSlice = createSlice({
-  name: 'filmState',
+const filmPageSlice = createSlice({
+  name: 'filmPage',
 
-  initialState: filmStateDefault,
+  initialState: filmPageStateDefault,
 
   reducers: {
-    setFilmState: (state, action: PayloadAction<FilmState>) => {
+    setFilmPageState: (state, action: PayloadAction<FilmPageState>) => {
       state = action.payload;
     },
   },
@@ -30,20 +29,20 @@ export const filmSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(
-        fetchFilm.pending, 
+        fetchFilmPage.pending, 
         (state) => {
           state.reqStatus = ReqStatus.LOADING;
         }
       )
       .addCase(
-        fetchFilm.fulfilled, 
+        fetchFilmPage.fulfilled, 
         (state, action) => {
           state.film = action.payload;
           state.reqStatus = ReqStatus.OK;
         }
       )
       .addCase(
-        fetchFilm.rejected, 
+        fetchFilmPage.rejected, 
         (state, action) => {
           state.film = filmDefault;
           state.reqStatus = action.payload ?? ReqStatus.ERROR;
@@ -52,12 +51,12 @@ export const filmSlice = createSlice({
   }
 });
 
-export const fetchFilm = 
+export const fetchFilmPage = 
   createAsyncThunk<Film, {filmId?: FilmId}, {state: RootState, rejectValue: ReqStatus}>(
-    'filmState/fetchFilm',
+    'filmPage/fetchFilmPage',
     async function ({filmId}, ThunkAPI) {
       const lang = ThunkAPI.getState().settings.lang;
-      filmId ??= ThunkAPI.getState().filmPage.filmState.film.id;
+      filmId ??= ThunkAPI.getState().filmPage.film.id;
       
       const {reqStatus, film} = await apiFetchFilm(filmId, lang);
       
@@ -69,5 +68,6 @@ export const fetchFilm =
     }
 );
 
-export const {setFilmState} = filmSlice.actions;
+export const {setFilmPageState} = filmPageSlice.actions;
 
+export const filmPageReducer = filmPageSlice.reducer; 

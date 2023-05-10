@@ -6,7 +6,7 @@ import {wrapper, useAppSelector, useAppDispatch} from '@/store';
 import {NextPageProps, PageStatus} from '@/units/next';
 import {ParsedUrlQuery} from 'querystring';
 import {FilmId} from '@/units/films';
-import {parseIntParam} from '@/units/parseParams';
+import {parseIntParam} from '@/units/query';
 import {ReqStatus, isReqError, reqErrorToHttpCode} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {fetchFilmPage} from '@/store/filmPage';
@@ -80,7 +80,6 @@ FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) =
 
   if (ctx.req) { //on server
     const [error, {filmId}] = parseFilmPageParams(ctx.query);
-    
     if (error) {
       ctx.res && (ctx.res.statusCode = 404);
       return {fromServer: true, initPageStatus: PageStatus.WRONG_URL};

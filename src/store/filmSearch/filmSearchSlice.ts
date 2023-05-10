@@ -36,6 +36,10 @@ const filmSearchSlice = createSlice({
     setFilmSearchParams: (state, action: PayloadAction<FilmSearchParams>) => {
       state.params = action.payload;
     },
+
+    updateFilmSearchParams: (state, action: PayloadAction<FilmSearchParams>) => {
+      state.params = Object.assign(state.params, action.payload);
+    },
   },
 
   extraReducers: builder => {
@@ -82,6 +86,7 @@ export const fetchFilmSearchResults =
 export const {
   setFilmSearchState,
   setFilmSearchParams,
+  updateFilmSearchParams,
 } = filmSearchSlice.actions;
 
 export const filmSearchReducer = filmSearchSlice.reducer; 

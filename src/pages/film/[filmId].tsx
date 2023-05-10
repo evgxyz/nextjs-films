@@ -24,11 +24,11 @@ const FilmNextPage: NextPage<FilmNextPageProps> = function({fromServer, initPage
   const reqStatus = useAppSelector(state => state.filmPage.reqStatus);
 
   const [pageStatus, setPageStatus] = useState(initPageStatus);
-  const [firstFlag, setFirstFlag] = useState(true); // first render?
+  const [firstFlag, setFirstFlag] = useState(true); //first render?
 
   function initState() {
-    const [valid, {filmId}] = parseFilmPageParams(router.query);
-    if (valid) {
+    const [error, {filmId}] = parseFilmPageParams(router.query);
+    if (!error) {
       dispatch(fetchFilmPage({filmId}));
     } else {
       setPageStatus(PageStatus.WRONG_URL);
@@ -78,9 +78,10 @@ const FilmNextPage: NextPage<FilmNextPageProps> = function({fromServer, initPage
 FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {
   console.log('getInitialProps');
 
-  if (ctx.req) { // on server
-    const [valid, {filmId}] = parseFilmPageParams(ctx.query);
-    if (!valid) {
+  if (ctx.req) { //on server
+    const [error, {filmId}] = parseFilmPageParams(ctx.query);
+    
+    if (error) {
       ctx.res && (ctx.res.statusCode = 404);
       return {fromServer: true, initPageStatus: PageStatus.WRONG_URL};
     }
@@ -91,22 +92,21 @@ FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) =
     if (isReqError(reqStatus)) {
       ctx.res && (ctx.res.statusCode = reqErrorToHttpCode(reqStatus));
       return {fromServer: true, initPageStatus: PageStatus.ERROR};
-    } else {
+    } 
+    else {
       return {fromServer: true, initPageStatus: PageStatus.OK};
     }
   } 
-  else { // on client
+  else { //on client
     return {fromServer: false, initPageStatus: PageStatus.OK}
   }
 });
 
 function parseFilmPageParams(query: ParsedUrlQuery): [boolean, {filmId: FilmId}] {
-  let valid = true;
-
-  const [error, filmId] = parseIntParam(query, 'filmId') as [boolean, FilmId];
-  if (error) valid = false;
-  
-  return [valid, {filmId}];
+  let error = false;
+  const [err, filmId] = parseIntParam(query, 'filmId');
+  if (err) error = true;
+  return [error, {filmId}];
 }
 
 export default FilmNextPage;

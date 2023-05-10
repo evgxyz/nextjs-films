@@ -111,8 +111,7 @@ FilmSearchNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(
   }
 });
 
-function parseFilmSearchParams(query: ParsedUrlQuery): [boolean, FilmSearchParams] 
-{
+function parseFilmSearchParams(query: ParsedUrlQuery): [boolean, FilmSearchParams] {
   let error = false;
   const params = { 
     filmId: 0,
@@ -122,6 +121,7 @@ function parseFilmSearchParams(query: ParsedUrlQuery): [boolean, FilmSearchParam
   }
 
   const [err, filmId] = parseIntParam(query, 'filmId');
+
   if (!err) { 
     params.filmId = filmId;
   } else { 

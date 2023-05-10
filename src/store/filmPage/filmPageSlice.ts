@@ -3,7 +3,7 @@ import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
 import {RootState} from '@/store';
 import {ReqStatus} from '@/units/status';
 import {Film, FilmId, filmDefault} from '@/units/films';
-import {apiFetchFilm} from '@/api/filmApi';
+import {apiFetchFilmPage} from '@/api/filmApi';
 
 interface FilmPageState {
   film: Film,
@@ -17,7 +17,6 @@ const filmPageStateDefault: FilmPageState = {
 
 const filmPageSlice = createSlice({
   name: 'filmPage',
-
   initialState: filmPageStateDefault,
 
   reducers: {
@@ -58,7 +57,7 @@ export const fetchFilmPage =
       const lang = ThunkAPI.getState().settings.lang;
       filmId ??= ThunkAPI.getState().filmPage.film.id;
       
-      const {reqStatus, film} = await apiFetchFilm(filmId, lang);
+      const {reqStatus, film} = await apiFetchFilmPage(filmId, lang);
       
       if (reqStatus === ReqStatus.OK && film) {
         return ThunkAPI.fulfillWithValue(film)

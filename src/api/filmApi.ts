@@ -8,7 +8,7 @@ import {
 } from '@/units/films';
 import {filmsMap, genresMap, countriesMap} from '@/data/filmData';
 
-function getFilm(filmId: FilmId, lang: Lang): (Film | undefined)
+function getFilm(filmId: FilmId, lang: Lang): (Film | undefined) 
 {
   const filmRaw = filmsMap.get(filmId);
 
@@ -16,9 +16,8 @@ function getFilm(filmId: FilmId, lang: Lang): (Film | undefined)
 
   return {
     id: filmRaw.id,
-
     title: lang === Lang.EN ? filmRaw.title_en : filmRaw.title_ru,
-
+    
     genres: filmRaw.genres.map(id => { 
         const genreRaw = genresMap.get(id);
         if (!genreRaw) return undefined;
@@ -41,19 +40,24 @@ function getFilm(filmId: FilmId, lang: Lang): (Film | undefined)
   }
 }
 
-export async function apiFetchFilm(filmId: FilmId, lang: Lang): 
+export async function apiFetchFilmPage(filmId: FilmId, lang: Lang): 
   Promise<{reqStatus: ReqStatus} & {film?: Film}> 
 {
-  delay(1000);
+  console.log('call apiFetchFilmPage');
+  await delay(1000);
   const film = getFilm(filmId, lang);
-  return film ? {reqStatus: ReqStatus.OK, film} : {reqStatus: ReqStatus.NOT_FOUND};
+  return ( 
+    film ? 
+      {reqStatus: ReqStatus.OK, film} 
+    : {reqStatus: ReqStatus.NOT_FOUND}
+  );
 }
 
 export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: Lang): 
   Promise<{reqStatus: ReqStatus} & {results?: FilmSearchResults}> 
 {
   console.log('call apiFetchFilmSearchResults');
-  console.log('params:', params);
+  await delay(1000);
 
   const films = Array.from(filmsMap.values())
     .filter(filmRaw => 

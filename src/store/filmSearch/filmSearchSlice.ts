@@ -25,7 +25,6 @@ const filmSearchStateDefault: FilmSearchState = {
 
 const filmSearchSlice = createSlice({
   name: 'filmSearch',
-  
   initialState: filmSearchStateDefault,
 
   reducers: {

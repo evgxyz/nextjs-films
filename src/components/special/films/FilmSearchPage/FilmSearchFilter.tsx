@@ -1,11 +1,11 @@
 
+import _ from 'lodash';
 import {useAppSelector, useAppDispatch} from '@/store';
 import {
   setFilmSearchParams, 
   updateFilmSearchParams,
   fetchFilmSearchResults
 } from '@/store/filmSearch';
-import {range} from '@/units/utils';
 import styles from './FilmSearchFilter.module.scss';
 
 export function FilmSearchFilter() {
@@ -35,7 +35,7 @@ export function FilmSearchFilter() {
   return (
     <div className={styles.filmSearchFilter}>
       <select multiple value={params.ids.map(i => i.toString())} onChange={filmIdChange}> { 
-          range(1, 5).map(i => 
+          _.range(1, 5).map(i => 
             <option key={i} value={i}>{`film ${i}`}</option>
           )
         }

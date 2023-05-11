@@ -1,7 +1,8 @@
 
 import {NextPage} from 'next';
-import {wrapper, useAppSelector} from '@/store';
 import cookie from 'js-cookie';
+import _ from 'lodash';
+import {wrapper, useAppSelector} from '@/store';
 import {MainLayout} from '@/components/layouts/MainLayout/MainLayout';
 
 interface AboutNextPageProps {
@@ -9,12 +10,11 @@ interface AboutNextPageProps {
   cookies?: string
 }
 
-const AboutNextPage: NextPage = function(props) {
+const AboutNextPage: NextPage<AboutNextPageProps> = function(props) {
   return (
     <MainLayout title={'About'}>
       <h1>About</h1>
       <div>{'props:' + JSON.stringify(props)}</div>
-      <button onClick={() => cookie.set('lang', 'RU')}>set</button>
     </MainLayout>
   )
 }

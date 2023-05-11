@@ -55,23 +55,8 @@ const FilmNextPage: NextPage<FilmNextPageProps> = function({fromServer, initPage
 
   if (pageStatus === PageStatus.WRONG_URL) {
     return <MessagePage type={'ERROR'} title={strlang('WRONG_URL', lang)} />
-  }
-
-  switch (reqStatus) {
-    case ReqStatus.OK: {
-      return <FilmPage />
-    }
-    case ReqStatus.LOADING: {
-      return <MessagePage type={'INFO'} title={strlang('LOADING', lang)} />
-    }
-    case ReqStatus.NOT_FOUND: {
-      return <MessagePage type={'ERROR'} title={strlang('NOT_FOUND', lang)} />
-    }
-    case ReqStatus.ERROR: {
-      return <MessagePage type={'ERROR'} title={strlang('ERROR', lang)} />
-    }
-    default:
-      return null;
+  } else {
+    return <FilmPage />
   }
 }
 

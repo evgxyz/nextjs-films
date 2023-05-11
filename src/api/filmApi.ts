@@ -3,8 +3,8 @@ import {delay} from '@/units/utils';
 import {Lang} from '@/units/lang';
 import {ReqStatus} from '@/units/status';
 import {
-  Film, FilmId, Genre, Country, FilmSearchParams, FilmSearchResults,
-  filmDefault
+  Film, FilmId, Genre, Country, 
+  FilmSearchOptions, FilmSearchParams, FilmSearchResults,
 } from '@/units/films';
 import {filmsMap, genresMap, countriesMap} from '@/data/filmData';
 
@@ -51,6 +51,36 @@ export async function apiFetchFilmPage(filmId: FilmId, lang: Lang):
       {reqStatus: ReqStatus.OK, film} 
     : {reqStatus: ReqStatus.NOT_FOUND}
   );
+}
+
+export async function apiFetchFilmSearchOptions(lang: Lang): 
+  Promise<{reqStatus: ReqStatus} & {options?: FilmSearchOptions}> 
+{
+  console.log('call apiFetchFilmSearchOptions');
+  await delay(1000);
+
+  const genres: Genre[] = Array.from(genresMap.values())
+    .map(genreRaw => 
+      ({
+        id: genreRaw.id,
+        name: lang === Lang.EN ? genreRaw.name_en : genreRaw.name_ru,
+      })
+    );
+
+  const countries: Country[] = Array.from(countriesMap.values())
+    .map(countryRaw => 
+      ({
+        id: countryRaw.id,
+        name: lang === Lang.EN ? countryRaw.name_en : countryRaw.name_ru
+      })
+    );
+
+  const options = {
+    genres,
+    countries 
+  }
+
+  return {reqStatus: ReqStatus.OK, options};
 }
 
 export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: Lang): 

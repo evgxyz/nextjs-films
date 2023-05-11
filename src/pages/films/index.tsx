@@ -12,7 +12,8 @@ import {strlang} from '@/units/lang';
 import {
   setFilmSearchParams, 
   updateFilmSearchParams,
-  fetchFilmSearchResults
+  fetchFilmSearchResults,
+  fetchFilmSearchOptions
 } from '@/store/filmSearch';
 import {MessagePage} from '@/components/general/MessagePage';
 import {FilmSearchPage} from '@/components/special/films/FilmSearchPage';
@@ -30,19 +31,21 @@ const FilmSearchNextPage: NextPage<FilmSearchNextPageProps> =
   const dispatch = useAppDispatch();
   const lang = useAppSelector(state => state.settings.lang);
 
-  function initState() {
+  async function initState() {
     const [error, params] = parseFilmSearchParams(router.query);
     if (!error) {
+      await dispatch(fetchFilmSearchOptions());
       dispatch(setFilmSearchParams(params));
-      dispatch(fetchFilmSearchResults());
+      await dispatch(fetchFilmSearchResults());
     } 
     else {
       setPageStatus(PageStatus.WRONG_URL);
     }
   };
 
-  function updateState() {
-    dispatch(fetchFilmSearchResults());
+  async function updateState() {
+    await dispatch(fetchFilmSearchOptions());
+    await dispatch(fetchFilmSearchResults());
   };
 
   useEffect(() => {
@@ -69,13 +72,15 @@ const FilmSearchNextPage: NextPage<FilmSearchNextPageProps> =
 FilmSearchNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {
   console.log('getInitialProps');
 
-  if (ctx.req) { // on server
+  if (ctx.req) { //on server
     const [error, params] = parseFilmSearchParams(ctx.query);
 
     if (error) {
       ctx.res && (ctx.res.statusCode = 404);
       return {fromServer: true, initPageStatus: PageStatus.WRONG_URL};
     }
+
+    await store.dispatch(fetchFilmSearchOptions());
 
     store.dispatch(setFilmSearchParams(params));
 
@@ -90,7 +95,7 @@ FilmSearchNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(
       return {fromServer: true, initPageStatus: PageStatus.OK};
     }
   } 
-  else { // on client
+  else { //on client
     return {fromServer: false, initPageStatus: PageStatus.OK}
   }
 });

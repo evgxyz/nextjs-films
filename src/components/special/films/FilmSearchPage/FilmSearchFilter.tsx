@@ -2,7 +2,6 @@
 import _ from 'lodash';
 import {useAppSelector, useAppDispatch} from '@/store';
 import {
-  setFilmSearchParams, 
   updateFilmSearchParams,
   fetchFilmSearchResults
 } from '@/store/filmSearch';

@@ -27,11 +27,16 @@ export const filmDefault: Film = {
   countries: [],
 }
 
-// filmSearch
+//filmSearch
 
 export interface FilmSearchOptions {
   genres: Genre[],
   countries: Country[],
+}
+
+export const filmSearchOptionsDefault = {
+  genres: [],
+  countries: [],
 }
 
 export interface FilmSearchParams {

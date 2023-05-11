@@ -1,6 +1,6 @@
 
-import {MainLayout} from '@/components/layouts/MainLayout'
-import styles from './MessagePage.module.scss'
+import {MainLayout} from '@/components/layouts/MainLayout';
+import styles from './MessagePage.module.scss';
 
 interface MessagePageProps {
   type: 'INFO' | 'WARN' | 'ERROR',

@@ -7,7 +7,7 @@ import {NextPageProps, PageStatus} from '@/units/next';
 import {ParsedUrlQuery} from 'querystring';
 import {FilmId} from '@/units/films';
 import {parseIntParam} from '@/units/query';
-import {ReqStatus, isReqError, reqErrorToHttpCode} from '@/units/status';
+import {isReqError, reqErrorToHttpCode} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {fetchFilmPage} from '@/store/filmPage';
 import {MessagePage} from '@/components/general/MessagePage';
@@ -21,7 +21,6 @@ const FilmNextPage: NextPage<FilmNextPageProps> = function({fromServer, initPage
   const router = useRouter();
   const dispatch = useAppDispatch();
   const lang = useAppSelector(state => state.settings.lang);
-  const reqStatus = useAppSelector(state => state.filmPage.reqStatus);
 
   const [pageStatus, setPageStatus] = useState(initPageStatus);
   const [firstFlag, setFirstFlag] = useState(true); //first render?
@@ -55,9 +54,9 @@ const FilmNextPage: NextPage<FilmNextPageProps> = function({fromServer, initPage
 
   if (pageStatus === PageStatus.WRONG_URL) {
     return <MessagePage type={'ERROR'} title={strlang('WRONG_URL', lang)} />
-  } else {
-    return <FilmPage />
   }
+  
+  return <FilmPage />
 }
 
 FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {

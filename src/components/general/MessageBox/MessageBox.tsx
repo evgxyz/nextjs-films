@@ -10,7 +10,7 @@ interface MessageBoxProps {
 export function MessageBox({type = 'INFO', title, text}: MessageBoxProps) {
   return (
     <div className={styles.messageBox}>
-      <h1 className={styles.title}>{title}</h1>
+      <h3 className={styles.title}>{title}</h3>
       <div className={styles.text}>{text}</div>
     </div>
   )

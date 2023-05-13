@@ -1,5 +1,4 @@
 
-import {delay} from '@/units/utils';
 import {Lang} from '@/units/lang';
 import {ReqStatus} from '@/units/status';
 import {
@@ -7,6 +6,8 @@ import {
   FilmSearchOptions, FilmSearchParams, FilmSearchResults,
 } from '@/units/films';
 import {filmsMap, genresMap, countriesMap} from '@/data/filmData';
+import {delay} from '@/units/utils';
+import _ from 'lodash';
 
 function getFilm(filmId: FilmId, lang: Lang): (Film | undefined) 
 {
@@ -91,7 +92,8 @@ export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: 
 
   const films = Array.from(filmsMap.values())
     .filter(filmRaw => 
-      (!params.ids || params.ids.length === 0 || params.ids.includes(filmRaw.id))
+      ( !params.genreIds || params.genreIds.length == 0 || 
+        _.intersection(params.genreIds, filmRaw.genres).length > 0 )
     )
     .map(filmRaw => getFilm(filmRaw.id, lang))
     .filter(film => !!film) as Film[];

@@ -10,14 +10,15 @@ import {buildIntArrParam} from '@/units/query';
 import _ from 'lodash';
 import styles from './FilmSearchFilter.module.scss';
 
-export function FilmSearchFilter() {
-
+export function FilmSearchFilter() 
+{
   const router = useRouter();
   const dispatch = useAppDispatch();
   const lang = useAppSelector(state => state.settings.lang);
   const {options, params} = useAppSelector(state => state.filmSearch);
 
-  function toggleGenre(genreId: GenreId) {
+  function toggleGenre(genreId: GenreId) 
+  {
     const genreIds = [...params.genreIds ?? []];
 
     if (!genreIds.includes(genreId)) {
@@ -39,22 +40,23 @@ export function FilmSearchFilter() {
     router.push({query}, undefined, {shallow: true});
   }
 
-  function updateResults(ev: React.MouseEvent<HTMLButtonElement>) {
+  function updateResults(ev: React.MouseEvent<HTMLButtonElement>) 
+  {
     ev.preventDefault();
     dispatch(fetchFilmSearchResults());
   }
 
   return (
-    <div className={styles.filmSearchFilter}>
+    <div className={styles['film-search-filter']}>
 
-      <div className={styles.filmSearchFilter__genres}>
+      <div className={styles['film-search-filter__genres']}>
         <ul>
           { 
             options.genres.map(genre =>
               <li key={genre.id}>
                 <label>
                   <input type='checkbox' 
-                    checked={!!params.genreIds?.includes(genre.id)} 
+                    checked={params.genreIds?.includes(genre.id)} 
                     onChange={() => {toggleGenre(genre.id)}}
                   />
                   {genre.name}

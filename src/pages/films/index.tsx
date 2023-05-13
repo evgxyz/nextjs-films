@@ -104,9 +104,9 @@ function parseFilmSearchParams(query: ParsedUrlQuery): [boolean, FilmSearchParam
   let error = false;
   const params = structuredClone(filmSearchParamsDefault);
 
-  const [err, ids] = parseIntArrParam(query, 'ids');
+  const [err, genreIds] = parseIntArrParam(query, 'genreIds');
   if (!err) { 
-    params.ids = ids;
+    params.genreIds = genreIds;
   }
 
   return [error, params];

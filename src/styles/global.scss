@@ -1,6 +1,65 @@
 
-* {
-  box-sizing: border-box;
+@import '@/styles/config';
+
+* { box-sizing: border-box; }
+
+body {
+  font-size: 1rem;
+  font-family: $font-family-1;
+  color: $color-1;
+  margin: 0;
+  padding: 0;
+  background-color: $bg-color-1;
 }
 
+// обертка, растягивающаяся по ширине содержимого
+#page-wrapper {
+  display: table;
+  margin: 0 auto;
+  width: 100%;
+  max-width: $page-max-width;
+  min-width: $page-min-width;
+  //@include debug-border(green);
+}
+
+// обертка флекс-колонка для опускания футера вниз 
+#page-content {
+  display: flex;
+  min-height: 98vh;
+  flex-direction: column;
+  //@include debug-border(red);  
+}
+
+// шапка
+.page-header {
+  justify-self: flex-start;
+  //@include debug-border(red);  
+}
+
+// основное содержание страницы
+.page-main {
+  flex-grow: 1;
+  //@include debug-border(green);
+}
+
+// подвал
+.page-footer {
+  justify-self: flex-end;
+  //@include debug-border(blue); 
+}
+
+// заголовок страницы
+.page-title {
+  font-size: x-large;
+}
+
+// ссылка по умолчанию
+a {
+  color: $color-2;
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
 

@@ -11,8 +11,10 @@ interface MessagePageProps {
 export function MessagePage({type = 'INFO', title, text}: MessagePageProps) {
   return (
     <MainLayout title={title}>
-      <h1 className={styles.title}>{title}</h1>
-      <div className={styles.text}>{text}</div>
+      <div className={[styles['body'], styles[type.toLowerCase()]].join(' ')}>
+        <h1 className={styles['title']}>{title}</h1>
+        {text && <div className={styles['text']}>{text}</div>}
+      </div>
     </MainLayout>
   )
 }

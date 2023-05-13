@@ -4,22 +4,22 @@ const films = [
     id: 1,
     title_ru: "Фильм 1",
     title_en: "Film 1",
-    genres: [1, 2],
-    countries: [1]
+    genreIds: [1, 2],
+    countryIds: [1]
   },
   {
     id: 2,
     title_ru: "Фильм 2",
     title_en: "Film 2",
-    genres: [2, 3],
-    countries: [1, 3]
+    genreIds: [2, 3],
+    countryIds: [1, 3]
   },
   {
     id: 3,
     title_ru: "Фильм 3",
     title_en: "Film 3",
-    genres: [3],
-    countries: [4]
+    genreIds: [3],
+    countryIds: [4]
   }
 ];
 

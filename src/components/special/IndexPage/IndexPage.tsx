@@ -15,7 +15,7 @@ export function IndexPage() {
   return (
     <MainLayout title={pageTitle}>
       <h1>{pageTitle}</h1>
-      <p><Link href='/films?ids=2,3'>Films</Link></p>
+      <p><Link href='/films?genreIds=2+3'>Films</Link></p>
       <p><Link href='/about'>About</Link></p>
       <p><Link href='/film/abc'>Wrong url</Link></p>
       <ul>

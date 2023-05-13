@@ -1,3 +1,36 @@
 
-@import '@/styles/config';
+/* @import '@/styles/config';
 
+// обертка, растягивающаяся по ширине содержимого
+#page-wrapper {
+  display: table;
+  margin: 0 auto;
+  width: 100%;
+  max-width: $page-max-width;
+  min-width: $page-min-width;
+}
+
+// обертка флекс-колонка для опускания футера вниз 
+#page-content {
+  display: flex;
+  min-height: 98vh;
+  flex-direction: column;
+}
+
+// шапка
+.page-header {
+  justify-self: flex-start;
+  //@include debug-border(red);  
+}
+
+// основное содержание страницы
+.page-main {
+  flex-grow: 1;
+  //@include debug-border(green);
+}
+
+// подвал
+.page-footer {
+  justify-self: flex-end;
+  //@include debug-border(blue); 
+} */

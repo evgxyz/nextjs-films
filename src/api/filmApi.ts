@@ -19,7 +19,7 @@ function getFilm(filmId: FilmId, lang: Lang): (Film | undefined)
     id: filmRaw.id,
     title: lang === Lang.EN ? filmRaw.title_en : filmRaw.title_ru,
     
-    genres: filmRaw.genres.map(id => { 
+    genres: filmRaw.genreIds.map(id => { 
         const genreRaw = genresMap.get(id);
         if (!genreRaw) return undefined;
         return {
@@ -29,7 +29,7 @@ function getFilm(filmId: FilmId, lang: Lang): (Film | undefined)
       })
       .filter(x => !!x) as Genre[],
     
-    countries: filmRaw.countries.map(id => { 
+    countries: filmRaw.countryIds.map(id => { 
         const countryRaw = countriesMap.get(id);
         if (!countryRaw) return undefined;
         return {
@@ -93,7 +93,7 @@ export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: 
   const films = Array.from(filmsMap.values())
     .filter(filmRaw => 
       ( !params.genreIds || params.genreIds.length == 0 || 
-        _.intersection(params.genreIds, filmRaw.genres).length > 0 )
+        _.intersection(params.genreIds, filmRaw.genreIds).length > 0 )
     )
     .map(filmRaw => getFilm(filmRaw.id, lang))
     .filter(film => !!film) as Film[];

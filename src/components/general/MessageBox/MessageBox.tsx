@@ -9,9 +9,9 @@ interface MessageBoxProps {
 
 export function MessageBox({type = 'INFO', title, text}: MessageBoxProps) {
   return (
-    <div className={styles.messageBox}>
-      <h3 className={styles.title}>{title}</h3>
-      <div className={styles.text}>{text}</div>
+    <div className={[styles['body'], styles[type.toLowerCase()]].join(' ')}>
+      <h3 className={styles['title']}>{title}</h3>
+      {text && <div className={styles['text']}>{text}</div>}
     </div>
   )
 }

@@ -18,7 +18,7 @@ export function UserMenuTray() {
   }
 
   return (
-    <div className={styles.userMenuTray}>
+    <div className={styles['user-menu-tray']}>
       {strlang('SELECT_LANG', lang) + ': '}
       <select value={lang} onChange={changeLang}>
         {

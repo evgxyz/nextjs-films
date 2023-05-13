@@ -1,10 +1,33 @@
 
 @import '@/styles/config';
 
-.title {
-  color: $warn-color;
+.body {
+  padding: 10px;
+
+  &.info {
+    border: 1px solid $color-ok;
+
+    & .title {
+      color: $color-ok;
+    }
+  
+    & .text {
+      color: $color-ok;
+    }
+  }
+
+  &.warn, 
+  &.error {
+    border: 1px solid $color-warn;
+
+    & .title {
+      color: $color-warn;
+    }
+  
+    & .text {
+      color: $color-warn;
+    }
+  }
 }
 
-.text {
-  color: $warn-color;
-}
+

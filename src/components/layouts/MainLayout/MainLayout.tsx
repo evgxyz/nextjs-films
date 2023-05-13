@@ -3,14 +3,13 @@ import Head from 'next/head';
 import {siteName} from '@/config';
 import {Header} from '@/components/general/Header';
 import {Footer} from '@/components/general/Footer';
-import styles from './MainLayout.module.scss';
 
 interface MainLayoutProps {
   children: JSX.Element | JSX.Element[],
   title?: string
 }
 
-export function MainLayout({ children, title }: MainLayoutProps) {
+export function MainLayout({children, title}: MainLayoutProps) {
   return (
     <>
       <Head>
@@ -18,15 +17,19 @@ export function MainLayout({ children, title }: MainLayoutProps) {
           {title ? `${title} | ${siteName}` : siteName}
         </title>
       </Head>
-      <header className={styles.header}>
-        <Header />
-      </header>
-      <main className={styles.main}>
-        {children}
-      </main>
-      <footer className={styles.footer}>
-        <Footer />
-      </footer>
+      <div id='page-wrapper'>
+        <div id='page-content'>
+          <header className='page-header'>
+            <Header />
+          </header>
+          <main className='page-main'>
+            {children}
+          </main>
+          <footer className='page-footer'>
+            <Footer />
+          </footer>
+        </div>
+      </div>
     </>
   )
 }

@@ -8,7 +8,7 @@ export function Footer() {
   const lang = useAppSelector(state => state.settings.lang);
 
   return (
-    <div className={styles.footer}>
+    <div className={styles['footer']}>
       <div>{strlang('FOOTER_SOME_TEXT', lang)}</div>
     </div>
   )

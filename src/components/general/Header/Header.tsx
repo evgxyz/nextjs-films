@@ -5,7 +5,7 @@ import styles from './Header.module.scss'
 
 export function Header() {
   return (
-    <div className={styles.header}>
+    <div className={styles['header']}>
       <div>header</div>
       <div><MainMenu /></div>
       <div><UserMenuTray /></div>

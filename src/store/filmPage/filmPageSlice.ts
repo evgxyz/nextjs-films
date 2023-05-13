@@ -55,10 +55,8 @@ export const fetchFilmPage =
     'filmPage/fetchFilmPage',
     async function ({filmId}, ThunkAPI) {
       const lang = ThunkAPI.getState().settings.lang;
-      filmId ??= ThunkAPI.getState().filmPage.film.id;
-      
+      filmId ??= ThunkAPI.getState().filmPage.film.id;      
       const {reqStatus, film} = await apiFetchFilmPage(filmId, lang);
-      
       if (reqStatus === ReqStatus.OK && film) {
         return ThunkAPI.fulfillWithValue(film)
       } else {

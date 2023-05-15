@@ -22,7 +22,3 @@ $bg-color-3: #444444;
 $brd-color-1: #555555;
 $brd-color-2: orange;
 
-// миксины
-@mixin debug-border($color) {
-  border: 1px solid $color;
-}

@@ -1,2 +1,2 @@
 
-export const siteName = 'Super site';
+export const appName = 'Super site';

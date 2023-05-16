@@ -1,21 +1,21 @@
 
 import Head from 'next/head';
-import {siteName} from '@/config';
+import {useAppSelector} from '@/store';
 import {Header} from '@/components/general/Header';
 import {Footer} from '@/components/general/Footer';
 
 interface MainLayoutProps {
-  children: JSX.Element | JSX.Element[],
-  title?: string
+  children: JSX.Element | JSX.Element[]
 }
 
-export function MainLayout({children, title}: MainLayoutProps) {
+export function MainLayout({children}: MainLayoutProps) {
+
+  const {title, navStack} = useAppSelector(state => state.pageEnv);
+
   return (
     <>
       <Head>
-        <title>
-          {title ? `${title} | ${siteName}` : siteName}
-        </title>
+        <title>{title}</title>
       </Head>
       <div id='page-wrapper'>
         <div id='page-content'>

@@ -28,7 +28,8 @@ const filmSearchStateDefault: FilmSearchState = {
 
 const filmSearchSlice = createSlice({
   name: 'filmSearch',
-  initialState: filmSearchStateDefault,
+
+  initialState: structuredClone(filmSearchStateDefault),
 
   reducers: {
     setFilmSearchState: (state, action: PayloadAction<FilmSearchState>) => {
@@ -50,7 +51,7 @@ const filmSearchSlice = createSlice({
       .addCase(
         fetchFilmSearchOptions.pending, 
         (state) => {
-          state.options = filmSearchOptionsDefault;
+          state.options = structuredClone(filmSearchOptionsDefault);
           state.reqStatus = ReqStatus.LOADING;
         }
       )

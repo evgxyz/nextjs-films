@@ -7,6 +7,6 @@ export enum PageStatus {
 }
 
 export interface NextPageProps {
-  fromServer: boolean,
-  initPageStatus: PageStatus
+  fromServer?: boolean,
+  initPageStatus?: PageStatus,
 }

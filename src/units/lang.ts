@@ -19,10 +19,21 @@ const langDict: LangDict = {
 export const langDefault = Lang.RU;
 export type LangStrKey = string; //(keyof typeof langDictRU) 
 
-export function isLang(str: string) {
+/**
+ * Checks whether the string code is a valid language code
+ * @param str - string code
+ * @returns boolean
+ */
+export function isLang(str: string): boolean {
   return langsAll.includes(str as Lang);
 }
 
+/**
+ * Returns a string from the dictionary
+ * @param key - key of the text string
+ * @param lang - language
+ * @returns a string in the specified language from the dictionary
+ */
 export function strlang(key: LangStrKey, lang: Lang = Lang.RU): string {
   return langDict[lang]?.[key] ?? langDict[langDefault]?.[key] ?? key;
 }

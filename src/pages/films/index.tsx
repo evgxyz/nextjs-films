@@ -7,11 +7,10 @@ import {NextPageProps, PageStatus} from '@/units/next';
 import {ParsedUrlQuery} from 'querystring';
 import {FilmSearchParams, filmSearchParamsDefault} from '@/units/films';
 import {parseIntArrParam} from '@/units/query';
-import {ReqStatus, isReqError, reqErrorToHttpCode} from '@/units/status';
+import {isReqError, reqErrorToHttpCode} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {
   setFilmSearchParams, 
-  updateFilmSearchParams,
   fetchFilmSearchResults,
   fetchFilmSearchOptions
 } from '@/store/filmSearch';

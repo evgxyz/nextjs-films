@@ -17,7 +17,8 @@ const filmPageStateDefault: FilmPageState = {
 
 const filmPageSlice = createSlice({
   name: 'filmPage',
-  initialState: filmPageStateDefault,
+
+  initialState: structuredClone(filmPageStateDefault),
 
   reducers: {
     setFilmPageState: (state, action: PayloadAction<FilmPageState>) => {

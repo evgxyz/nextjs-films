@@ -16,7 +16,7 @@ const settingsDefault: Settings = {
 export const settingsSlice = createSlice({
   name: 'settings',
 
-  initialState: settingsDefault,
+  initialState: structuredClone(settingsDefault),
 
   reducers: {
     setSettingsFromCookies: (state, action: PayloadAction<Record<string, string>>) => {

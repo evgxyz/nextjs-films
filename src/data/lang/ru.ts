@@ -7,7 +7,9 @@ const langDictRU = {
 
   SELECT_LANG: 'Выберете язык',
 
-  INDEX_PAGE_TITLE: 'Главная страница',
+  INDEX_PAGE_TITLE: 'Главная',
+
+  ABOUT_PAGE_TITLE: 'О сайте',
 
   FOOTER_SOME_TEXT: 'Это футер',
 

@@ -39,6 +39,7 @@ const FilmNextPage: NextPage<FilmNextPageProps> = function({fromServer, initPage
   }
 
   useEffect(() => {
+    console.log('call useEffect')
     if (pageStatus === PageStatus.OK) {
       if (firstFlag) {
         if (!fromServer) { 

@@ -1,0 +1,14 @@
+
+@import '@/styles/abstract';
+
+.body {
+  padding: 5px;
+}
+
+.list {
+  display: flex;
+
+  & li {
+    list-style-type: none;
+  }
+}

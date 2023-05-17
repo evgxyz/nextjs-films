@@ -1,6 +1,5 @@
 
-import {useAppDispatch, useAppSelector} from '@/store';
-import {setPageEnv} from '@/store/pageEnv';
+import {useAppSelector} from '@/store';
 import {ReqStatus} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {MainLayout} from '@/components/layouts/MainLayout';
@@ -10,7 +9,6 @@ import styles from './FilmPage.module.scss'
 
 export function FilmPage() {
 
-  const dispatch = useAppDispatch();
   const lang = useAppSelector(state => state.settings.lang);
   const filmPage = useAppSelector(state => state.filmPage);
   const {reqStatus, film} = filmPage;
@@ -45,10 +43,8 @@ export function FilmPage() {
     } 
   }
 
-  dispatch(setPageEnv({title}));
-
   return (
-    <MainLayout>
+    <MainLayout pageEnv={{title}}>
       {content}
     </MainLayout>
   )

@@ -1,6 +1,5 @@
 
-import {useAppDispatch, useAppSelector} from '@/store';
-import {setPageEnv} from '@/store/pageEnv';
+import {useAppSelector} from '@/store';
 import {ReqStatus} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {MainLayout} from '@/components/layouts/MainLayout';
@@ -10,7 +9,6 @@ import styles from './FilmSearchPage.module.scss';
 
 export function FilmSearchPage() {
 
-  const dispatch = useAppDispatch();
   const lang = useAppSelector(state => state.settings.lang);
   const filmSearch = useAppSelector(state => state.filmSearch);
   const {params, results, reqStatus} = filmSearch;
@@ -37,10 +35,8 @@ export function FilmSearchPage() {
     } break;
   }
 
-  dispatch(setPageEnv({title}));
-
   return (
-    <MainLayout>
+    <MainLayout pageEnv={{title}}>
       <h1>{title}</h1>
       <FilmSearchFilter />
       {content}

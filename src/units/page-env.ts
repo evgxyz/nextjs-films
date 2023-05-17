@@ -9,3 +9,11 @@ export interface NavStackItem {
 }
 
 export type NavStack = NavStackItem[];
+
+// параметры окружения страницы
+export interface PageEnv {
+  title?: PageTitle,
+  navStack?: NavStack,
+  description?: string,
+  keywords?: string,
+}

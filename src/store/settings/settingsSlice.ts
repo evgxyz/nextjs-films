@@ -21,8 +21,9 @@ export const settingsSlice = createSlice({
   reducers: {
     setSettingsFromCookies: (state, action: PayloadAction<Record<string, string>>) => {
       const {lang} = action.payload;
-      if (lang && isLang(lang)) {
+      if (isLang(lang)) {
         state.lang = lang as Lang;
+        cookie.set('lang', state.lang);
       }
     },
 
@@ -31,28 +32,7 @@ export const settingsSlice = createSlice({
       cookie.set('lang', state.lang);
     },
   },
-
-  /* extraReducers: builder => {
-    builder
-      .addCase(
-        initSettingsAsync.fulfilled, 
-        (state, action) => {
-         
-        }
-      )
-  } */
 });
-
-/* export const initSettingsAsync = 
-  createAsyncThunk(
-    'settings/initSettingsAsync',
-    async function () {
-    }
-)
-
-function saveSettings(settings: Settings) {
-  localStorage.setItem('settings', JSON.stringify(settings));
-} */
 
 export const { 
   setSettingsFromCookies, 

@@ -1,6 +1,6 @@
 
 import {ParsedUrlQuery} from 'querystring';
-import {isString, isIntStr} from '@/units/utils';
+import _ from 'lodash';
 
 /**
  * Parse an integer parameter from a ParsedUrlQuery object
@@ -12,7 +12,7 @@ export function parseIntParam(query: ParsedUrlQuery, name: string): [boolean, nu
   let error = true;
   let x = NaN;
   const paramStr = query[name];
-  if (paramStr && isString(paramStr)) {
+  if (_.isString(paramStr)) {
     x = parseInt(paramStr as string);
     if (Number.isInteger(x)) {
       error = false;
@@ -31,7 +31,7 @@ export function parseIntArrParam(query: ParsedUrlQuery, name: string): [boolean,
   let error = true;
   let xArr: number[] = [];
   const paramStr = query[name];
-  if (paramStr && isString(paramStr)) {
+  if (_.isString(paramStr)) {
     xArr = decodeURI(paramStr as string).split(/[_\ ]/).map(s => parseInt(s));
     let e = false;
     for (let x of xArr) {
@@ -64,7 +64,7 @@ export function buildStrArrParam(strArr: string[]): string {
 }
 
 /**
- * Convert a %20 sequence to the + symbol
+ * Convert all %20 sequences to the + symbol
  * @param str - string
  * @returns converted string
  */

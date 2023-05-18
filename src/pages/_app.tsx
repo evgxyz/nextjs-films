@@ -1,9 +1,11 @@
 
 import App, {AppProps} from 'next/app';
+import {useRouter} from 'next/router';
 import {Provider as ReduxProvider} from 'react-redux';
 import {wrapper} from '@/store';
+import {setSettingsFromCookies, setLang} from '@/store/settings';
+import {Lang, isLang} from '@/units/lang';
 import Cookie from 'cookie';
-import {setSettingsFromCookies} from '@/store/settings';
 import '@/styles/global.scss';
 
 interface PageProps {
@@ -14,8 +16,13 @@ interface PageProps {
 
 const MyApp = ({Component, ...restProps}: Omit<AppProps, 'pageProps'> & PageProps) => {
   
-  //console.log('rest: ', rest);
   const {store, props} = wrapper.useWrappedStore(restProps);
+
+  const router = useRouter();
+  const lang = router.query.lang;
+  if (isLang(lang)) {
+    store.dispatch(setLang(lang as Lang));
+  }
 
   return (
     <ReduxProvider store={store}>

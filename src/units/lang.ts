@@ -1,31 +1,32 @@
 
 import langDictRU from '@/data/lang/ru';
 import langDictEN from '@/data/lang/en';
+import _ from 'lodash';
 
 export enum Lang {
-  RU = 'RU',
-  EN = 'EN',
+  RU = 'ru',
+  EN = 'en',
 }
 
-export const langsAll = Object.keys(Lang) as Lang[];
+export const langsAll = Object.values(Lang) as Lang[];
 
 type LangDict = Record<string, Record<string, string>>;
 
 const langDict: LangDict = {
-  [Lang.RU.valueOf()]: langDictRU,
-  [Lang.EN.valueOf()]: langDictEN,
+  [Lang.RU]: langDictRU,
+  [Lang.EN]: langDictEN,
 };
 
 export const langDefault = Lang.RU;
 export type LangStrKey = string; //(keyof typeof langDictRU) 
 
 /**
- * Checks whether the string code is a valid language code
- * @param str - string code
+ * Checks whether the value is a valid language code
+ * @param value - any value
  * @returns boolean
  */
-export function isLang(str: string): boolean {
-  return langsAll.includes(str as Lang);
+export function isLang(value: any): boolean {
+  return _.isString(value) && langsAll.includes(value as Lang);
 }
 
 /**

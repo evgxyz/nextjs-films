@@ -13,9 +13,9 @@ import styles from './FilmSearchFilter.module.scss';
 export function FilmSearchFilter() {
 
   const router = useRouter();
-  const dispatch = useAppDispatch();
   const lang = useAppSelector(state => state.settings.lang);
   const {options, params} = useAppSelector(state => state.filmSearch);
+  const dispatch = useAppDispatch();
 
   //toggleGenre
   function toggleGenre(genreId: GenreId) {

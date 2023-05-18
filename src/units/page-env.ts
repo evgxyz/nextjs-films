@@ -3,12 +3,12 @@
 export type PageTitle = string;
 
 // навигация
-export interface NavStackItem {
-  url: string,
-  text: string
+export interface NavItem {
+  url?: string,
+  text: string,
 }
 
-export type NavStack = NavStackItem[];
+export type NavStack = NavItem[];
 
 // параметры окружения страницы
 export interface PageEnv {

@@ -11,12 +11,18 @@ interface MainLayoutProps {
 
 export function MainLayout({pageEnv, children}: MainLayoutProps) {
 
-  const {title} = pageEnv;
+  const {
+    title = '', 
+    description = '', 
+    keywords = ''
+  } = pageEnv;
 
   return (
     <>
       <Head>
         <title>{title}</title>
+        <meta name='description' content={description} />
+        <meta name='keywords' content={keywords} />
       </Head>
       <div id='page-wrapper'>
         <div id='page-content'>

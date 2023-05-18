@@ -15,18 +15,23 @@ export function Navline({pageEnv}: NavlineProps) {
 
   const {navStack = []} = pageEnv;
 
-  navStack.unshift(
-    {url: '/', text: strlang('INDEX_PAGE_TITLE', lang)}
-  );
+  navStack.unshift({
+    url: '/', 
+    text: strlang('INDEX_PAGE_TITLE', lang)
+  });
 
   return (
     <div className={styles['body']}>
-      <pre>{'Navline: pageEnv:'+ JSON.stringify(navStack)}</pre>
+      <pre>{'Navline: pageEnv:' + JSON.stringify(navStack)}</pre>
       <ul className={styles['list']}>
         {
           navStack.map((item, idx) =>
             <li key={idx}>
-              <Link href={item.url}>{item.text}</Link>
+              { 
+                item.url ? 
+                  <Link href={item.url}>{item.text}</Link>
+                : item.text
+              }
             </li>
           )
         }

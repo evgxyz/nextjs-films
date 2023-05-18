@@ -10,9 +10,15 @@ export function IndexPage() {
   const lang = useAppSelector(state => state.settings.lang);
 
   const title = strlang('INDEX_PAGE_TITLE', lang);
+  const pageEnv = {
+    title,
+    navStack: [],
+    description: 'Index lorem ipsum dolor sit',
+    keywords: 'index, lorem, ipsum, dolor'
+  }
 
   return (
-    <MainLayout pageEnv={{title}}>
+    <MainLayout pageEnv={pageEnv}>
       <h1>{title}</h1>
       <p><Link href='/films?genreIds=2+3'>Films</Link></p>
       <p><Link href='/about'>About</Link></p>

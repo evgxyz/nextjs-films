@@ -56,9 +56,18 @@ export function buildIntArrParam(intArr: number[]): string {
 
 /**
  * Build a string representation an array of strings parameter for a url query
- * @param strArr array of strings
+ * @param strArr - array of strings
  * @returns string representation
  */
 export function buildStrArrParam(strArr: string[]): string {
   return strArr.join(' ');
+}
+
+/**
+ * Convert a %20 sequence to the + symbol
+ * @param str - string
+ * @returns converted string
+ */
+export function normalizeURL(str: string) {
+  return str.replace(/%20/, '+');
 }

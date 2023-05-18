@@ -1,4 +1,5 @@
 
+import {useRouter} from 'next/router';
 import {useAppSelector} from '@/store';
 import {ReqStatus} from '@/units/status';
 import {strlang} from '@/units/lang';
@@ -8,7 +9,8 @@ import {MessageBox} from '@/components/general/MessageBox';
 import styles from './FilmPage.module.scss'
 
 export function FilmPage() {
-
+  
+  const router = useRouter();
   const lang = useAppSelector(state => state.settings.lang);
   const filmPage = useAppSelector(state => state.filmPage);
   const {reqStatus, film} = filmPage;
@@ -31,20 +33,33 @@ export function FilmPage() {
     } 
     break;
     case ReqStatus.LOADING: {
-      content = <MessageBox type={'INFO'} title={strlang('LOADING', lang)} />
+      content = (
+        <MessageBox type={'INFO'} title={strlang('LOADING', lang)} />
+      )
     } 
     break;
     case ReqStatus.ERROR: {
-      content = <MessageBox type={'ERROR'} title={strlang('ERROR', lang)} />
+      content = (
+        <MessageBox type={'ERROR'} title={strlang('ERROR', lang)} />
+      )
     } 
     break;
     case ReqStatus.NOT_FOUND: {
-      return <MessagePage type={'ERROR'} title={strlang('NOT_FOUND', lang)} />
+      return (
+        <MessagePage type={'ERROR'} title={strlang('NOT_FOUND', lang)} />
+      )
     } 
   }
 
+  const pageEnv = {
+    title,
+    navStack: [{url: router.asPath, text: title}],
+    description: 'Film lorem ipsum dolor sit',
+    keywords: 'film, lorem, ipsum, dolor'
+  }
+
   return (
-    <MainLayout pageEnv={{title}}>
+    <MainLayout pageEnv={pageEnv}>
       {content}
     </MainLayout>
   )

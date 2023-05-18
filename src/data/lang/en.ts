@@ -7,13 +7,13 @@ const langDictEN = {
 
   SELECT_LANG: 'Select a language',
 
+  FOOTER_SOME_TEXT: 'This is footer',
+
   INDEX_PAGE_TITLE: 'Home',
 
   ABOUT_PAGE_TITLE: 'About site',
 
-  FOOTER_SOME_TEXT: 'This is footer',
-
-  FILM: 'Film',
+  FILM_SEARCH_TITLE: 'Film search',
 }
 
 export default langDictEN;

@@ -1,19 +1,19 @@
 
 const langDictRU = {
+  LOADING: 'Загрузка...',
   WRONG_URL: 'Неправильный URL',
   NOT_FOUND: 'Не найдено',
-  LOADING: 'Загрузка...',
   ERROR: 'Ошибка',
 
   SELECT_LANG: 'Выберете язык',
+
+  FOOTER_SOME_TEXT: 'Это футер',
 
   INDEX_PAGE_TITLE: 'Главная',
 
   ABOUT_PAGE_TITLE: 'О сайте',
 
-  FOOTER_SOME_TEXT: 'Это футер',
-
-  FILM: 'Фильм',
+  FILM_SEARCH_TITLE: 'Поиск фильмов',
 }
 
 export default langDictRU;

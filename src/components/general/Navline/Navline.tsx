@@ -2,7 +2,7 @@
 import {useAppSelector} from '@/store';
 import {PageEnv} from '@/units/page-env';
 import {strlang} from '@/units/lang';
-import Link from 'next/link';
+import Link from '@/next/Link';
 import styles from './Navline.module.scss';
 
 interface NavlineProps {

@@ -3,6 +3,7 @@ import {useRouter} from 'next/router';
 import {useAppSelector} from '@/store';
 import {normalizeURL} from '@/units/query';
 import {strlang} from '@/units/lang';
+import Link from '@/next/Link';
 import {MainLayout} from '@/components/layouts/MainLayout';
 import _ from 'lodash';
 
@@ -22,6 +23,7 @@ export function AboutPage() {
   return (
     <MainLayout pageEnv={pageEnv}>
       <h1 className='page-title'>{title}</h1>
+      <p><Link href='/films?genreIds=2+3&countryIds=1+3'>Films</Link></p>
       <p>Lorem ipsum dolor sit, 
         amet consectetur adipisicing elit. 
         Cupiditate nesciunt adipisci voluptatem ipsa alias iste dolorem officiis nisi 

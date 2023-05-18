@@ -2,13 +2,13 @@
 import Head from 'next/head';
 import {useAppSelector} from '@/store';
 import {PageEnv} from '@/units/page-env';
+import {strlang} from '@/units/lang';
 import {Header} from '@/components/general/Header';
 import {Footer} from '@/components/general/Footer';
-import { strlang } from '@/units/lang';
 
 interface MainLayoutProps {
   pageEnv: PageEnv,
-  children: JSX.Element | JSX.Element[]
+  children: React.ReactNode
 }
 
 export function MainLayout({pageEnv, children}: MainLayoutProps) {

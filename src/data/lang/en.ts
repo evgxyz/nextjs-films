@@ -1,5 +1,7 @@
 
 const langDictEN = {
+  APP_NAME: 'Super site',
+
   WRONG_URL: 'Wrong URL',
   NOT_FOUND: 'Not found',
   LOADING: 'Loading...',
@@ -9,7 +11,7 @@ const langDictEN = {
 
   FOOTER_SOME_TEXT: 'This is footer',
 
-  INDEX_PAGE_TITLE: 'Home',
+  INDEX_PAGE_TITLE: 'Main',
 
   ABOUT_PAGE_TITLE: 'About site',
 

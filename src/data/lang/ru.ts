@@ -1,5 +1,7 @@
 
 const langDictRU = {
+  APP_NAME: 'Супер сайт',
+
   LOADING: 'Загрузка...',
   WRONG_URL: 'Неправильный URL',
   NOT_FOUND: 'Не найдено',

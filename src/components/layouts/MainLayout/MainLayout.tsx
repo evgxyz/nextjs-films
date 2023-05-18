@@ -1,8 +1,10 @@
 
 import Head from 'next/head';
+import {useAppSelector} from '@/store';
 import {PageEnv} from '@/units/page-env';
 import {Header} from '@/components/general/Header';
 import {Footer} from '@/components/general/Footer';
+import { strlang } from '@/units/lang';
 
 interface MainLayoutProps {
   pageEnv: PageEnv,
@@ -11,16 +13,21 @@ interface MainLayoutProps {
 
 export function MainLayout({pageEnv, children}: MainLayoutProps) {
 
+  const lang = useAppSelector(state => state.settings.lang);
+
   const {
     title = '', 
     description = '', 
     keywords = ''
   } = pageEnv;
 
+  const appName = strlang('APP_NAME', lang);
+  const winTitle = (title !== '') ? `${title} | ${appName}` : appName;
+
   return (
     <>
       <Head>
-        <title>{title}</title>
+        <title>{winTitle}</title>
         <meta name='description' content={description} />
         <meta name='keywords' content={keywords} />
       </Head>

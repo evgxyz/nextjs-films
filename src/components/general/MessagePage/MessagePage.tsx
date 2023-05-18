@@ -9,11 +9,17 @@ interface MessagePageProps {
 }
 
 export function MessagePage({type = 'INFO', title, text}: MessagePageProps) {
+
+  const pageEnv = {
+    title,
+    navStack: [{text: title}]
+  }
+
   return (
-    <MainLayout title={title}>
+    <MainLayout pageEnv={pageEnv}>
       <div className={[styles['body'], styles[type.toLowerCase()]].join(' ')}>
         <h1 className={styles['title']}>{title}</h1>
-        {text && <div className={styles['text']}>{text}</div>}
+        { text && <div className={styles['text']}>{text}</div> }
       </div>
     </MainLayout>
   )

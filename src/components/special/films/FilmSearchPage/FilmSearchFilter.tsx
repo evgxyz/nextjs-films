@@ -32,13 +32,11 @@ export function FilmSearchFilter() {
     dispatch(fetchFilmSearchResults());
 
     const query = {...router.query};
-
     if (genreIds.length > 0) {
       query.genreIds = buildIntArrParam(genreIds);
     } else {
       delete query.genreIds;
     }
-
     router.push({query}, undefined, {shallow: true});
   }
 

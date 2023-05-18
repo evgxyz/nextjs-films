@@ -2,7 +2,7 @@
 import {useAppSelector} from '@/store';
 import {strlang} from '@/units/lang';
 import {MainLayout} from '@/components/layouts/MainLayout';
-import Link from 'next/link';
+import Link from '@/next/Link';
 import _ from 'lodash';
 
 export function IndexPage() {

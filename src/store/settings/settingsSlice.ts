@@ -23,14 +23,14 @@ export const settingsSlice = createSlice({
       const {lang} = action.payload;
       if (isLang(lang)) {
         state.lang = lang as Lang;
-        cookie.set('lang', lang);
+        cookie.set('lang', lang, {expires: 30, secure: true});
       }
     },
 
     setLang: (state, action: PayloadAction<Lang>) => {
       const lang = action.payload;
       state.lang = lang;
-      cookie.set('lang', lang);
+      cookie.set('lang', lang, {expires: 30, secure: true});
     },
   },
 });

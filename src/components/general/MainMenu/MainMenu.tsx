@@ -1,7 +1,7 @@
 
 import {useAppSelector} from '@/store';
 import {strlang} from '@/units/lang';
-import Link from 'next/link';
+import Link from '@/next/Link';
 import styles from './MainMenu.module.scss';
 
 export function MainMenu() {

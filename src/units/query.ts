@@ -64,10 +64,14 @@ export function buildStrArrParam(strArr: string[]): string {
 }
 
 /**
- * Convert all %20 sequences to the + symbol
+ * Replace all '%20' to '+', delete '?' from end
  * @param str - string
- * @returns converted string
+ * @returns normalized string
  */
 export function normalizeURL(str: string) {
-  return str.replace(/%20/g, '+');
+  return (
+    str
+      .replace(/%20/g, '+')
+      .replace(/\?$/, '')
+  )
 }

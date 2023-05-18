@@ -92,8 +92,12 @@ export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: 
 
   const films = Array.from(filmsMap.values())
     .filter(filmRaw => 
+      //genres
       ( !params.genreIds || params.genreIds.length == 0 || 
-        _.intersection(params.genreIds, filmRaw.genreIds).length > 0 )
+        _.intersection(params.genreIds, filmRaw.genreIds).length > 0 ) &&
+      //countries
+      ( !params.countryIds || params.countryIds.length == 0 || 
+        _.intersection(params.countryIds, filmRaw.countryIds).length > 0 )
     )
     .map(filmRaw => getFilm(filmRaw.id, lang))
     .filter(film => !!film) as Film[];

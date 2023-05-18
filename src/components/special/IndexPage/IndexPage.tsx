@@ -20,12 +20,11 @@ export function IndexPage() {
   return (
     <MainLayout pageEnv={pageEnv}>
       <h1>{title}</h1>
-      <p><Link href='/films?genreIds=2+3'>Films</Link></p>
+      <p><Link href='/films?genreIds=2+3&countryIds=1+3'>Films</Link></p>
       <p><Link href='/about'>About</Link></p>
       <p><Link href='/film/abc'>Wrong url</Link></p>
       <ul>
-        {
-          _.range(1, 6).map(i => 
+        { _.range(1, 6).map(i => 
             <li key={i}><Link href={`/film/${i}`}>{`Film ${i}`}</Link></li>
           )
         }

@@ -1,6 +1,7 @@
 
 import {useRouter} from 'next/router';
 import {useAppSelector} from '@/store';
+import {normalizeURL} from '@/units/query';
 import {strlang} from '@/units/lang';
 import {MainLayout} from '@/components/layouts/MainLayout';
 import _ from 'lodash';
@@ -13,7 +14,7 @@ export function AboutPage() {
   const title = strlang('ABOUT_PAGE_TITLE', lang);
   const pageEnv = {
     title,
-    navStack: [{url: router.asPath, text: title}],
+    navStack: [{url: normalizeURL(router.asPath), text: title}],
     description: 'About lorem ipsum dolor sit',
     keywords: 'about, lorem, ipsum, dolor'
   }

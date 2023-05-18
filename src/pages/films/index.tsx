@@ -24,7 +24,7 @@ const FilmSearchNextPage: NextPage<FilmSearchNextPageProps> =
   console.log('FilmSearchNextPage:', {fromServer, initPageStatus});
 
   const [pageStatus, setPageStatus] = useState(initPageStatus);
-  const [firstFlag, setFirstFlag] = useState(true); // first render?
+  const [firstFlag, setFirstFlag] = useState(true); //first render?
 
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -103,9 +103,16 @@ function parseFilmSearchParams(query: ParsedUrlQuery): [boolean, FilmSearchParam
   let error = false;
   const params = structuredClone(filmSearchParamsDefault);
 
-  const [err, genreIds] = parseIntArrParam(query, 'genreIds');
-  if (!err) { 
-    params.genreIds = genreIds;
+  { const [err, genreIds] = parseIntArrParam(query, 'genreIds');
+    if (!err) { 
+      params.genreIds = genreIds;
+    }
+  }
+
+  { const [err, countryIds] = parseIntArrParam(query, 'countryIds');
+    if (!err) { 
+      params.countryIds = countryIds;
+    }
   }
 
   return [error, params];

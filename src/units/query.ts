@@ -69,5 +69,5 @@ export function buildStrArrParam(strArr: string[]): string {
  * @returns converted string
  */
 export function normalizeURL(str: string) {
-  return str.replace(/%20/, '+');
+  return str.replace(/%20/g, '+');
 }

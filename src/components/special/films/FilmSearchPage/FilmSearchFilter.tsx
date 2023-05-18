@@ -1,7 +1,7 @@
 
 import {useRouter} from 'next/router';
 import {useAppSelector, useAppDispatch} from '@/store';
-import {GenreId} from '@/units/films';
+import {GenreId, CountryId} from '@/units/films';
 import {
   updateFilmSearchParams,
   fetchFilmSearchResults
@@ -17,6 +17,7 @@ export function FilmSearchFilter() {
   const lang = useAppSelector(state => state.settings.lang);
   const {options, params} = useAppSelector(state => state.filmSearch);
 
+  //toggleGenre
   function toggleGenre(genreId: GenreId) {
     const genreIds = [...params.genreIds ?? []];
 
@@ -31,26 +32,53 @@ export function FilmSearchFilter() {
     dispatch(fetchFilmSearchResults());
 
     const query = {...router.query};
+
     if (genreIds.length > 0) {
       query.genreIds = buildIntArrParam(genreIds);
     } else {
       delete query.genreIds;
     }
+
     router.push({query}, undefined, {shallow: true});
   }
 
+  //toggleCountry
+  function toggleCountry(countryId: CountryId) {
+    const countryIds = [...params.countryIds ?? []];
+
+    if (!countryIds.includes(countryId)) {
+      countryIds.push(countryId);
+    } else {
+      _.pull(countryIds, countryId);
+    }
+    countryIds.sort();
+
+    dispatch(updateFilmSearchParams({countryIds}));
+    dispatch(fetchFilmSearchResults());
+
+    const query = {...router.query};
+    
+    if (countryIds.length > 0) {
+      query.countryIds = buildIntArrParam(countryIds);
+    } else {
+      delete query.countryIds;
+    }
+
+    router.push({query}, undefined, {shallow: true});
+  }
+
+  //updateResults
   function updateResults(ev: React.MouseEvent<HTMLButtonElement>) {
     ev.preventDefault();
     dispatch(fetchFilmSearchResults());
   }
 
   return (
-    <div className={styles['film-search-filter']}>
-      
-      <div className={styles['film-search-filter__genres']}>
+    <div className={styles['body']}>
+
+      <div className={styles['genres']}>
         <ul>
-          { 
-            options.genres.map(genre =>
+          { options.genres.map(genre =>
               <li key={genre.id}>
                 <label>
                   <input type='checkbox' 
@@ -58,6 +86,23 @@ export function FilmSearchFilter() {
                     onChange={() => {toggleGenre(genre.id)}}
                   />
                   {genre.name}
+                </label>
+              </li>
+            )
+          }
+        </ul>
+      </div>
+
+      <div className={styles['countries']}>
+        <ul>
+          { options.countries.map(country =>
+              <li key={country.id}>
+                <label>
+                  <input type='checkbox' 
+                    checked={params.countryIds?.includes(country.id)} 
+                    onChange={() => {toggleCountry(country.id)}}
+                  />
+                  {country.name}
                 </label>
               </li>
             )

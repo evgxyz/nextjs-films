@@ -2,13 +2,10 @@
 import {useRouter} from 'next/router';
 import {useAppSelector, useAppDispatch} from '@/store';
 import {GenreId, CountryId} from '@/units/films';
-import {
-  updateFilmSearchParams,
-  fetchFilmSearchResults
-} from '@/store/filmSearch';
+import {updateFilmSearchParams, fetchFilmSearchResults} from '@/store/filmSearch';
 import {buildIntArrParam} from '@/units/query';
 import _ from 'lodash';
-import styles from './FilmSearchFilter.module.scss';
+import css from './FilmSearchFilter.module.scss';
 
 export function FilmSearchFilter() {
 
@@ -72,9 +69,9 @@ export function FilmSearchFilter() {
   }
 
   return (
-    <div className={styles['body']}>
+    <div className={css['body']}>
 
-      <div className={styles['genres']}>
+      <div className={css['genres']}>
         <ul>
           { options.genres.map(genre =>
               <li key={genre.id}>
@@ -91,7 +88,7 @@ export function FilmSearchFilter() {
         </ul>
       </div>
 
-      <div className={styles['countries']}>
+      <div className={css['countries']}>
         <ul>
           { options.countries.map(country =>
               <li key={country.id}>

@@ -1,5 +1,5 @@
 
-import styles from './MessageBox.module.scss';
+import css from './MessageBox.module.scss';
 
 interface MessageBoxProps {
   type: 'INFO' | 'WARN' | 'ERROR',
@@ -9,9 +9,9 @@ interface MessageBoxProps {
 
 export function MessageBox({type = 'INFO', title, text}: MessageBoxProps) {
   return (
-    <div className={[styles['body'], styles[type.toLowerCase()]].join(' ')}>
-      <h3 className={styles['title']}>{title}</h3>
-      {text && <div className={styles['text']}>{text}</div>}
+    <div className={[css['body'], css[type.toLowerCase()]].join(' ')}>
+      <h3 className={css['title']}>{title}</h3>
+      {text && <div className={css['text']}>{text}</div>}
     </div>
   )
 }

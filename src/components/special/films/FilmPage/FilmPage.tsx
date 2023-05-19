@@ -7,7 +7,7 @@ import {MainLayout} from '@/components/layouts/MainLayout';
 import {MessagePage} from '@/components/general/MessagePage';
 import {MessageBox} from '@/components/general/MessageBox';
 import {LoadingBox} from '@/components/common/LoadingBox';
-import styles from './FilmPage.module.scss'
+import css from './FilmPage.module.scss';
 
 export function FilmPage() {
   

@@ -8,7 +8,7 @@ import {MainLayout} from '@/components/layouts/MainLayout';
 import {MessageBox} from '@/components/general/MessageBox';
 import {LoadingBox} from '@/components/common/LoadingBox';
 import {FilmSearchFilter} from './FilmSearchFilter'; 
-import styles from './FilmSearchPage.module.scss';
+import css from './FilmSearchPage.module.scss';
 
 export function FilmSearchPage() {
 
@@ -54,7 +54,7 @@ export function FilmSearchPage() {
 
   return (
     <MainLayout pageEnv={pageEnv}>
-      <h1>{title}</h1>
+      <h1 className='page-title'>{title}</h1>
       <FilmSearchFilter />
       {content}
     </MainLayout>

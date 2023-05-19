@@ -3,7 +3,7 @@ import {useAppSelector} from '@/store';
 import {PageEnv} from '@/units/page-env';
 import {strlang} from '@/units/lang';
 import Link from '@/next/Link';
-import styles from './Navline.module.scss';
+import css from './Navline.module.scss';
 
 interface NavlineProps {
   pageEnv: PageEnv,
@@ -21,9 +21,9 @@ export function Navline({pageEnv}: NavlineProps) {
   });
 
   return (
-    <div className={styles['body']}>
+    <div className={css['body']}>
       <pre>{'Navline: pageEnv:' + JSON.stringify(navStack)}</pre>
-      <ul className={styles['list']}>
+      <ul className={css['list']}>
         { navStack.map((item, idx) =>
             <li key={idx}>
               { 

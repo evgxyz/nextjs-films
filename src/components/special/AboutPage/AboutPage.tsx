@@ -7,6 +7,7 @@ import Link from '@/next/Link';
 import {MainLayout} from '@/components/layouts/MainLayout';
 import {LoadingBox} from '@/components/common/LoadingBox';
 import _ from 'lodash';
+import css from './AboutPage.module.scss';
 
 export function AboutPage() {
 

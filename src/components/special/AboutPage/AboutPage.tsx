@@ -5,6 +5,7 @@ import {normalizeURL} from '@/units/query';
 import {strlang} from '@/units/lang';
 import Link from '@/next/Link';
 import {MainLayout} from '@/components/layouts/MainLayout';
+import {LoadingBox} from '@/components/common/LoadingBox';
 import _ from 'lodash';
 
 export function AboutPage() {
@@ -24,6 +25,7 @@ export function AboutPage() {
     <MainLayout pageEnv={pageEnv}>
       <h1 className='page-title'>{title}</h1>
       <p><Link href='/films?genreIds=2+3&countryIds=1+3'>Films</Link></p>
+      <LoadingBox />
       <p>Lorem ipsum dolor sit, 
         amet consectetur adipisicing elit. 
         Cupiditate nesciunt adipisci voluptatem ipsa alias iste dolorem officiis nisi 

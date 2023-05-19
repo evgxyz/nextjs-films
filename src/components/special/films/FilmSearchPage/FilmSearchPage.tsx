@@ -6,6 +6,7 @@ import {strlang} from '@/units/lang';
 import {normalizeURL} from '@/units/query';
 import {MainLayout} from '@/components/layouts/MainLayout';
 import {MessageBox} from '@/components/general/MessageBox';
+import {LoadingBox} from '@/components/common/LoadingBox';
 import {FilmSearchFilter} from './FilmSearchFilter'; 
 import styles from './FilmSearchPage.module.scss';
 
@@ -29,7 +30,7 @@ export function FilmSearchPage() {
     } break;
     case ReqStatus.LOADING: {
       content = (
-        <MessageBox type={'INFO'} title={strlang('LOADING', lang)} />
+        <LoadingBox />
       )
     } break;
     case ReqStatus.NOT_FOUND: {

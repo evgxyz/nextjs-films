@@ -1,0 +1,19 @@
+
+@import '@/styles/abstract';
+
+.body {
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+}
+
+.icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  background-image: url('/images/common/loading-box/loading.gif');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 80% auto;
+}

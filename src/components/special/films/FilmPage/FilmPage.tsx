@@ -6,6 +6,7 @@ import {strlang} from '@/units/lang';
 import {MainLayout} from '@/components/layouts/MainLayout';
 import {MessagePage} from '@/components/general/MessagePage';
 import {MessageBox} from '@/components/general/MessageBox';
+import {LoadingBox} from '@/components/common/LoadingBox';
 import styles from './FilmPage.module.scss'
 
 export function FilmPage() {
@@ -34,7 +35,7 @@ export function FilmPage() {
     break;
     case ReqStatus.LOADING: {
       content = (
-        <MessageBox type={'INFO'} title={strlang('LOADING', lang)} />
+        <LoadingBox />
       )
     } 
     break;

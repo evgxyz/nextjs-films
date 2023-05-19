@@ -5,7 +5,7 @@ import {ReqStatus} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {normalizeURL} from '@/units/query';
 import {MainLayout} from '@/components/layouts/MainLayout';
-import {MessageBox} from '@/components/general/MessageBox';
+import {MessageBox} from '@/components/common/MessageBox';
 import {LoadingBox} from '@/components/common/LoadingBox';
 import {FilmSearchFilter} from './FilmSearchFilter'; 
 import css from './FilmSearchPage.module.scss';

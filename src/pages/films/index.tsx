@@ -4,6 +4,7 @@ import {useRouter} from 'next/router';
 import {useEffect, useState} from 'react';
 import {wrapper, useAppSelector, useAppDispatch} from '@/store';
 import {NextPageProps, PageStatus} from '@/units/next';
+import {normalizeURL} from '@/units/url';
 import {ParsedUrlQuery} from 'querystring';
 import {FilmSearchParams, filmSearchParamsDefault} from '@/units/films';
 import {parseIntParam, parseIntArrParam} from '@/units/url';
@@ -20,21 +21,23 @@ import {FilmSearchPage} from '@/components/special/films/FilmSearchPage';
 interface FilmSearchNextPageProps extends NextPageProps {};
 
 const FilmSearchNextPage: NextPage<FilmSearchNextPageProps> = 
-  function({fromServer, initPageStatus}) {
+function({fromServer, initPageStatus}) {
   console.log('FilmSearchNextPage:', {fromServer, initPageStatus});
 
   const [pageStatus, setPageStatus] = useState(initPageStatus);
-  const [firstFlag, setFirstFlag] = useState(true); //first render?
+  //const [firstFlag, setFirstFlag] = useState(true); //first render?
 
   const router = useRouter();
-  const dispatch = useAppDispatch();
-  const lang = useAppSelector(state => state.settings.lang);
+  const [prsError, prsParams] = parseFilmSearchParams(router.query);
+  const page = prsParams?.page;
 
-  async function initState() {
-    const [error, params] = parseFilmSearchParams(router.query);
-    if (!error) {
+  const lang = useAppSelector(state => state.settings.lang);
+  const dispatch = useAppDispatch();
+
+  async function updateState() {
+    if (!prsError) {
       await dispatch(fetchFilmSearchOptions());
-      dispatch(setFilmSearchParams(params));
+      dispatch(setFilmSearchParams(prsParams));
       await dispatch(fetchFilmSearchResults());
     } 
     else {
@@ -42,24 +45,11 @@ const FilmSearchNextPage: NextPage<FilmSearchNextPageProps> =
     }
   };
 
-  async function updateState() {
-    await dispatch(fetchFilmSearchOptions());
-    await dispatch(fetchFilmSearchResults());
-  };
-
   useEffect(() => {
     if (pageStatus === PageStatus.OK) {
-      if (firstFlag) {
-        if (!fromServer) { 
-          initState();
-        }
-        setFirstFlag(false);
-      }
-      else {
-        updateState();
-      }
+      updateState();
     }
-  }, [lang]);
+  }, [lang, page]);
 
   if (pageStatus === PageStatus.WRONG_URL) {
     return <MessagePage type={'ERROR'} title={strlang('WRONG_URL', lang)} />
@@ -68,7 +58,8 @@ const FilmSearchNextPage: NextPage<FilmSearchNextPageProps> =
   return <FilmSearchPage />
 }
 
-FilmSearchNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {
+FilmSearchNextPage.getInitialProps = 
+wrapper.getInitialPageProps(store => async(ctx) => {
   console.log('getInitialProps');
 
   if (ctx.req) { //on server

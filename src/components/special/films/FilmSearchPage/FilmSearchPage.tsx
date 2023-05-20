@@ -15,11 +15,10 @@ import css from './FilmSearchPage.module.scss';
 export function FilmSearchPage() {
 
   const router = useRouter();
+  const url = normalizeURL(router.asPath);
+  
   const lang = useAppSelector(state => state.settings.lang);
   const filmSearch = useAppSelector(state => state.filmSearch);
-
-  const currUrl = normalizeURL(router.asPath);
-  //const currPage = 
 
   let title = strlang('FILM_SEARCH_TITLE', lang);
   let content = <></>;
@@ -29,7 +28,7 @@ export function FilmSearchPage() {
       content = (
         <>
           <Pagination 
-            baseUrl={currUrl} 
+            baseUrl={url} 
             paramName={'page'} 
             start={1} 
             count={7} 
@@ -60,7 +59,7 @@ export function FilmSearchPage() {
 
   const pageEnv = {
     title,
-    navStack: [{url: currUrl, text: title}],
+    navStack: [{url, text: title}],
     description: 'Film lorem ipsum dolor sit',
     keywords: 'film, lorem, ipsum, dolor'
   }

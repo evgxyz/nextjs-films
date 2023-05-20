@@ -4,6 +4,7 @@ import {useAppSelector} from '@/store';
 import {ReqStatus} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {normalizeURL} from '@/units/query';
+import {perPageDefault} from '@/units/films';
 import {MainLayout} from '@/components/layouts/MainLayout';
 import {MessageBox} from '@/components/common/MessageBox';
 import {LoadingBox} from '@/components/common/LoadingBox';
@@ -24,7 +25,9 @@ export function FilmSearchPage() {
     case ReqStatus.OK: {
       content = (
         <>
-          <pre>{JSON.stringify(filmSearch, null, 2)}</pre>
+          <pre>
+            { JSON.stringify(filmSearch.results, null, 2) }
+          </pre>
         </>
       )
     } break;

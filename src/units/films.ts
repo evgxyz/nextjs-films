@@ -43,12 +43,26 @@ export interface FilmSearchParams {
   title?: string,
   genreIds?: GenreId[],
   countryIds?: CountryId[],
+  page?: number,
+  perPage?: number,
 }
+
+export const perPageDefault = 10;
 
 export const filmSearchParamsDefault: FilmSearchParams = { 
   title: '',
   genreIds: [],
   countryIds: [],
+  page: 0,
+  perPage: perPageDefault,
 }
 
-export type FilmSearchResults = Film[];
+export interface FilmSearchResults {
+  films: Film[],
+  totalPages: number,
+}
+
+export const filmSearchResultsDefault = {
+  films: [],
+  totalPages: 0,
+}

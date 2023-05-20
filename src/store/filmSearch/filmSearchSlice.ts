@@ -5,7 +5,7 @@ import {ReqStatus} from '@/units/status';
 import {
   FilmSearchOptions, filmSearchOptionsDefault,
   FilmSearchParams, filmSearchParamsDefault,
-  FilmSearchResults,
+  FilmSearchResults, filmSearchResultsDefault
 } from '@/units/films';
 import {
   apiFetchFilmSearchResults, 
@@ -22,7 +22,7 @@ interface FilmSearchState {
 const filmSearchStateDefault: FilmSearchState = {
   options: filmSearchOptionsDefault,
   params: filmSearchParamsDefault,
-  results: [],
+  results: filmSearchResultsDefault,
   reqStatus: ReqStatus.NONE,
 }
 
@@ -72,7 +72,7 @@ const filmSearchSlice = createSlice({
       .addCase(
         fetchFilmSearchResults.pending, 
         (state) => {
-          state.results = [];
+          state.results = structuredClone(filmSearchResultsDefault);
           state.reqStatus = ReqStatus.LOADING;
         }
       )
@@ -128,4 +128,3 @@ export const {
 } = filmSearchSlice.actions;
 
 export const filmSearchReducer = filmSearchSlice.reducer; 
-

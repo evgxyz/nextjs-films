@@ -46,12 +46,18 @@ export async function apiFetchFilmPage(filmId: FilmId, lang: Lang):
 {
   console.log('call apiFetchFilmPage');
   await delay(1000);
+
   const film = getFilm(filmId, lang);
-  return ( 
-    film ? 
-      {reqStatus: ReqStatus.OK, film} 
-    : {reqStatus: ReqStatus.NOT_FOUND}
-  );
+  if (film) {
+    return {
+      reqStatus: ReqStatus.OK, 
+      film
+    }
+  } else {
+    return {
+      reqStatus: ReqStatus.NOT_FOUND
+    }
+  }
 }
 
 export async function apiFetchFilmSearchOptions(lang: Lang): 
@@ -81,7 +87,10 @@ export async function apiFetchFilmSearchOptions(lang: Lang):
     countries 
   }
 
-  return {reqStatus: ReqStatus.OK, options};
+  return {
+    reqStatus: ReqStatus.OK, 
+    options
+  };
 }
 
 export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: Lang): 
@@ -90,17 +99,39 @@ export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: 
   console.log('call apiFetchFilmSearchResults');
   await delay(1000);
 
+  let {
+    title,
+    genreIds,
+    countryIds,
+    page = 1,
+    perPage = 10
+  } = params;
+
+  page = Math.max(1, page);
+  perPage = Math.max(1, perPage);
+
   const films = Array.from(filmsMap.values())
     .filter(filmRaw => 
       //genres
-      ( !params.genreIds || params.genreIds.length == 0 || 
-        _.intersection(params.genreIds, filmRaw.genreIds).length > 0 ) &&
+      ( !genreIds || genreIds.length == 0 || 
+        _.intersection(genreIds, filmRaw.genreIds).length > 0 ) &&
       //countries
-      ( !params.countryIds || params.countryIds.length == 0 || 
-        _.intersection(params.countryIds, filmRaw.countryIds).length > 0 )
+      ( !countryIds || countryIds.length == 0 || 
+        _.intersection(countryIds, filmRaw.countryIds).length > 0 )
     )
     .map(filmRaw => getFilm(filmRaw.id, lang))
     .filter(film => !!film) as Film[];
 
-  return {reqStatus: ReqStatus.OK, results: films};
+  const indexFrom = perPage * (page - 1);
+  const indexTo = indexFrom + perPage;
+  
+  const results = {
+    films: films.slice(indexFrom, indexTo),
+    totalPages: Math.ceil(films.length / perPage)
+  }
+
+  return {
+    reqStatus: ReqStatus.OK,
+    results
+  };
 }

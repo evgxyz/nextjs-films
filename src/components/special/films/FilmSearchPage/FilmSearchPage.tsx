@@ -3,7 +3,7 @@ import {useRouter} from 'next/router';
 import {useAppSelector} from '@/store';
 import {ReqStatus} from '@/units/status';
 import {strlang} from '@/units/lang';
-import {normalizeURL} from '@/units/query';
+import {normalizeURL} from '@/units/url';
 import {perPageDefault} from '@/units/films';
 import {MainLayout} from '@/components/layouts/MainLayout';
 import {MessageBox} from '@/components/common/MessageBox';
@@ -16,12 +16,11 @@ export function FilmSearchPage() {
   const router = useRouter();
   const lang = useAppSelector(state => state.settings.lang);
   const filmSearch = useAppSelector(state => state.filmSearch);
-  const {params, results, reqStatus} = filmSearch;
 
   let title = strlang('FILM_SEARCH_TITLE', lang);
   let content = <></>;
 
-  switch (reqStatus) {
+  switch (filmSearch.reqStatus) {
     case ReqStatus.OK: {
       content = (
         <>

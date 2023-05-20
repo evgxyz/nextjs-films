@@ -6,7 +6,7 @@ import {wrapper, useAppSelector, useAppDispatch} from '@/store';
 import {NextPageProps, PageStatus} from '@/units/next';
 import {ParsedUrlQuery} from 'querystring';
 import {FilmId} from '@/units/films';
-import {parseIntParam} from '@/units/query';
+import {parseIntParam} from '@/units/url';
 import {isReqError, reqErrorToHttpCode} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {fetchFilmPage} from '@/store/filmPage';

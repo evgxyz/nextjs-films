@@ -1,13 +1,14 @@
 
 import {useRouter} from 'next/router';
 import {useAppSelector} from '@/store';
-import {normalizeURL} from '@/units/query';
+import {normalizeURL} from '@/units/url';
 import {strlang} from '@/units/lang';
 import Link from '@/next/Link';
 import {MainLayout} from '@/components/layouts/MainLayout';
 import {LoadingBox} from '@/components/common/LoadingBox';
 import _ from 'lodash';
 import css from './AboutPage.module.scss';
+import { Pagination } from '@/components/common/Pagination';
 
 export function AboutPage() {
 
@@ -27,6 +28,7 @@ export function AboutPage() {
       <h1 className='page-title'>{title}</h1>
       <p><Link href='/films?genreIds=2+3&countryIds=1+3'>Films</Link></p>
       <LoadingBox />
+      <Pagination baseUrl={'/films?genreIds=2+3&countryIds=1+3'} paramName={'page'} start={1} count={7} />
       <p>Lorem ipsum dolor sit, 
         amet consectetur adipisicing elit. 
         Cupiditate nesciunt adipisci voluptatem ipsa alias iste dolorem officiis nisi 

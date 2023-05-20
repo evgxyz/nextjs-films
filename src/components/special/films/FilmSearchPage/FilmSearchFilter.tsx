@@ -3,7 +3,7 @@ import {useRouter} from 'next/router';
 import {useAppSelector, useAppDispatch} from '@/store';
 import {GenreId, CountryId} from '@/units/films';
 import {updateFilmSearchParams, fetchFilmSearchResults} from '@/store/filmSearch';
-import {buildIntArrParam} from '@/units/query';
+import {buildIntArrParam} from '@/units/url';
 import _ from 'lodash';
 import css from './FilmSearchFilter.module.scss';
 

@@ -3,6 +3,38 @@ import {ParsedUrlQuery} from 'querystring';
 import _ from 'lodash';
 
 /**
+ * Replace all '%20' to '+', delete '?' from end
+ * @param str - string
+ * @returns normalized string
+ */
+export function normalizeURL(str: string) {
+  return (
+    str
+      .replace(/%20/g, '+')
+      .replace(/\?$/, '')
+  )
+}
+
+/**
+ * Set the parameter to URL string
+ * @param url - URL string
+ * @param paramName - name of the parameter
+ * @param paramValue - value of the parameter
+ * @returns new URL string
+ */
+export function setURLParam(url: string, paramName: string, paramValue: string) {
+  const [path, query] = url.split('?');
+  const params = new URLSearchParams(query);
+  params.set(paramName, paramValue);
+  let url2 = path;
+  const query2 = params.toString();
+  if (query2 !== '') {
+    url2 += '?' + query2;
+  }
+  return url2;
+}
+
+/**
  * Parse an integer parameter from a ParsedUrlQuery object
  * @param query - object from router.query or ctx.query
  * @param name - name of parsed parameter
@@ -63,15 +95,3 @@ export function buildStrArrParam(strArr: string[]): string {
   return strArr.join(' ');
 }
 
-/**
- * Replace all '%20' to '+', delete '?' from end
- * @param str - string
- * @returns normalized string
- */
-export function normalizeURL(str: string) {
-  return (
-    str
-      .replace(/%20/g, '+')
-      .replace(/\?$/, '')
-  )
-}

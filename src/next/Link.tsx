@@ -1,6 +1,7 @@
 
 import {useAppSelector} from '@/store';
 import Link, {LinkProps} from 'next/link';
+import {setURLParam} from '@/units/url';
 import {langDefault} from '@/units/lang';
 
 interface LinkHocProps extends LinkProps {
@@ -11,7 +12,7 @@ export default function LinkHoc(props: LinkHocProps) {
   
   const lang = useAppSelector(state => state.settings.lang);
 
-  if (lang !== langDefault) {
+  /* if (lang !== langDefault) {
     const [pathStr, queryStr] = props.href.toString().split('?');
     const query = new URLSearchParams(queryStr);
     query.set('lang', lang);
@@ -21,7 +22,12 @@ export default function LinkHoc(props: LinkHocProps) {
       href += '?' + queryStr2;
     }
     props = {...props, href};
-  } 
+  } */ 
+
+  if (lang !== langDefault) {
+    const href = setURLParam(props.href.toString(), 'lang', lang);
+    props = {...props, href};
+  }
 
   return (
     <Link {...props}>

@@ -8,6 +8,7 @@ import {perPageDefault} from '@/units/films';
 import {MainLayout} from '@/components/layouts/MainLayout';
 import {MessageBox} from '@/components/common/MessageBox';
 import {LoadingBox} from '@/components/common/LoadingBox';
+import {Pagination} from '@/components/common/Pagination';
 import {FilmSearchFilter} from './FilmSearchFilter'; 
 import css from './FilmSearchPage.module.scss';
 
@@ -17,6 +18,9 @@ export function FilmSearchPage() {
   const lang = useAppSelector(state => state.settings.lang);
   const filmSearch = useAppSelector(state => state.filmSearch);
 
+  const currUrl = normalizeURL(router.asPath);
+  //const currPage = 
+
   let title = strlang('FILM_SEARCH_TITLE', lang);
   let content = <></>;
 
@@ -24,8 +28,15 @@ export function FilmSearchPage() {
     case ReqStatus.OK: {
       content = (
         <>
+          <Pagination 
+            baseUrl={currUrl} 
+            paramName={'page'} 
+            start={1} 
+            count={7} 
+            curr={filmSearch.params.page ?? 1}
+          />
           <pre>
-            { JSON.stringify(filmSearch.results, null, 2) }
+            { JSON.stringify(filmSearch, null, 2) }
           </pre>
         </>
       )
@@ -49,7 +60,7 @@ export function FilmSearchPage() {
 
   const pageEnv = {
     title,
-    navStack: [{url: normalizeURL(router.asPath), text: title}],
+    navStack: [{url: currUrl, text: title}],
     description: 'Film lorem ipsum dolor sit',
     keywords: 'film, lorem, ipsum, dolor'
   }

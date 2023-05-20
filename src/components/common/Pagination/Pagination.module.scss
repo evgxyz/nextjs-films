@@ -17,4 +17,8 @@
   &:hover {
     background-color: $bg-color-3;
   }
+
+  &.curr-item {
+    background-color: $bg-color-3;
+  }
 }

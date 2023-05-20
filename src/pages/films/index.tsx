@@ -6,7 +6,7 @@ import {wrapper, useAppSelector, useAppDispatch} from '@/store';
 import {NextPageProps, PageStatus} from '@/units/next';
 import {ParsedUrlQuery} from 'querystring';
 import {FilmSearchParams, filmSearchParamsDefault} from '@/units/films';
-import {parseIntArrParam} from '@/units/url';
+import {parseIntParam, parseIntArrParam} from '@/units/url';
 import {isReqError, reqErrorToHttpCode} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {
@@ -112,6 +112,12 @@ function parseFilmSearchParams(query: ParsedUrlQuery): [boolean, FilmSearchParam
   { const [err, countryIds] = parseIntArrParam(query, 'countryIds');
     if (!err) { 
       params.countryIds = countryIds;
+    }
+  }
+
+  { const [err, page] = parseIntParam(query, 'page');
+    if (!err) { 
+      params.page = page;
     }
   }
 

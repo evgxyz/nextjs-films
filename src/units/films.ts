@@ -1,4 +1,5 @@
 
+// film
 export type GenreId = number;
 export type CountryId = number;
 export type FilmId = number;
@@ -27,7 +28,7 @@ export const filmDefault: Film = {
   countries: [],
 }
 
-//filmSearch
+//film search
 
 export interface FilmSearchOptions {
   genres: Genre[],
@@ -47,13 +48,14 @@ export interface FilmSearchParams {
   perPage?: number,
 }
 
+export const pageDefault = 1;
 export const perPageDefault = 10;
 
 export const filmSearchParamsDefault: FilmSearchParams = { 
   title: '',
   genreIds: [],
   countryIds: [],
-  page: 0,
+  page: pageDefault,
   perPage: perPageDefault,
 }
 

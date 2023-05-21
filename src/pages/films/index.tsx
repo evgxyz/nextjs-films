@@ -26,28 +26,44 @@ function({fromServer, initPageStatus}) {
   console.log('FilmSearchNextPage:', {fromServer, initPageStatus});
 
   const [pageStatus, setPageStatus] = useState(initPageStatus);
-  //const [firstFlag, setFirstFlag] = useState(true); //first render?
+  const [firstFlag, setFirstFlag] = useState(true); //first render?
 
   const router = useRouter();
   const [prsError, prsParams] = parseFilmSearchParams(router.query);
   const page = prsParams?.page;
 
   const lang = useAppSelector(state => state.settings.lang);
+  const filmSearchLang = useAppSelector(state => state.filmSearch.lang);
   const dispatch = useAppDispatch();
 
   const updateState = async function() {
-    dispatch(setFilmSearchLang(lang));
-    await dispatch(fetchFilmSearchOptions());
+    const updateLang = lang !== filmSearchLang;
+
+    if (updateLang) {
+      console.log('setFilmSearchLang')
+      dispatch(setFilmSearchLang(lang));
+    }
+
+    if (firstFlag || updateLang) {
+      await dispatch(fetchFilmSearchOptions());
+    }
+
     dispatch(setFilmSearchParams(prsParams));
     await dispatch(fetchFilmSearchResults());
   };
 
   useEffect(() => {
     if (pageStatus === PageStatus.OK) {
-      if (!prsError) {
-        updateState();
-      } else {
-        setPageStatus(PageStatus.WRONG_URL);
+      if (!(fromServer && firstFlag)) {
+        if (!prsError) {
+          updateState();
+        } else {
+          setPageStatus(PageStatus.WRONG_URL);
+        }
+      }
+
+      if (firstFlag) {
+        setFirstFlag(false);
       }
     }
   }, [lang, page]);

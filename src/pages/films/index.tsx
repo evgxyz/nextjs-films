@@ -11,6 +11,7 @@ import {parseIntParam, parseIntArrParam} from '@/units/url';
 import {isReqError, reqErrorToHttpCode} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {
+  setFilmSearchLang,
   setFilmSearchParams, 
   fetchFilmSearchResults,
   fetchFilmSearchOptions
@@ -34,20 +35,20 @@ function({fromServer, initPageStatus}) {
   const lang = useAppSelector(state => state.settings.lang);
   const dispatch = useAppDispatch();
 
-  async function updateState() {
-    if (!prsError) {
-      await dispatch(fetchFilmSearchOptions());
-      dispatch(setFilmSearchParams(prsParams));
-      await dispatch(fetchFilmSearchResults());
-    } 
-    else {
-      setPageStatus(PageStatus.WRONG_URL);
-    }
+  const updateState = async function() {
+    dispatch(setFilmSearchLang(lang));
+    await dispatch(fetchFilmSearchOptions());
+    dispatch(setFilmSearchParams(prsParams));
+    await dispatch(fetchFilmSearchResults());
   };
 
   useEffect(() => {
     if (pageStatus === PageStatus.OK) {
-      updateState();
+      if (!prsError) {
+        updateState();
+      } else {
+        setPageStatus(PageStatus.WRONG_URL);
+      }
     }
   }, [lang, page]);
 
@@ -63,17 +64,17 @@ wrapper.getInitialPageProps(store => async(ctx) => {
   console.log('getInitialProps');
 
   if (ctx.req) { //on server
-    const [error, params] = parseFilmSearchParams(ctx.query);
+    const [prsError, prsParams] = parseFilmSearchParams(ctx.query);
 
-    if (error) {
+    if (prsError) {
       ctx.res && (ctx.res.statusCode = 404);
       return {fromServer: true, initPageStatus: PageStatus.WRONG_URL};
     }
 
+    const lang = store.getState().settings.lang;
+    store.dispatch(setFilmSearchLang(lang));
     await store.dispatch(fetchFilmSearchOptions());
-
-    store.dispatch(setFilmSearchParams(params));
-
+    store.dispatch(setFilmSearchParams(prsParams));
     await store.dispatch(fetchFilmSearchResults());
 
     const reqStatus = store.getState().filmSearch.reqStatus;

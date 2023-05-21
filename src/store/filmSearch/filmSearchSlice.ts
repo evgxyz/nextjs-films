@@ -2,7 +2,6 @@
 import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
 import {RootState} from '@/store';
 import {ReqStatus} from '@/units/status';
-import {Lang, langDefault} from '@/units/lang';
 import {
   FilmSearchOptions, filmSearchOptionsDefault,
   FilmSearchParams, filmSearchParamsDefault,
@@ -14,7 +13,6 @@ import {
 } from '@/api/filmApi';
 
 interface FilmSearchState {
-  lang: Lang,
   options: FilmSearchOptions,
   params: FilmSearchParams,
   results: FilmSearchResults,
@@ -22,7 +20,6 @@ interface FilmSearchState {
 }
 
 const filmSearchStateDefault: FilmSearchState = {
-  lang: langDefault,
   options: filmSearchOptionsDefault,
   params: filmSearchParamsDefault,
   results: filmSearchResultsDefault,
@@ -35,10 +32,6 @@ const filmSearchSlice = createSlice({
   initialState: structuredClone(filmSearchStateDefault),
 
   reducers: {
-    setFilmSearchLang: (state, action: PayloadAction<Lang>) => {
-      state.lang = action.payload;
-    },
-
     setFilmSearchParams: (state, action: PayloadAction<FilmSearchParams>) => {
       state.params = action.payload;
     },
@@ -99,7 +92,7 @@ export const fetchFilmSearchOptions =
 createAsyncThunk<FilmSearchOptions, void, {state: RootState, rejectValue: ReqStatus}>(
     'filmSearch/fetchFilmSearchOptions',
     async function (_unused, ThunkAPI) {
-      const lang = ThunkAPI.getState().filmSearch.lang;
+      const lang = ThunkAPI.getState().settings.lang;
       const {reqStatus, options} = await apiFetchFilmSearchOptions(lang);
       if (reqStatus === ReqStatus.OK && options) {
         return ThunkAPI.fulfillWithValue(options)
@@ -113,7 +106,7 @@ export const fetchFilmSearchResults =
   createAsyncThunk<FilmSearchResults, void, {state: RootState, rejectValue: ReqStatus}>(
     'filmSearch/fetchFilmSearchResults',
     async function (_unused, ThunkAPI) {
-      const lang = ThunkAPI.getState().filmSearch.lang;
+      const lang = ThunkAPI.getState().settings.lang;
       const params = ThunkAPI.getState().filmSearch.params;
       const {reqStatus, results} = await apiFetchFilmSearchResults(params, lang);
       if (reqStatus === ReqStatus.OK && results) {
@@ -125,7 +118,6 @@ export const fetchFilmSearchResults =
 );
 
 export const {
-  setFilmSearchLang,
   setFilmSearchParams,
   updateFilmSearchParams,
 } = filmSearchSlice.actions;

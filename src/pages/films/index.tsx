@@ -1,17 +1,15 @@
 
 import {NextPage} from 'next';
 import {useRouter} from 'next/router';
-import {useEffect, useState} from 'react';
+import {useState, useEffect} from 'react';
 import {wrapper, useAppSelector, useAppDispatch} from '@/store';
 import {NextPageProps, PageStatus} from '@/units/next';
-import {normalizeURL} from '@/units/url';
 import {ParsedUrlQuery} from 'querystring';
 import {FilmSearchParams, filmSearchParamsDefault} from '@/units/films';
 import {parseIntParam, parseIntArrParam} from '@/units/url';
 import {isReqError, reqErrorToHttpCode} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {
-  setFilmSearchLang,
   setFilmSearchParams, 
   fetchFilmSearchResults,
   fetchFilmSearchOptions
@@ -33,15 +31,15 @@ function({fromServer, initPageStatus}) {
   const page = prsParams?.page;
 
   const lang = useAppSelector(state => state.settings.lang);
-  const filmSearchLang = useAppSelector(state => state.filmSearch.lang);
   const dispatch = useAppDispatch();
+  
+  const [pageLang, setPageLang] = useState(() => lang);
 
   const updateState = async function() {
-    const updateLang = lang !== filmSearchLang;
+    const updateLang = lang !== pageLang;
 
     if (updateLang) {
-      console.log('setFilmSearchLang')
-      dispatch(setFilmSearchLang(lang));
+      setPageLang(lang);
     }
 
     if (firstFlag || updateLang) {
@@ -69,10 +67,14 @@ function({fromServer, initPageStatus}) {
   }, [lang, page]);
 
   if (pageStatus === PageStatus.WRONG_URL) {
-    return <MessagePage type={'ERROR'} title={strlang('WRONG_URL', lang)} />
+    return (
+      <MessagePage type={'ERROR'} title={strlang('WRONG_URL', lang)} />
+    )
   }
 
-  return <FilmSearchPage />
+  return (
+    <FilmSearchPage />
+  )
 }
 
 FilmSearchNextPage.getInitialProps = 
@@ -87,8 +89,6 @@ wrapper.getInitialPageProps(store => async(ctx) => {
       return {fromServer: true, initPageStatus: PageStatus.WRONG_URL};
     }
 
-    const lang = store.getState().settings.lang;
-    store.dispatch(setFilmSearchLang(lang));
     await store.dispatch(fetchFilmSearchOptions());
     store.dispatch(setFilmSearchParams(prsParams));
     await store.dispatch(fetchFilmSearchResults());

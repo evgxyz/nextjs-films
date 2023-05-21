@@ -18,46 +18,43 @@ interface FilmNextPageProps extends NextPageProps {};
 const FilmNextPage: NextPage<FilmNextPageProps> = function({fromServer, initPageStatus}) {
   console.log('FilmNextPage:', {fromServer, initPageStatus});
 
-  const router = useRouter();
-  const dispatch = useAppDispatch();
-  const lang = useAppSelector(state => state.settings.lang);
-
   const [pageStatus, setPageStatus] = useState(initPageStatus);
   const [firstFlag, setFirstFlag] = useState(true); //first render?
 
-  function initState() {
-    const [error, {filmId}] = parseFilmPageParams(router.query);
-    if (!error) {
-      dispatch(fetchFilmPage({filmId}));
-    } else {
-      setPageStatus(PageStatus.WRONG_URL);
-    }
-  }
+  const router = useRouter();
+  
+  const lang = useAppSelector(state => state.settings.lang);
+  const dispatch = useAppDispatch();
 
-  function updateState() {
-    dispatch(fetchFilmPage({}));
+  const [prsError, {filmId}] = parseFilmPageParams(router.query);
+
+  const updateState = async function() {
+    await dispatch(fetchFilmPage({filmId}));
   }
 
   useEffect(() => {
-    console.log('call useEffect')
-    if (pageStatus === PageStatus.OK) {
-      if (firstFlag) {
-        if (!fromServer) { 
-          initState();
+    if (pageStatus === PageStatus.OK) {  
+      if (!(fromServer && firstFlag)) {
+        if (!prsError) {
+          updateState();
+        } else {
+          setPageStatus(PageStatus.WRONG_URL);
         }
-        setFirstFlag(false);
       }
-      else {
-        updateState();
-      }
+
+      firstFlag && setFirstFlag(false);
     }
   }, [lang]);
 
   if (pageStatus === PageStatus.WRONG_URL) {
-    return <MessagePage type={'ERROR'} title={strlang('WRONG_URL', lang)} />
+    return (
+      <MessagePage type={'ERROR'} title={strlang('WRONG_URL', lang)} />
+    )
   }
   
-  return <FilmPage />
+  return (
+    <FilmPage />
+  )
 }
 
 FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) => {

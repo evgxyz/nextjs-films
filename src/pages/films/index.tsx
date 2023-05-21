@@ -27,13 +27,14 @@ function({fromServer, initPageStatus}) {
   const [firstFlag, setFirstFlag] = useState(true); //first render?
 
   const router = useRouter();
-  const [prsError, prsParams] = parseFilmSearchParams(router.query);
-  const page = prsParams?.page;
 
   const lang = useAppSelector(state => state.settings.lang);
   const dispatch = useAppDispatch();
   
   const [pageLang, setPageLang] = useState(() => lang);
+
+  const [prsError, prsParams] = parseFilmSearchParams(router.query);
+  const page = prsParams?.page;
 
   const updateState = async function() {
     const updateLang = lang !== pageLang;
@@ -60,9 +61,7 @@ function({fromServer, initPageStatus}) {
         }
       }
 
-      if (firstFlag) {
-        setFirstFlag(false);
-      }
+      firstFlag && setFirstFlag(false);
     }
   }, [lang, page]);
 

@@ -9,8 +9,8 @@ import {filmsMap, genresMap, countriesMap} from '@/data/filmData';
 import {delay} from '@/units/utils';
 import _ from 'lodash';
 
-function getFilm(filmId: FilmId, lang: Lang): (Film | undefined) 
-{
+function getFilm(filmId: FilmId, lang: Lang): (Film | undefined) {
+
   const filmRaw = filmsMap.get(filmId);
 
   if (!filmRaw) return undefined;
@@ -42,8 +42,8 @@ function getFilm(filmId: FilmId, lang: Lang): (Film | undefined)
 }
 
 export async function apiFetchFilmPage(filmId: FilmId, lang: Lang): 
-  Promise<{reqStatus: ReqStatus} & {film?: Film}> 
-{
+  Promise<{reqStatus: ReqStatus} & {film?: Film}> {
+//
   console.log('call apiFetchFilmPage');
   await delay(1000);
 
@@ -61,8 +61,8 @@ export async function apiFetchFilmPage(filmId: FilmId, lang: Lang):
 }
 
 export async function apiFetchFilmSearchOptions(lang: Lang): 
-  Promise<{reqStatus: ReqStatus} & {options?: FilmSearchOptions}> 
-{
+  Promise<{reqStatus: ReqStatus} & {options?: FilmSearchOptions}> {
+//
   console.log('call apiFetchFilmSearchOptions');
   await delay(1000);
 
@@ -94,19 +94,20 @@ export async function apiFetchFilmSearchOptions(lang: Lang):
 }
 
 export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: Lang): 
-  Promise<{reqStatus: ReqStatus} & {results?: FilmSearchResults}> 
-{
+  Promise<{reqStatus: ReqStatus} & {results?: FilmSearchResults}> {
+//
   console.log('call apiFetchFilmSearchResults');
   await delay(1000);
 
   let {
-    title,
+    text = '',
     genreIds,
     countryIds,
     page = 1,
     perPage = 10
   } = params;
 
+  text = text.toLowerCase();
   page = Math.max(1, page);
   perPage = Math.max(1, perPage);
 
@@ -117,7 +118,11 @@ export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: 
         _.intersection(genreIds, filmRaw.genreIds).length > 0 ) &&
       //countries
       ( !countryIds || countryIds.length == 0 || 
-        _.intersection(countryIds, filmRaw.countryIds).length > 0 )
+        _.intersection(countryIds, filmRaw.countryIds).length > 0 ) &&
+      //text
+      ( text === '' || 
+        filmRaw.title_ru.toLowerCase().includes(text) || 
+        filmRaw.title_en.toLowerCase().includes(text) )
     )
     .map(filmRaw => getFilm(filmRaw.id, lang))
     .filter(film => !!film) as Film[];

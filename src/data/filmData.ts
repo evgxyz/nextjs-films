@@ -20,6 +20,55 @@ const films = [
     title_en: "Film 3",
     genreIds: [3],
     countryIds: [4]
+  },
+  {
+    id: 4,
+    title_ru: "Фильм 4",
+    title_en: "Film 4",
+    genreIds: [1],
+    countryIds: [2]
+  },
+  {
+    id: 5,
+    title_ru: "Фильм 5",
+    title_en: "Film 5",
+    genreIds: [2],
+    countryIds: [1]
+  },
+  {
+    id: 6,
+    title_ru: "Фильм 6",
+    title_en: "Film 6",
+    genreIds: [1, 2],
+    countryIds: [3]
+  },
+  {
+    id: 7,
+    title_ru: "Фильм 7",
+    title_en: "Film 7",
+    genreIds: [1],
+    countryIds: [4]
+  },
+  {
+    id: 8,
+    title_ru: "Фильм 8",
+    title_en: "Film 8",
+    genreIds: [2, 4],
+    countryIds: [1, 4]
+  },
+  {
+    id: 9,
+    title_ru: "Фильм 9",
+    title_en: "Film 9",
+    genreIds: [1, 3],
+    countryIds: [1, 2, 4]
+  },
+  {
+    id: 10,
+    title_ru: "Фильм 10",
+    title_en: "Film 10",
+    genreIds: [2, 4],
+    countryIds: [2, 3, 4]
   }
 ];
 
@@ -38,6 +87,11 @@ const genres = [
     id: 3,
     name_ru: "Фантастика", 
     name_en: "Fiction"
+  },
+  {
+    id: 4,
+    name_ru: "Документальный", 
+    name_en: "Documentary"
   },
 ];
 

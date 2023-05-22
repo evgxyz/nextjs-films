@@ -31,11 +31,11 @@ export function FilmSearchPage() {
             baseUrl={url} 
             paramName={'page'} 
             start={1} 
-            count={7} 
+            count={filmSearch.results.totalPages ?? 1} 
             curr={filmSearch.params.page ?? 1}
           />
           <pre>
-            { JSON.stringify(filmSearch, null, 2) }
+            { JSON.stringify(filmSearch.results, null, 2) }
           </pre>
         </>
       )

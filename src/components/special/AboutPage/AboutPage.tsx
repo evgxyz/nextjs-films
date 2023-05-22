@@ -32,8 +32,8 @@ export function AboutPage() {
         baseUrl={'/films?genreIds=2+3&countryIds=1+3'} 
         paramName={'page'} 
         start={1} 
-        count={7} 
-        curr={3}
+        end={10} 
+        curr={6}
       />
       <p>Lorem ipsum dolor sit, 
         amet consectetur adipisicing elit. 

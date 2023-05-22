@@ -1,7 +1,7 @@
 
 import {useRouter} from 'next/router';
 import {useAppSelector, useAppDispatch} from '@/store';
-import {GenreId, CountryId} from '@/units/films';
+import {GenreId, CountryId} from '@/units/film';
 import {updateFilmSearchParams, fetchFilmSearchResults} from '@/store/filmSearch';
 import {buildIntArrParam} from '@/units/url';
 import _ from 'lodash';

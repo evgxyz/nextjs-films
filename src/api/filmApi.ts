@@ -4,7 +4,7 @@ import {ReqStatus} from '@/units/status';
 import {
   Film, FilmId, Genre, Country, 
   FilmSearchOptions, FilmSearchParams, FilmSearchResults,
-} from '@/units/films';
+} from '@/units/film';
 import {filmsMap, genresMap, countriesMap} from '@/data/filmData';
 import {delay} from '@/units/utils';
 import _ from 'lodash';

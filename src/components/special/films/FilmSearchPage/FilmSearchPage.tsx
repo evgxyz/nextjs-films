@@ -4,7 +4,7 @@ import {useAppSelector} from '@/store';
 import {ReqStatus} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {normalizeURL} from '@/units/url';
-import {perPageDefault} from '@/units/films';
+import {perPageDefault} from '@/units/film';
 import {MainLayout} from '@/components/layouts/MainLayout';
 import {MessageBox} from '@/components/common/MessageBox';
 import {LoadingBox} from '@/components/common/LoadingBox';
@@ -31,7 +31,7 @@ export function FilmSearchPage() {
             baseUrl={url} 
             paramName={'page'} 
             start={1} 
-            count={filmSearch.results.totalPages ?? 1} 
+            end={filmSearch.results.totalPages ?? 1} 
             curr={filmSearch.params.page ?? 1}
           />
           <pre>

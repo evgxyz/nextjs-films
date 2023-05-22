@@ -6,7 +6,7 @@ import {
   FilmSearchOptions, filmSearchOptionsDefault,
   FilmSearchParams, filmSearchParamsDefault,
   FilmSearchResults, filmSearchResultsDefault
-} from '@/units/films';
+} from '@/units/film';
 import {
   apiFetchFilmSearchResults, 
   apiFetchFilmSearchOptions,

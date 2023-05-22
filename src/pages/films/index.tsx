@@ -6,7 +6,7 @@ import {wrapper, useAppSelector, useAppDispatch} from '@/store';
 import {NextPageProps, PageStatus} from '@/units/next';
 import {ParsedUrlQuery} from 'querystring';
 import {FilmSearchParams, filmSearchParamsDefault} from '@/units/films';
-import {parseIntParam, parseIntArrParam} from '@/units/url';
+import {parseIntParam, parseIntArrParam, parseStrParam} from '@/units/url';
 import {isReqError, reqErrorToHttpCode} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {
@@ -107,8 +107,14 @@ wrapper.getInitialPageProps(store => async(ctx) => {
 });
 
 function parseFilmSearchParams(query: ParsedUrlQuery): [boolean, FilmSearchParams] {
-  let error = false;
+  
   const params = structuredClone(filmSearchParamsDefault);
+
+  { const [err, text] = parseStrParam(query, 'text');
+    if (!err) { 
+      params.text = text;
+    }
+  }
 
   { const [err, genreIds] = parseIntArrParam(query, 'genreIds');
     if (!err) { 
@@ -128,7 +134,7 @@ function parseFilmSearchParams(query: ParsedUrlQuery): [boolean, FilmSearchParam
     }
   }
 
-  return [error, params];
+  return [false, params];
 }
 
 export default FilmSearchNextPage;

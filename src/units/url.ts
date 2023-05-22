@@ -54,6 +54,23 @@ export function parseIntParam(query: ParsedUrlQuery, name: string): [boolean, nu
 }
 
 /**
+ * Parse an string parameter from a ParsedUrlQuery object
+ * @param query - object from router.query or ctx.query
+ * @param name - name of parsed parameter
+ * @returns array of error and parsed value
+ */
+export function parseStrParam(query: ParsedUrlQuery, name: string): [boolean, string] {
+  let error = true;
+  let str = '';
+  const paramStr = query[name];
+  if (_.isString(paramStr)) {
+    str = decodeURIComponent(paramStr);
+    error = false;
+  }
+  return [error, str];
+}
+
+/**
  * Parse an array of integers parameter from a ParsedUrlQuery object
  * @param query - object from router.query or ctx.query
  * @param name - name of parsed parameter

@@ -62,14 +62,25 @@ export function FilmSearchFilter() {
     router.push({query}, undefined, {shallow: true});
   }
 
-  //updateResults
-  function updateResults(ev: React.MouseEvent<HTMLButtonElement>) {
+  const changeText = function(ev: React.ChangeEvent<HTMLInputElement>) {
+    const text = ev.currentTarget.value.trim();
+    dispatch(updateFilmSearchParams({text}));
+  }
+
+  const updateResults = function (ev: React.SyntheticEvent) {
     ev.preventDefault();
     dispatch(fetchFilmSearchResults());
   }
 
   return (
     <div className={css['body']}>
+
+      <div className={css['text']}>
+        <form className={css['text-form']} onSubmit={updateResults}>
+          <input type='text' value={params.text} onChange={changeText} />
+          <button type='submit'>Search</button>
+        </form>
+      </div>
 
       <div className={css['genres']}>
         <ul>
@@ -105,7 +116,6 @@ export function FilmSearchFilter() {
         </ul>
       </div>
 
-      <button onClick={updateResults}>Search</button>
     </div>
   )
 }

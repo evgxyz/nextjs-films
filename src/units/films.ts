@@ -41,7 +41,7 @@ export const filmSearchOptionsDefault = {
 }
 
 export interface FilmSearchParams {
-  title?: string,
+  text?: string,
   genreIds?: GenreId[],
   countryIds?: CountryId[],
   page?: number,
@@ -52,7 +52,7 @@ export const pageDefault = 1;
 export const perPageDefault = 10;
 
 export const filmSearchParamsDefault: FilmSearchParams = { 
-  title: '',
+  text: '',
   genreIds: [],
   countryIds: [],
   page: pageDefault,

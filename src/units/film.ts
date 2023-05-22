@@ -49,7 +49,7 @@ export interface FilmSearchParams {
 }
 
 export const pageDefault = 1;
-export const perPageDefault = 3;
+export const perPageDefault = 2;
 
 export const filmSearchParamsDefault: FilmSearchParams = { 
   text: '',

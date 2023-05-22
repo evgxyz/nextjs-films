@@ -81,7 +81,7 @@ export function parseIntArrParam(query: ParsedUrlQuery, name: string): [boolean,
   let xArr: number[] = [];
   const paramStr = query[name];
   if (_.isString(paramStr)) {
-    xArr = decodeURI(paramStr as string).split(/[_\ ]/).map(s => parseInt(s));
+    xArr = decodeURIComponent(paramStr as string).split(/[_\ ]/).map(s => parseInt(s));
     let e = false;
     for (let x of xArr) {
       if (!Number.isInteger(x)) {

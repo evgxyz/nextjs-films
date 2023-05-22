@@ -115,7 +115,7 @@ function parseFilmSearchParams(query: ParsedUrlQuery): [boolean, FilmSearchParam
       params.text = text;
     }
   }
-
+  
   { const [err, genreIds] = parseIntArrParam(query, 'genreIds');
     if (!err) { 
       params.genreIds = genreIds;

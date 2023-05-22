@@ -52,22 +52,28 @@ export function FilmSearchFilter() {
     dispatch(fetchFilmSearchResults());
 
     const query = {...router.query};
-    
     if (countryIds.length > 0) {
       query.countryIds = buildIntArrParam(countryIds);
     } else {
       delete query.countryIds;
     }
-
     router.push({query}, undefined, {shallow: true});
   }
 
   const changeText = function(ev: React.ChangeEvent<HTMLInputElement>) {
-    const text = ev.currentTarget.value.trim();
+    const text = ev.currentTarget.value;
     dispatch(updateFilmSearchParams({text}));
+
+    const query = {...router.query};
+    if (text.length > 0) {
+      query.text = text;
+    } else {
+      delete query.text;
+    }
+    router.push({query}, undefined, {shallow: true});
   }
 
-  const updateResults = function (ev: React.SyntheticEvent) {
+  const updateResults = function(ev: React.SyntheticEvent) {
     ev.preventDefault();
     dispatch(fetchFilmSearchResults());
   }
@@ -78,7 +84,7 @@ export function FilmSearchFilter() {
       <div className={css['text']}>
         <form className={css['text-form']} onSubmit={updateResults}>
           <input type='text' value={params.text} onChange={changeText} />
-          <button type='submit'>Search</button>
+          <button type='submit' disabled={!params.text?.length}>Search</button>
         </form>
       </div>
 

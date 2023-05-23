@@ -127,12 +127,15 @@ export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: 
     .map(filmRaw => getFilm(filmRaw.id, lang))
     .filter(film => !!film) as Film[];
 
+  const totalPages = Math.ceil(films.length / perPage);
+  page = _.clamp(page, 1, totalPages);
+
   const indexFrom = perPage * (page - 1);
   const indexTo = indexFrom + perPage;
-  
+
   const results = {
     films: films.slice(indexFrom, indexTo),
-    totalPages: Math.ceil(films.length / perPage)
+    totalPages
   }
 
   return {

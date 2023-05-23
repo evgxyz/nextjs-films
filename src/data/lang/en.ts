@@ -16,6 +16,11 @@ const langDictEN = {
   ABOUT_PAGE_TITLE: 'About site',
 
   FILM_SEARCH_TITLE: 'Film search',
+
+  FILM_COUNTRY: 'Country',
+  FILM_COUNTRIES: 'Countries',
+  FILM_GENRE: 'Genre',
+  FILM_GENRES: 'Genres',
 }
 
 export default langDictEN;

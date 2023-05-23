@@ -4,12 +4,12 @@ import {useAppSelector} from '@/store';
 import {ReqStatus} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {normalizeURL} from '@/units/url';
-import {perPageDefault} from '@/units/film';
 import {MainLayout} from '@/components/layouts/MainLayout';
 import {MessageBox} from '@/components/common/MessageBox';
 import {LoadingBox} from '@/components/common/LoadingBox';
 import {Pagination} from '@/components/common/Pagination';
 import {FilmSearchFilter} from './FilmSearchFilter'; 
+import _ from 'lodash';
 import css from './FilmSearchPage.module.scss';
 
 export function FilmSearchPage() {
@@ -25,14 +25,18 @@ export function FilmSearchPage() {
 
   switch (filmSearch.reqStatus) {
     case ReqStatus.OK: {
+      const totalPages = filmSearch.results.totalPages ?? 1;
+      let page = filmSearch.params.page ?? 1;
+      page = _.clamp(page, 1, totalPages);
+      
       content = (
         <>
           <Pagination 
             baseUrl={url} 
             paramName={'page'} 
             start={1} 
-            end={filmSearch.results.totalPages ?? 1} 
-            curr={filmSearch.params.page ?? 1}
+            end={totalPages} 
+            curr={page}
           />
           <pre>
             { JSON.stringify(filmSearch.results, null, 2) }

@@ -27,8 +27,34 @@ export function FilmPage() {
       content = (
         <>
           <h1>{film.title}</h1>
-          <div>{`lang=${lang}`}</div>
-          <pre>{JSON.stringify(filmPage, null, 2)}</pre>
+
+          <div className={css['countries']}>
+            { strlang( 
+                film.countries.length > 1 ? 'FILM_COUNTRIES' : 'FILM_COUNTRY', 
+                lang
+              ) + ': ' 
+            }
+            { film.countries.map((country, idx) =>
+                <span key={country.id} className={css['country']}>
+                  { (idx > 0 ? ', ': '') + country.name }
+                </span>
+              )
+            }
+          </div>
+
+          <div className={css['genres']}>
+            { strlang( 
+                film.genres.length > 1 ? 'FILM_GENRES' : 'FILM_GENRE', 
+                lang
+              ) + ': ' 
+            }
+            { film.genres.map((genre, idx) =>
+                <span key={genre.id} className={css['genre']}>
+                  { (idx > 0 ? ', ': '') + genre.name }
+                </span>
+              )
+            }
+          </div>
         </>
       )
     } 

@@ -45,7 +45,7 @@ function FilmSearchItem({film}: FilmSearchItemProps) {
         }
         { film.countries.map((country, idx) =>
             <span key={country.id} className={css['country']}>
-              { (idx > 0 ? ', ': '') + country.name }
+              { (idx > 0 ? ', ': '') + country.name } 
             </span>
           )
         }

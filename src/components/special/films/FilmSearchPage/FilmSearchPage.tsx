@@ -29,17 +29,21 @@ export function FilmSearchPage() {
       const totalPages = filmSearch.results.totalPages ?? 1;
       let page = filmSearch.params.page ?? 1;
       page = _.clamp(page, 1, totalPages);
+
+      const pagination = 
+        <Pagination 
+          baseUrl={url} 
+          paramName={'page'} 
+          start={1} 
+          end={totalPages} 
+          curr={page}
+        />
       
       content = (
         <>
-          <Pagination 
-            baseUrl={url} 
-            paramName={'page'} 
-            start={1} 
-            end={totalPages} 
-            curr={page}
-          />
+          {pagination}
           <FilmSearchResults />
+          {pagination}
         </>
       )
     } break;

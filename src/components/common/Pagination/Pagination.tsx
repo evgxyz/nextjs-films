@@ -21,6 +21,14 @@ export function Pagination({baseUrl, paramName, start, end, curr}: PaginationPro
 
   start = Math.min(start, curr);
   end = Math.max(end, curr);
+
+  if (curr > start) {
+    htmlLeft.push(
+      <Link href={setURLParam(baseUrl, paramName, (curr - 1).toString())}>
+        <div className={css['item']}>{'<'}</div>
+      </Link>
+    );
+  }
    
   const outStart = Math.max(curr - around, start);
   
@@ -48,6 +56,14 @@ export function Pagination({baseUrl, paramName, start, end, curr}: PaginationPro
     if (outEnd < end - 1) {
       htmlRight.unshift('...');
     }
+  }
+
+  if (curr < end) {
+    htmlRight.push(
+      <Link href={setURLParam(baseUrl, paramName, (curr + 1).toString())}>
+        <div className={css['item']}>{'>'}</div>
+      </Link>
+    );
   }
   
   for (let p = outStart; p <= outEnd; p++) {

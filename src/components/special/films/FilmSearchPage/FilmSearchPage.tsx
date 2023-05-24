@@ -40,9 +40,6 @@ export function FilmSearchPage() {
             curr={page}
           />
           <FilmSearchResults />
-          {/* <pre>
-            { JSON.stringify(filmSearch.results, null, 2) }
-          </pre> */}
         </>
       )
     } break;

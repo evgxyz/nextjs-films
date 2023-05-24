@@ -1,6 +1,23 @@
 
 @import '@/styles/abstract';
 
-.genres {
+.body {
+  display: flex;
+  padding: 10px 0;
+  row-gap: 10px;
+  column-gap: 10px;
+}
+
+.film {
+  flex-basis: 300px;
+  padding: 10px;
+  border: 1px solid $color-1;
+}
+
+.film-countries {
+  color: pink;
+}
+
+.film-genres {
   color: yellow;
 }

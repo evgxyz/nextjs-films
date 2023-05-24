@@ -11,7 +11,7 @@ import {isReqError, reqErrorToHttpCode} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {fetchFilmPage} from '@/store/filmPage';
 import {MessagePage} from '@/components/general/MessagePage';
-import {FilmPage} from '@/components/special/films/FilmPage';
+import {FilmPage} from '@/components/special/FilmPage';
 
 interface FilmNextPageProps extends NextPageProps {};
 

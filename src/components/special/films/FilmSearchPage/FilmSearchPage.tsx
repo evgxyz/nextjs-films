@@ -9,6 +9,7 @@ import {MessageBox} from '@/components/common/MessageBox';
 import {LoadingBox} from '@/components/common/LoadingBox';
 import {Pagination} from '@/components/common/Pagination';
 import {FilmSearchFilter} from './FilmSearchFilter'; 
+import {FilmSearchResults} from './FilmSearchResults';
 import _ from 'lodash';
 import css from './FilmSearchPage.module.scss';
 
@@ -38,9 +39,10 @@ export function FilmSearchPage() {
             end={totalPages} 
             curr={page}
           />
-          <pre>
+          <FilmSearchResults />
+          {/* <pre>
             { JSON.stringify(filmSearch.results, null, 2) }
-          </pre>
+          </pre> */}
         </>
       )
     } break;

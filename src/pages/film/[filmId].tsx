@@ -69,7 +69,7 @@ FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) =
 
     await store.dispatch(fetchFilmPage({filmId}));
 
-    const reqStatus = store.getState().filmPage.reqStatus;
+    const reqStatus = store.getState().filmPage.reqStatus.film;
     if (isReqStatusError(reqStatus)) {
       ctx.res && (ctx.res.statusCode = reqStatusToHttpCode(reqStatus));
       return {fromServer: true, initPageStatus: PageStatus.ERROR};
@@ -85,8 +85,12 @@ FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) =
 
 function parseFilmPageParams(query: ParsedUrlQuery): [boolean, {filmId: FilmId}] {
   let error = false;
+
   const [err, filmId] = parseIntParam(query, 'filmId');
-  if (err) error = true;
+  if (err) {
+    error = true;
+  }
+
   return [error, {filmId}];
 }
 

@@ -7,12 +7,16 @@ import {apiFetchFilmPage} from '@/api/filmApi';
 
 interface FilmPageState {
   film: Film,
-  reqStatus: ReqStatus,
+  reqStatus: {
+    film: ReqStatus,
+  }
 }
 
 const filmPageStateDefault: FilmPageState = {
   film: filmDefault,
-  reqStatus: ReqStatus.NONE,
+  reqStatus: {
+    film: ReqStatus.NONE
+  },
 }
 
 const filmPageSlice = createSlice({
@@ -31,32 +35,31 @@ const filmPageSlice = createSlice({
       .addCase(
         fetchFilmPage.pending, 
         (state) => {
-          state.reqStatus = ReqStatus.LOADING;
+          state.reqStatus.film = ReqStatus.LOADING;
         }
       )
       .addCase(
         fetchFilmPage.fulfilled, 
         (state, action) => {
           state.film = action.payload;
-          state.reqStatus = ReqStatus.OK;
+          state.reqStatus.film = ReqStatus.OK;
         }
       )
       .addCase(
         fetchFilmPage.rejected, 
         (state, action) => {
           state.film = filmDefault;
-          state.reqStatus = action.payload ?? ReqStatus.ERROR;
+          state.reqStatus.film = action.payload ?? ReqStatus.ERROR;
         }
       )
   }
 });
 
 export const fetchFilmPage = 
-  createAsyncThunk<Film, {filmId?: FilmId}, {state: RootState, rejectValue: ReqStatus}>(
+  createAsyncThunk<Film, {filmId: FilmId}, {state: RootState, rejectValue: ReqStatus}>(
     'filmPage/fetchFilmPage',
     async function ({filmId}, ThunkAPI) {
       const lang = ThunkAPI.getState().settings.lang;
-      filmId ??= ThunkAPI.getState().filmPage.film.id;      
       const {reqStatus, film} = await apiFetchFilmPage(filmId, lang);
       if (reqStatus === ReqStatus.OK && film) {
         return ThunkAPI.fulfillWithValue(film)

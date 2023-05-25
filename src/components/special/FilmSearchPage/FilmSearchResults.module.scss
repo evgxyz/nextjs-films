@@ -2,6 +2,10 @@
 @import '@/styles/abstract';
 
 .body {
+  margin: 10px 0;
+}
+
+.film-list {
   display: flex;
   padding: 10px 0;
   row-gap: 10px;

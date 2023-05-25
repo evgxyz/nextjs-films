@@ -7,7 +7,6 @@ import {normalizeURL} from '@/units/url';
 import {MainLayout} from '@/components/layouts/MainLayout';
 import {MessageBox} from '@/components/common/MessageBox';
 import {LoadingBox} from '@/components/common/LoadingBox';
-import {Pagination} from '@/components/common/Pagination';
 import {FilmSearchFilter} from './FilmSearchFilter'; 
 import {FilmSearchResults} from './FilmSearchResults';
 import _ from 'lodash';
@@ -30,9 +29,7 @@ export function FilmSearchPage() {
   );
 
   let contentHTML = <></>;
-
   switch (filmSearch.reqStatus.res) {
-
     case ReqStatus.LOADING: {
       contentHTML = (
         <LoadingBox />
@@ -40,25 +37,8 @@ export function FilmSearchPage() {
     } break;
 
     case ReqStatus.OK: {
-      const totalPages = filmSearch.results.totalPages ?? 1;
-      let page = filmSearch.params.page ?? 1;
-      page = _.clamp(page, 1, totalPages);
-
-      const pagination = 
-        <Pagination 
-          baseUrl={url} 
-          paramName={'page'} 
-          start={1} 
-          end={totalPages} 
-          curr={page}
-        />
-      
       contentHTML = (
-        <>
-          {pagination}
-          <FilmSearchResults />
-          {pagination}
-        </>
+        <FilmSearchResults url={url} />
       )
     } break;
    

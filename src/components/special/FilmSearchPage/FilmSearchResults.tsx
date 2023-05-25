@@ -3,29 +3,54 @@ import {useAppSelector} from '@/store';
 import {strlang} from '@/units/lang';
 import Link from '@/next/Link';
 import {Film} from '@/units/film';
+import {Pagination} from '@/components/common/Pagination';
+import _ from 'lodash';
 import css from './FilmSearchResults.module.scss';
 
-export function FilmSearchResults() {
+//FilmSearchResults
+interface FilmSearchResultsProps {
+  url: string,
+}
+
+export function FilmSearchResults({url}: FilmSearchResultsProps) {
 
   const lang = useAppSelector(state => state.settings.lang);
-  const results = useAppSelector(state => state.filmSearch.results);
+  const filmSearch = useAppSelector(state => state.filmSearch);
 
+  const totalPages = filmSearch.results.totalPages ?? 1;
+  let page = filmSearch.params.page ?? 1;
+  page = _.clamp(page, 1, totalPages);
+
+  const pagination = (
+    <Pagination 
+      baseUrl={url} 
+      paramName={'page'} 
+      start={1} 
+      end={totalPages} 
+      curr={page}
+    />
+  );
+      
   return (
     <div className={css['body']}>
-      { results.films.map(film => 
-          <FilmSearchItem film={film} />
-        )
-      }
+      {pagination}
+      <div className={css['film-list']}>
+        { filmSearch.results.films.map(film => 
+            <FilmSearchItem film={film} />
+          )
+        }
+      </div>
+      {pagination}
     </div>
   )
 }
 
+//FilmSearchItem
 interface FilmSearchItemProps {
   film: Film,
 }
 
 function FilmSearchItem({film}: FilmSearchItemProps) {
-
   const lang = useAppSelector(state => state.settings.lang);
 
   return (

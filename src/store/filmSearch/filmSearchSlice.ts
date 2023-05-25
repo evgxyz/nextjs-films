@@ -1,7 +1,7 @@
 
 import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
 import {RootState} from '@/store';
-import {ReqStatus} from '@/units/status';
+import {ReqStatus, isReqStatusError, isReqStatusOK} from '@/units/status';
 import {
   FilmSearchOptions, filmSearchOptionsDefault,
   FilmSearchParams, filmSearchParamsDefault,
@@ -16,14 +16,20 @@ interface FilmSearchState {
   options: FilmSearchOptions,
   params: FilmSearchParams,
   results: FilmSearchResults,
-  reqStatus: ReqStatus,
+  reqStatus: {
+    opt: ReqStatus,
+    res: ReqStatus,
+  },
 }
 
 const filmSearchStateDefault: FilmSearchState = {
   options: filmSearchOptionsDefault,
   params: filmSearchParamsDefault,
   results: filmSearchResultsDefault,
-  reqStatus: ReqStatus.NONE,
+  reqStatus: {
+    opt: ReqStatus.NONE,
+    res: ReqStatus.NONE,
+  },
 }
 
 const filmSearchSlice = createSlice({
@@ -48,20 +54,20 @@ const filmSearchSlice = createSlice({
         fetchFilmSearchOptions.pending, 
         (state) => {
           state.options = structuredClone(filmSearchOptionsDefault);
-          state.reqStatus = ReqStatus.LOADING;
+          state.reqStatus.opt = ReqStatus.LOADING;
         }
       )
       .addCase(
         fetchFilmSearchOptions.fulfilled, 
         (state, action) => {
           state.options = action.payload;
-          state.reqStatus = ReqStatus.OK;
+          state.reqStatus.opt = ReqStatus.OK;
         }
       )
       .addCase(
         fetchFilmSearchOptions.rejected, 
         (state, action) => {
-          state.reqStatus = action.payload ?? ReqStatus.ERROR;
+          state.reqStatus.opt = action.payload ?? ReqStatus.ERROR;
         }
       )
       //fetchFilmSearchResults
@@ -69,20 +75,20 @@ const filmSearchSlice = createSlice({
         fetchFilmSearchResults.pending, 
         (state) => {
           state.results = structuredClone(filmSearchResultsDefault);
-          state.reqStatus = ReqStatus.LOADING;
+          state.reqStatus.res = ReqStatus.LOADING;
         }
       )
       .addCase(
         fetchFilmSearchResults.fulfilled, 
         (state, action) => {
           state.results = action.payload;
-          state.reqStatus = ReqStatus.OK;
+          state.reqStatus.res = ReqStatus.OK;
         }
       )
       .addCase(
         fetchFilmSearchResults.rejected, 
         (state, action) => {
-          state.reqStatus = action.payload ?? ReqStatus.ERROR;
+          state.reqStatus.res = action.payload ?? ReqStatus.ERROR;
         }
       )
   }
@@ -94,7 +100,7 @@ createAsyncThunk<FilmSearchOptions, void, {state: RootState, rejectValue: ReqSta
     async function (_unused, ThunkAPI) {
       const lang = ThunkAPI.getState().settings.lang;
       const {reqStatus, options} = await apiFetchFilmSearchOptions(lang);
-      if (reqStatus === ReqStatus.OK && options) {
+      if (isReqStatusOK(reqStatus) && options) {
         return ThunkAPI.fulfillWithValue(options)
       } else {
         return ThunkAPI.rejectWithValue(reqStatus)
@@ -105,14 +111,19 @@ createAsyncThunk<FilmSearchOptions, void, {state: RootState, rejectValue: ReqSta
 export const fetchFilmSearchResults = 
   createAsyncThunk<FilmSearchResults, void, {state: RootState, rejectValue: ReqStatus}>(
     'filmSearch/fetchFilmSearchResults',
-    async function (_unused, ThunkAPI) {
+    async function (_unused, ThunkAPI) {   
+      const reqStatusOpt = ThunkAPI.getState().filmSearch.reqStatus.opt;
+      if (isReqStatusError(reqStatusOpt)) {
+        return ThunkAPI.rejectWithValue(reqStatusOpt);
+      }
+
       const lang = ThunkAPI.getState().settings.lang;
       const params = ThunkAPI.getState().filmSearch.params;
       const {reqStatus, results} = await apiFetchFilmSearchResults(params, lang);
-      if (reqStatus === ReqStatus.OK && results) {
-        return ThunkAPI.fulfillWithValue(results)
+      if (isReqStatusOK(reqStatus) && results) {
+        return ThunkAPI.fulfillWithValue(results);
       } else {
-        return ThunkAPI.rejectWithValue(reqStatus)
+        return ThunkAPI.rejectWithValue(reqStatus);
       } 
     }
 );

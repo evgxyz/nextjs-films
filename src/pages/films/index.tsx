@@ -7,7 +7,7 @@ import {NextPageProps, PageStatus} from '@/units/next';
 import {ParsedUrlQuery} from 'querystring';
 import {FilmSearchParams, filmSearchParamsDefault} from '@/units/film';
 import {parseIntParam, parseIntArrParam, parseStrParam} from '@/units/url';
-import {isReqError, reqErrorToHttpCode} from '@/units/status';
+import {isReqStatusError, reqStatusToHttpCode} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {
   setFilmSearchParams, 
@@ -20,7 +20,8 @@ import {FilmSearchPage} from '@/components/special/FilmSearchPage';
 interface FilmSearchNextPageProps extends NextPageProps {};
 
 const FilmSearchNextPage: NextPage<FilmSearchNextPageProps> = 
-function({fromServer, initPageStatus}) {
+  function({fromServer, initPageStatus}) {
+//
   console.log('FilmSearchNextPage:', {fromServer, initPageStatus});
 
   const [pageStatus, setPageStatus] = useState(initPageStatus);
@@ -29,6 +30,7 @@ function({fromServer, initPageStatus}) {
   const router = useRouter();
 
   const lang = useAppSelector(state => state.settings.lang);
+  const filmSearch = useAppSelector(state => state.filmSearch);
   const dispatch = useAppDispatch();
   
   const [pageLang, setPageLang] = useState(() => lang);
@@ -48,6 +50,7 @@ function({fromServer, initPageStatus}) {
     }
 
     dispatch(setFilmSearchParams(prsParams));
+
     await dispatch(fetchFilmSearchResults());
   };
 
@@ -77,7 +80,8 @@ function({fromServer, initPageStatus}) {
 }
 
 FilmSearchNextPage.getInitialProps = 
-wrapper.getInitialPageProps(store => async(ctx) => {
+  wrapper.getInitialPageProps(store => async(ctx) => {
+//
   console.log('getInitialProps');
 
   if (ctx.req) { //on server
@@ -89,15 +93,16 @@ wrapper.getInitialPageProps(store => async(ctx) => {
     }
 
     await store.dispatch(fetchFilmSearchOptions());
+
     store.dispatch(setFilmSearchParams(prsParams));
+
     await store.dispatch(fetchFilmSearchResults());
 
-    const reqStatus = store.getState().filmSearch.reqStatus;
-    if (isReqError(reqStatus)) {
-      ctx.res && (ctx.res.statusCode = reqErrorToHttpCode(reqStatus));
+    const reqStatus = store.getState().filmSearch.reqStatus.res;
+    if (isReqStatusError(reqStatus)) {
+      ctx.res && (ctx.res.statusCode = reqStatusToHttpCode(reqStatus));
       return {fromServer: true, initPageStatus: PageStatus.ERROR};
-    } 
-    else {
+    } else {
       return {fromServer: true, initPageStatus: PageStatus.OK};
     }
   } 

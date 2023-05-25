@@ -1,7 +1,7 @@
 
 import {useRouter} from 'next/router';
 import {useAppSelector} from '@/store';
-import {ReqStatus} from '@/units/status';
+import {ReqStatus, isReqStatusOK} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {normalizeURL} from '@/units/url';
 import {MainLayout} from '@/components/layouts/MainLayout';
@@ -22,9 +22,23 @@ export function FilmSearchPage() {
   const filmSearch = useAppSelector(state => state.filmSearch);
 
   let title = strlang('FILM_SEARCH_TITLE', lang);
-  let content = <></>;
 
-  switch (filmSearch.reqStatus) {
+  let filterHTML = (
+    isReqStatusOK(filmSearch.reqStatus.opt) ? 
+      <FilmSearchFilter /> 
+    : <></>
+  );
+
+  let contentHTML = <></>;
+
+  switch (filmSearch.reqStatus.res) {
+
+    case ReqStatus.LOADING: {
+      contentHTML = (
+        <LoadingBox />
+      )
+    } break;
+
     case ReqStatus.OK: {
       const totalPages = filmSearch.results.totalPages ?? 1;
       let page = filmSearch.params.page ?? 1;
@@ -39,7 +53,7 @@ export function FilmSearchPage() {
           curr={page}
         />
       
-      content = (
+      contentHTML = (
         <>
           {pagination}
           <FilmSearchResults />
@@ -47,18 +61,15 @@ export function FilmSearchPage() {
         </>
       )
     } break;
-    case ReqStatus.LOADING: {
-      content = (
-        <LoadingBox />
-      )
-    } break;
+   
     case ReqStatus.NOT_FOUND: {
-      content = (
+      contentHTML = (
         <MessageBox type={'ERROR'} title={strlang('NOT_FOUND', lang)} />
       )
     } break;
+
     case ReqStatus.ERROR: {
-      content = (
+      contentHTML = (
         <MessageBox type={'ERROR'} title={strlang('ERROR', lang)} />
       )
     } break;
@@ -74,8 +85,8 @@ export function FilmSearchPage() {
   return (
     <MainLayout pageEnv={pageEnv}>
       <h1 className='page-title'>{title}</h1>
-      <FilmSearchFilter />
-      {content}
+      {filterHTML}
+      {contentHTML}
     </MainLayout>
   )
 }

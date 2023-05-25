@@ -7,7 +7,7 @@ import {NextPageProps, PageStatus} from '@/units/next';
 import {ParsedUrlQuery} from 'querystring';
 import {FilmId} from '@/units/film';
 import {parseIntParam} from '@/units/url';
-import {isReqError, reqErrorToHttpCode} from '@/units/status';
+import {isReqStatusError, reqStatusToHttpCode} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {fetchFilmPage} from '@/store/filmPage';
 import {MessagePage} from '@/components/general/MessagePage';
@@ -70,8 +70,8 @@ FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) =
     await store.dispatch(fetchFilmPage({filmId}));
 
     const reqStatus = store.getState().filmPage.reqStatus;
-    if (isReqError(reqStatus)) {
-      ctx.res && (ctx.res.statusCode = reqErrorToHttpCode(reqStatus));
+    if (isReqStatusError(reqStatus)) {
+      ctx.res && (ctx.res.statusCode = reqStatusToHttpCode(reqStatus));
       return {fromServer: true, initPageStatus: PageStatus.ERROR};
     } 
     else {

@@ -7,7 +7,11 @@ export enum ReqStatus {
   ERROR = 'ERROR',
 }
 
-export function isReqError(reqStatus: ReqStatus) {
+export function isReqStatusOK(reqStatus: ReqStatus) {
+  return (reqStatus === ReqStatus.OK);
+}
+
+export function isReqStatusError(reqStatus: ReqStatus) {
   const errorReqStatusArr = [
     ReqStatus.NOT_FOUND,
     ReqStatus.ERROR
@@ -15,7 +19,7 @@ export function isReqError(reqStatus: ReqStatus) {
   return errorReqStatusArr.includes(reqStatus);
 }
 
-export function reqErrorToHttpCode(reqStatus: ReqStatus) {
+export function reqStatusToHttpCode(reqStatus: ReqStatus) {
   switch (reqStatus) {
     case ReqStatus.NOT_FOUND: 
       return 404;

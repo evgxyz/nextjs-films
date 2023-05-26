@@ -1,6 +1,46 @@
 
 @import '@/styles/abstract';
 
+.body {
+  display: flex;
+  border: 1px solid $color-1;
+  column-gap: 10px;
+}
+
 .genres {
+  flex-basis: 200px;
   color: yellow;
+}
+
+.countries {
+  flex-basis: 200px;
+  color: pink;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-btn {
+  padding: 5px;
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 30px;
+  margin: 0;
+  padding: 0;
+  height: 0;
+  overflow: hidden;
+  background-color: $bg-color-2;
+  @include debug-border(green);
+
+  &:focus {
+    height: auto;
+  }
+
+  & li {
+    list-style-type: none;
+    padding: 5px;
+  }
 }

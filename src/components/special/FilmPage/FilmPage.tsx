@@ -14,17 +14,22 @@ export function FilmPage() {
   const router = useRouter();
   const lang = useAppSelector(state => state.settings.lang);
   const filmPage = useAppSelector(state => state.filmPage);
-  const {reqStatus, film} = filmPage;
-
-  console.log('reqStatus:', reqStatus)
 
   let title = '';
-  let content = <></>;
+  let contentHTML = <></>;
 
-  switch (reqStatus) {
+  switch (filmPage.reqStatus.film) {
+    case ReqStatus.LOADING: {
+      contentHTML = (
+        <LoadingBox />
+      )
+    } 
+    break;
+
     case ReqStatus.OK: {
+      const film = filmPage.film;
       title = film.title;
-      content = (
+      contentHTML = (
         <>
           <h1>{film.title}</h1>
 
@@ -59,18 +64,14 @@ export function FilmPage() {
       )
     } 
     break;
-    case ReqStatus.LOADING: {
-      content = (
-        <LoadingBox />
-      )
-    } 
-    break;
+    
     case ReqStatus.ERROR: {
-      content = (
+      contentHTML = (
         <MessageBox type={'ERROR'} title={strlang('ERROR', lang)} />
       )
     } 
     break;
+
     case ReqStatus.NOT_FOUND: {
       return (
         <MessagePage type={'ERROR'} title={strlang('NOT_FOUND', lang)} />
@@ -87,7 +88,7 @@ export function FilmPage() {
 
   return (
     <MainLayout pageEnv={pageEnv}>
-      {content}
+      {contentHTML}
     </MainLayout>
   )
 }

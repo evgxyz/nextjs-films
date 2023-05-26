@@ -36,7 +36,7 @@ export function FilmSearchResults({url}: FilmSearchResultsProps) {
       {pagination}
       <div className={css['film-list']}>
         { filmSearch.results.films.map(film => 
-            <FilmSearchItem film={film} />
+            <FilmSearchItem key={film.id} film={film} />
           )
         }
       </div>

@@ -24,7 +24,7 @@ export function Pagination({baseUrl, paramName, start, end, curr}: PaginationPro
 
   if (curr > start) {
     htmlLeft.push(
-      <Link href={setURLParam(baseUrl, paramName, (curr - 1).toString())}>
+      <Link key={'prev'} href={setURLParam(baseUrl, paramName, (curr - 1).toString())}>
         <div className={css['item']}>{'<'}</div>
       </Link>
     );
@@ -34,13 +34,13 @@ export function Pagination({baseUrl, paramName, start, end, curr}: PaginationPro
   
   if (outStart > start) {
     htmlLeft.push(
-      <Link href={setURLParam(baseUrl, paramName, start.toString())}>
+      <Link key={start} href={setURLParam(baseUrl, paramName, start.toString())}>
         <div className={css['item']}>{start}</div>
       </Link>
     );
 
     if (outStart > start + 1) {
-      htmlLeft.push('...');
+      htmlLeft.push(<span key={'leftDots'}>{'...'}</span>);
     }
   }
   
@@ -48,19 +48,19 @@ export function Pagination({baseUrl, paramName, start, end, curr}: PaginationPro
   
   if (outEnd < end) {
     htmlRight.push(
-      <Link href={setURLParam(baseUrl, paramName, end.toString())}>
+      <Link key={end} href={setURLParam(baseUrl, paramName, end.toString())}>
         <div className={css['item']}>{end}</div>
       </Link>
     );
 
     if (outEnd < end - 1) {
-      htmlRight.unshift('...');
+      htmlRight.unshift(<span key={'rightDots'}>{'...'}</span>);
     }
   }
 
   if (curr < end) {
     htmlRight.push(
-      <Link href={setURLParam(baseUrl, paramName, (curr + 1).toString())}>
+      <Link key={'next'} href={setURLParam(baseUrl, paramName, (curr + 1).toString())}>
         <div className={css['item']}>{'>'}</div>
       </Link>
     );
@@ -69,13 +69,13 @@ export function Pagination({baseUrl, paramName, start, end, curr}: PaginationPro
   for (let p = outStart; p <= outEnd; p++) {
     if (p !== curr) {
       html.push(
-        <Link href={setURLParam(baseUrl, paramName, p.toString())}>
+        <Link key={p} href={setURLParam(baseUrl, paramName, p.toString())}>
           <div className={css['item']}>{p}</div>
         </Link>
       )
     } else {
       html.push(
-        <div className={[css['item'], css['curr-item']].join(' ')}>{p}</div>
+        <div key={p} className={[css['item'], css['curr-item']].join(' ')}>{p}</div>
       )  
     }
   }

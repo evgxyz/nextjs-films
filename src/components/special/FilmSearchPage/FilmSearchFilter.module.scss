@@ -4,43 +4,56 @@
 .body {
   display: flex;
   border: 1px solid $color-1;
-  column-gap: 10px;
+  align-items: center;
+  column-gap: 5px;
 }
 
 .genres {
-  flex-basis: 200px;
+  flex-basis: 12em;
   color: yellow;
 }
 
 .countries {
-  flex-basis: 200px;
+  flex-basis: 12em;
   color: pink;
 }
 
 .dropdown {
   position: relative;
+  width: 100%;
 }
 
-.dropdown-btn {
+.dropdown .dropdown-btn {
   padding: 5px;
 }
 
-.dropdown-list {
+.dropdown .dropdown-btn__icon {
+  margin-left: 0.2em;
+}
+
+.dropdown .dropdown-btn__icon::after {
+  content: ' ▼';
+}
+
+.dropdown.--exp .dropdown-btn__icon::after {
+  content: ' ▲';
+}
+
+.dropdown .dropdown-list {
   position: absolute;
-  top: 30px;
   margin: 0;
   padding: 0;
+  width: 100%;
   height: 0;
   overflow: hidden;
   background-color: $bg-color-2;
-  @include debug-border(green);
-
-  &.--exp {
-    height: auto;
-  }
 
   & li {
     list-style-type: none;
     padding: 5px;
   }
+}
+
+.dropdown.--exp .dropdown-list {
+  height: auto;
 }

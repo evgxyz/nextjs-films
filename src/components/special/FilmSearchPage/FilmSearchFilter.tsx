@@ -30,7 +30,8 @@ export function FilmSearchFilter() {
     }
     genreIds.sort();
 
-    dispatch(updateFilmSearchParams({genreIds}));
+    dispatch(updateFilmSearchParams({genreIds, page: 1}));
+
     dispatch(fetchFilmSearchResults());
 
     const query = {...router.query};
@@ -39,6 +40,7 @@ export function FilmSearchFilter() {
     } else {
       delete query.genreIds;
     }
+    query.page = '1';
     router.push({query}, undefined, {shallow: true});
   }
 
@@ -53,7 +55,7 @@ export function FilmSearchFilter() {
     }
     countryIds.sort();
 
-    dispatch(updateFilmSearchParams({countryIds}));
+    dispatch(updateFilmSearchParams({countryIds, page: 1}));
 
     dispatch(fetchFilmSearchResults());
 
@@ -63,12 +65,14 @@ export function FilmSearchFilter() {
     } else {
       delete query.countryIds;
     }
+    query.page = '1';
     router.push({query}, undefined, {shallow: true});
   }
 
   const changeText = function(ev: React.ChangeEvent<HTMLInputElement>) {
     const text = ev.currentTarget.value;
-    dispatch(updateFilmSearchParams({text}));
+    
+    dispatch(updateFilmSearchParams({text, page: 1}));
 
     if (text === '') {
       dispatch(fetchFilmSearchResults());
@@ -80,6 +84,7 @@ export function FilmSearchFilter() {
     } else {
       delete query.text;
     }
+    query.page = '1';
     router.push({query}, undefined, {shallow: true});
   }
 
@@ -117,13 +122,11 @@ export function FilmSearchFilter() {
           tabIndex={0}
           onBlur={onBlurGenres}
         >
-          <div 
-            className={[css['dropdown-btn'], genresExp ? css['--exp'] : ''].join(' ')}
-            onClick={toggleGenres}
-          >
+          <div className={css['dropdown-btn']} onClick={toggleGenres}>
             {strlang('FILM_FILTER_GENRES', lang)}
+            <span className={css['dropdown-btn__icon']}></span>
           </div>
-          <ul className={[css['dropdown-list'], genresExp ? css['--exp'] : ''].join(' ')}>
+          <ul className={css['dropdown-list']}>
             { options.genres.map(genre =>
                 <li key={genre.id}>
                   <label>
@@ -148,8 +151,9 @@ export function FilmSearchFilter() {
         >
           <div className={css['dropdown-btn']} onClick={toggleCountries}>
             {strlang('FILM_FILTER_COUNTRIES', lang)}
+            <span className={css['dropdown-btn__icon']}></span>
           </div>
-          <ul className={[css['dropdown-list'], countriesExp ? css['--exp'] : ''].join(' ')}>
+          <ul className={css['dropdown-list']}>
             { options.countries.map(country =>
                 <li key={country.id}>
                   <label>

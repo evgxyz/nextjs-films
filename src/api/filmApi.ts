@@ -3,10 +3,12 @@ import {Lang} from '@/units/lang';
 import {ReqStatus} from '@/units/status';
 import {
   Film, FilmId, Genre, Country, 
-  FilmSearchOptions, FilmSearchParams, FilmSearchResults,
+  FilmSearchOptions, 
+  FilmSearchParams, isFilmSearchSort, filmSearchSortDefault, 
+  FilmSearchResults, 
 } from '@/units/film';
 import {filmsMap, genresMap, countriesMap} from '@/data/filmData';
-import {delay} from '@/units/utils';
+import {signCompare, delay} from '@/units/utils';
 import _ from 'lodash';
 
 function getFilm(filmId: FilmId, lang: Lang): (Film | undefined) {
@@ -103,11 +105,37 @@ export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: 
     text = '',
     genreIds,
     countryIds,
+    sort = filmSearchSortDefault,
     page = 1,
     perPage = 10
   } = params;
 
   text = text.toLowerCase();
+
+  if (!isFilmSearchSort(sort)) {
+    sort = filmSearchSortDefault;
+  }
+
+  let sortCompareFun: (filmX: Film, filmY: Film) => number;
+  switch (sort) {
+    case 'title': 
+    default: {
+      sortCompareFun = (filmX, filmY) => signCompare(filmX.title, filmY.title);
+    } break;
+
+    case 'title_DESC': {
+      sortCompareFun = (filmX, filmY) => -signCompare(filmX.title, filmY.title);
+    } break;
+
+    /* case 'date': {
+      sortCompareFun = (filmX, filmY) => signCompare(filmX.date, filmY.date);
+    } break;
+
+    case 'date_DESC': {
+      sortCompareFun = (filmX, filmY) => -signCompare(filmX.date, filmY.date);
+    } break; */
+  }
+
   page = Math.max(1, page);
   perPage = Math.max(1, perPage);
 
@@ -126,6 +154,8 @@ export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: 
     )
     .map(filmRaw => getFilm(filmRaw.id, lang))
     .filter(film => !!film) as Film[];
+  
+  films.sort(sortCompareFun);
 
   const totalPages = Math.ceil(films.length / perPage);
   page = _.clamp(page, 1, totalPages);

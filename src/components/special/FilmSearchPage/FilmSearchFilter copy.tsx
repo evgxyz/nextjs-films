@@ -60,6 +60,7 @@ export function FilmSearchFilter() {
     updateRouterParams();
   }
 
+  //updateRouterParams
   const updateRouterParams = function() {
     const query = {...router.query};
 
@@ -89,11 +90,13 @@ export function FilmSearchFilter() {
     router.push({query}, undefined, {shallow: true}); 
   }
 
+  //updateResults
   const updateResults = function(ev: React.FormEvent) {
     ev.preventDefault();
     dispatch(fetchFilmSearchResults());
   }
 
+  //filter states
   const toggleGenres = function() {
     setGenresExp(exp => !exp);
   }

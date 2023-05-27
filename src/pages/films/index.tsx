@@ -133,6 +133,12 @@ function parseFilmSearchParams(query: ParsedUrlQuery): [boolean, FilmSearchParam
     }
   }
 
+  { const [err, sort] = parseStrParam(query, 'sort');
+    if (!err) { 
+      params.sort = sort;
+    }
+  }
+
   { const [err, page] = parseIntParam(query, 'page');
     if (!err) { 
       params.page = page;

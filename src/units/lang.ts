@@ -8,17 +8,14 @@ export enum Lang {
   EN = 'en',
 }
 
-export const langsAll = Object.values(Lang) as Lang[];
+export const langs = Object.values(Lang) as Lang[];
 
-type LangDict = Record<string, Record<string, string>>;
-
-const langDict: LangDict = {
-  [Lang.RU]: langDictRU,
-  [Lang.EN]: langDictEN,
+export const langKeys = {
+  [Lang.RU]: 'LANG_RU',
+  [Lang.EN]: 'LANG_EN',
 };
 
 export const langDefault = Lang.RU;
-export type LangStrKey = string; //(keyof typeof langDictRU) 
 
 /**
  * Checks whether the value is a valid language code
@@ -26,8 +23,17 @@ export type LangStrKey = string; //(keyof typeof langDictRU)
  * @returns boolean
  */
 export function isLang(value: any): boolean {
-  return _.isString(value) && langsAll.includes(value as Lang);
+  return _.isString(value) && langs.includes(value as Lang);
 }
+
+export type LangStrKey = string; //(keyof typeof langDictRU) 
+
+type LangDict = Record<string, Record<string, string>>;
+
+const langDict: LangDict = {
+  [Lang.RU]: langDictRU,
+  [Lang.EN]: langDictEN,
+};
 
 /**
  * Returns a string from the dictionary

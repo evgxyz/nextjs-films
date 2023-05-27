@@ -2,12 +2,14 @@
 const langDictEN = {
   APP_NAME: 'Super site',
 
+  LOADING: 'Loading...',
   WRONG_URL: 'Wrong URL',
   NOT_FOUND: 'Not found',
-  LOADING: 'Loading...',
   ERROR: 'Error',
 
   SELECT_LANG: 'Select a language',
+  /* LANG_RU: 'Русский',
+  LANG_EN: 'English', */
 
   FOOTER_SOME_TEXT: 'This is footer',
 

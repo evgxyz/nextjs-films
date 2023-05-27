@@ -1,7 +1,7 @@
 
 import {useRouter} from 'next/router';
 import {useAppSelector, useAppDispatch} from '@/store';
-import {Lang, langDefault, isLang, langsAll, strlang} from '@/units/lang';
+import {Lang, isLang, langs, langKeys, langDefault, strlang} from '@/units/lang';
 import {setLang} from '@/store/settings';
 import css from './UserMenuTray.module.scss';
 
@@ -34,8 +34,10 @@ export function UserMenuTray() {
     <div className={css['body']}>
       { strlang('SELECT_LANG', lang) + ': ' }
       <select value={lang} onChange={changeLang}>
-        { langsAll.map(lang => 
-            <option key={lang} value={lang}>{lang}</option>
+        { langs.map(lang => 
+            <option key={lang} value={lang}>
+              {strlang(langKeys[lang])}
+            </option>
           )
         }
       </select>

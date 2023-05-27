@@ -8,6 +8,8 @@ const langDictRU = {
   ERROR: 'Ошибка',
 
   SELECT_LANG: 'Выберете язык',
+  LANG_RU: 'Русский',
+  LANG_EN: 'English',
 
   FOOTER_SOME_TEXT: 'Это футер',
 

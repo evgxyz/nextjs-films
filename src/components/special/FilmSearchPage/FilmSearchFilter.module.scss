@@ -35,7 +35,7 @@
   background-color: $bg-color-2;
   @include debug-border(green);
 
-  &:focus {
+  &.--exp {
     height: auto;
   }
 

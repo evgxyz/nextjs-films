@@ -16,8 +16,8 @@ export function FilmSearchFilter() {
   const {options, params} = useAppSelector(state => state.filmSearch);
   const dispatch = useAppDispatch();
 
-  const [genresActive, setGenresActive] = useState(() => false);
-  const [countriesActive, setCountriesActive] = useState(() => false);
+  const [genresExp, setGenresExp] = useState(() => false);
+  const [countriesExp, setCountriesExp] = useState(() => false);
 
   //changeGenre
   function changeGenre(genreId: GenreId) {
@@ -83,32 +83,29 @@ export function FilmSearchFilter() {
     router.push({query}, undefined, {shallow: true});
   }
 
-  const updateResults = function(ev: React.SyntheticEvent) {
+  const updateResults = function(ev: React.FormEvent) {
     ev.preventDefault();
     dispatch(fetchFilmSearchResults());
   }
 
   const toggleGenres = function() {
-    console.log('toggleGenres')
-    setGenresActive(active => !active);
+    setGenresExp(exp => !exp);
   }
 
-  const openGenres = function() {
-    console.log('openGenres')
-    setGenresActive(true);
-  }
-
-  const closeGenres = function() {
-    console.log('closeGenres')
-    setGenresActive(false);
+  const onBlurGenres = function(ev: React.FocusEvent) {
+    if (ev.relatedTarget?.closest('.' + css['dropdown']) !== ev.currentTarget) {
+      setGenresExp(false);
+    }
   }
 
   const toggleCountries = function() {
-    setCountriesActive(active => !active);
+    setCountriesExp(exp => !exp);
   }
 
-  const closeCountries = function() {
-    setCountriesActive(false);
+  const onBlurCountries = function(ev: React.FocusEvent) {
+    if (ev.relatedTarget?.closest('.' + css['dropdown']) !== ev.currentTarget) {
+      setCountriesExp(false);
+    }
   }
 
   return (
@@ -116,32 +113,17 @@ export function FilmSearchFilter() {
 
       <div className={css['genres']}>
         <div 
-          className={[css['dropdown'], genresActive ? css['--active'] : ''].join(' ')}
+          className={[css['dropdown'], genresExp ? css['--exp'] : ''].join(' ')}
+          tabIndex={0}
+          onBlur={onBlurGenres}
         >
-          <div className={css['dropdown-btn']} 
-            onClick={ev => {
-              ev.preventDefault(); 
-              const listElem = 
-                ev.currentTarget
-                .parentElement
-                ?.querySelector<HTMLElement>('ul');  
-                if (listElem) {
-                  if (genresActive) {
-                    listElem.blur();
-                  } else {
-                    listElem.focus(); 
-                  }
-                }  
-            }}>
-            {'Genres'}
-          </div>
-          <ul 
-            className={[
-              css['dropdown-list'], 
-              genresActive ? css['--active'] : ''
-            ].join(' ')}
-            tabIndex={0}
+          <div 
+            className={[css['dropdown-btn'], genresExp ? css['--exp'] : ''].join(' ')}
+            onClick={toggleGenres}
           >
+            {strlang('FILM_FILTER_GENRES', lang)}
+          </div>
+          <ul className={[css['dropdown-list'], genresExp ? css['--exp'] : ''].join(' ')}>
             { options.genres.map(genre =>
                 <li key={genre.id}>
                   <label>
@@ -160,21 +142,14 @@ export function FilmSearchFilter() {
 
       <div className={css['countries']}>
         <div 
-          className={[
-            css['dropdown'], 
-            genresActive ? css['--active'] : ''
-          ].join(' ')}
+          className={[css['dropdown'], countriesExp ? css['--exp'] : ''].join(' ')}
           tabIndex={0}
-          onBlur={closeCountries}
+          onBlur={onBlurCountries}
         >
           <div className={css['dropdown-btn']} onClick={toggleCountries}>
-            {'Countries'}
+            {strlang('FILM_FILTER_COUNTRIES', lang)}
           </div>
-          <ul className={[
-              css['dropdown-list'],
-              countriesActive ? css['--active'] : ''
-            ].join(' ')}
-          >
+          <ul className={[css['dropdown-list'], countriesExp ? css['--exp'] : ''].join(' ')}>
             { options.countries.map(country =>
                 <li key={country.id}>
                   <label>

@@ -18,6 +18,7 @@ const langDictRU = {
   FILM_SEARCH_TITLE: 'Поиск фильмов',
   FILM_FILTER_GENRES: 'Жанры',
   FILM_FILTER_COUNTRIES: 'Страны',
+  FILM_SEARCH_BUTTON: 'Найти',
 
   FILM_COUNTRY: 'Страна',
   FILM_COUNTRIES: 'Страны',

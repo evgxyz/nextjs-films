@@ -18,6 +18,7 @@ const langDictEN = {
   FILM_SEARCH_TITLE: 'Film search',
   FILM_FILTER_GENRES: 'Genres',
   FILM_FILTER_COUNTRIES: 'Countries',
+  FILM_SEARCH_BUTTON: 'Search',
 
   FILM_COUNTRY: 'Country',
   FILM_COUNTRIES: 'Countries',

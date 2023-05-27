@@ -20,7 +20,7 @@ export function FilmSearchFilter() {
   const [countriesExp, setCountriesExp] = useState(() => false);
 
   //changeGenre
-  function changeGenre(genreId: GenreId) {
+  const changeGenre = function(genreId: GenreId) {
     const genreIds = [...params.genreIds ?? []];
 
     if (!genreIds.includes(genreId)) {
@@ -30,28 +30,13 @@ export function FilmSearchFilter() {
     }
     genreIds.sort();
 
-    const page = 1;
-
-    dispatch(updateFilmSearchParams({genreIds, page}));
-
+    dispatch(updateFilmSearchParams({genreIds, page: 1}));
     dispatch(fetchFilmSearchResults());
-
-    //update router
-    const query = {...router.query};
-
-    if (genreIds.length > 0) {
-      query.genreIds = buildIntArrParam(genreIds);
-    } else {
-      delete query.genreIds;
-    }
-
-    query.page = page.toString();
-
-    router.push({query}, undefined, {shallow: true});
+    updateRouterParams();
   }
 
   //changeCountry
-  function changeCountry(countryId: CountryId) {
+  const changeCountry = function(countryId: CountryId) {
     const countryIds = [...params.countryIds ?? []];
 
     if (!countryIds.includes(countryId)) {
@@ -61,63 +46,52 @@ export function FilmSearchFilter() {
     }
     countryIds.sort();
 
-    const page = 1;
-
-    dispatch(updateFilmSearchParams({countryIds, page}));
-
+    dispatch(updateFilmSearchParams({countryIds, page: 1}));
     dispatch(fetchFilmSearchResults());
+    updateRouterParams();
+  }
 
-    //update router
+  const changeText = function(ev: React.ChangeEvent<HTMLInputElement>) {
+    const text = ev.currentTarget.value; 
+    dispatch(updateFilmSearchParams({text, page: 1}));
+    if (text === '') {
+      dispatch(fetchFilmSearchResults());
+    }
+    updateRouterParams();
+  }
+
+  const updateRouterParams = function() {
     const query = {...router.query};
 
+    const genreIds = [...params.genreIds ?? []];
+    if (genreIds.length > 0) {
+      query.genreIds = buildIntArrParam(genreIds);
+    } else {
+      delete query.genreIds;
+    }
+
+    const countryIds = [...params.countryIds ?? []];
     if (countryIds.length > 0) {
       query.countryIds = buildIntArrParam(countryIds);
     } else {
       delete query.countryIds;
     }
 
-    query.page = page.toString();
-
-    router.push({query}, undefined, {shallow: true});
-  }
-
-  const changeText = function(ev: React.ChangeEvent<HTMLInputElement>) {
-    const text = ev.currentTarget.value;
-    
-    dispatch(updateFilmSearchParams({text}));
-
-    if (text === '') {
-      dispatch(fetchFilmSearchResults());
-    }
-
-    //update router
-    const query = {...router.query};
-
+    const text = params.text ?? '';
     if (text.length > 0) {
       query.text = text;
     } else {
       delete query.text;
     }
 
-    router.push({query}, undefined, {shallow: true});
+    query.page = (params.page ?? 1).toString();
+
+    router.push({query}, undefined, {shallow: true}); 
   }
 
-  const updateResults = function() {
-    const page = 1;
-
-    dispatch(updateFilmSearchParams({page}));
-
-    dispatch(fetchFilmSearchResults());
-
-    //update router
-    const query = {...router.query};
-    query.page = page.toString();
-    router.push({query}, undefined, {shallow: true});
-  }
-
-  const submitSearch = function(ev: React.FormEvent) {
+  const updateResults = function(ev: React.FormEvent) {
     ev.preventDefault();
-    updateResults();
+    dispatch(fetchFilmSearchResults());
   }
 
   const toggleGenres = function() {
@@ -198,10 +172,10 @@ export function FilmSearchFilter() {
       </div>
 
       <div className={css['text']}>
-        <form className={css['text-form']} onSubmit={submitSearch}>
+        <form className={css['text-form']} onSubmit={updateResults}>
           <input type='text' value={params.text} onChange={changeText} />
           <button type='submit' disabled={!params.text?.length}>
-            {strlang('FILM_SEARCH_BUTTON', lang)}
+            {strlang('FIND', lang)}
           </button>
         </form>
       </div>

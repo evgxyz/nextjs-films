@@ -16,8 +16,15 @@ const langDictEN = {
   ABOUT_PAGE_TITLE: 'About site',
 
   FILM_SEARCH_TITLE: 'Film search',
-  FILM_FILTER_GENRES: 'Genres',
-  FILM_FILTER_COUNTRIES: 'Countries',
+  FILM_SEARCH_GENRES: 'Genres',
+  FILM_SEARCH_COUNTRIES: 'Countries',
+
+  FILM_SEARCH_SORT: 'Sort',
+  FILM_SEARCH_SORT_TITLE: 'by title ↗',
+  FILM_SEARCH_SORT_TITLE_DESC: 'by title ↘',
+  FILM_SEARCH_SORT_YEAR: 'by year ↗',
+  FILM_SEARCH_SORT_YEAR_DESC: 'by year ↘',
+
   FILM_SEARCH_BUTTON: 'Search',
 
   FILM_YEAR: 'Year',

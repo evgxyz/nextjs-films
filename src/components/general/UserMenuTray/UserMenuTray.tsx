@@ -19,11 +19,13 @@ export function UserMenuTray() {
       dispatch(setLang(lang as Lang));
       
       const query = {...router.query};
+
       if (lang !== langDefault) {
         query.lang = lang;
       } else {
         delete query.lang;
       }
+      
       router.push({query}, undefined, {shallow: true});
     }
   }

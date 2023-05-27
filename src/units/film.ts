@@ -45,16 +45,25 @@ export const filmSearchOptionsDefault = {
   countries: [],
 }
 
-/* export const filmSearchSortAll = <const>[
-  'title', 'title_DESC',
-  'date', 'date_DESC', 
+export const filmSearchSorts = <const>[
+  'title', 
+  'title_DESC',
+  'year', 
+  'year_DESC', 
 ];
 
-export type FilmSearchSort = typeof filmSearchSortAll[number];
+export type FilmSearchSort = typeof filmSearchSorts[number];
 
-export function isFilmSearchSort(sort: any) {
-  return _.isString(sort) && filmSearchSortAll.includes(sort as FilmSearchSort);
-} */
+export function isFilmSearchSort(value: any) {
+  return _.isString(value) && filmSearchSorts.includes(value as FilmSearchSort);
+}
+
+export const filmSearchSortKeys = <const>{
+  title: 'FILM_SEARCH_SORT_TITLE', 
+  title_DESC: 'FILM_SEARCH_SORT_TITLE_DESC',
+  year: 'FILM_SEARCH_SORT_YEAR', 
+  year_DESC: 'FILM_SEARCH_SORT_YEAR_DESC', 
+};
 
 export interface FilmSearchParams {
   text?: string,

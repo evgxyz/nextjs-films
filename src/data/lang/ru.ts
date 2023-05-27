@@ -16,8 +16,15 @@ const langDictRU = {
   ABOUT_PAGE_TITLE: 'О сайте',
 
   FILM_SEARCH_TITLE: 'Поиск фильмов',
-  FILM_FILTER_GENRES: 'Жанры',
-  FILM_FILTER_COUNTRIES: 'Страны',
+  FILM_SEARCH_GENRES: 'Жанры',
+  FILM_SEARCH_COUNTRIES: 'Страны',
+  
+  FILM_SEARCH_SORT: 'Сортировать',
+  FILM_SEARCH_SORT_TITLE: 'по названию ↗',
+  FILM_SEARCH_SORT_TITLE_DESC: 'по названию ↘',
+  FILM_SEARCH_SORT_YEAR: 'по году ↗',
+  FILM_SEARCH_SORT_YEAR_DESC: 'по году ↘',
+
   FILM_SEARCH_BUTTON: 'Найти',
 
   FILM_YEAR: 'Год',

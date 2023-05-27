@@ -2,7 +2,10 @@
 import {useRouter} from 'next/router';
 import {useAppSelector, useAppDispatch} from '@/store';
 import {useState} from 'react';
-import {GenreId, CountryId} from '@/units/film';
+import {
+  GenreId, CountryId, 
+  isFilmSearchSort, filmSearchSortDefault, filmSearchSorts, filmSearchSortKeys,  
+} from '@/units/film';
 import {strlang} from '@/units/lang';
 import {updateFilmSearchParams, fetchFilmSearchResults} from '@/store/filmSearch';
 import {buildIntArrParam} from '@/units/url';
@@ -102,6 +105,33 @@ export function FilmSearchFilter() {
     router.push({query}, undefined, {shallow: true});
   }
 
+  const changeSort = function(ev: React.ChangeEvent<HTMLSelectElement>) {
+    ev.preventDefault();
+    
+    const sort = ev.target.value;
+    if (!isFilmSearchSort(sort)) {
+      return;
+    }
+
+    const page = 1;
+
+    dispatch(updateFilmSearchParams({sort, page}));
+
+    dispatch(fetchFilmSearchResults());
+
+    const query = {...router.query};
+
+    if (sort !== filmSearchSortDefault) {
+      query.sort = sort;
+    } else {
+      delete query.sort;
+    }
+
+    query.page = page.toString();
+
+    router.push({query}, undefined, {shallow: true});
+  }
+
   const updateResults = function() {
     const page = 1;
 
@@ -109,7 +139,6 @@ export function FilmSearchFilter() {
 
     dispatch(fetchFilmSearchResults());
 
-    //update router
     const query = {...router.query};
     query.page = page.toString();
     router.push({query}, undefined, {shallow: true});
@@ -150,7 +179,7 @@ export function FilmSearchFilter() {
           onBlur={onBlurGenres}
         >
           <div className={css['dropdown-btn']} onClick={toggleGenres}>
-            {strlang('FILM_FILTER_GENRES', lang)}
+            {strlang('FILM_SEARCH_GENRES', lang)}
             <span className={css['dropdown-btn__icon']}></span>
           </div>
           <ul className={css['dropdown-list']}>
@@ -177,7 +206,7 @@ export function FilmSearchFilter() {
           onBlur={onBlurCountries}
         >
           <div className={css['dropdown-btn']} onClick={toggleCountries}>
-            {strlang('FILM_FILTER_COUNTRIES', lang)}
+            {strlang('FILM_SEARCH_COUNTRIES', lang)}
             <span className={css['dropdown-btn__icon']}></span>
           </div>
           <ul className={css['dropdown-list']}>
@@ -204,6 +233,18 @@ export function FilmSearchFilter() {
             {strlang('FILM_SEARCH_BUTTON', lang)}
           </button>
         </form>
+      </div>
+
+      <div className={css['sort']}>
+        { strlang('FILM_SEARCH_SORT', lang) + ': ' }
+        <select value={params.sort} onChange={changeSort}>
+          { filmSearchSorts.map(sort => 
+              <option key={sort} value={sort}>
+                { strlang(filmSearchSortKeys[sort], lang)}
+              </option>
+            )
+          }
+        </select>
       </div>
 
     </div>

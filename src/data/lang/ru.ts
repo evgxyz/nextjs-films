@@ -20,6 +20,7 @@ const langDictRU = {
   FILM_FILTER_COUNTRIES: 'Страны',
   FILM_SEARCH_BUTTON: 'Найти',
 
+  FILM_YEAR: 'Год',
   FILM_COUNTRY: 'Страна',
   FILM_COUNTRIES: 'Страны',
   FILM_GENRE: 'Жанр',

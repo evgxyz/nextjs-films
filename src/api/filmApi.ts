@@ -4,8 +4,10 @@ import {ReqStatus} from '@/units/status';
 import {
   Film, FilmId, Genre, Country, 
   FilmSearchOptions, 
-  FilmSearchParams, isFilmSearchSort, filmSearchSortDefault, 
-  FilmSearchResults, 
+  FilmSearchParams, 
+  filmSearchSortDefault, 
+  filmSearchPageDefault, filmSearchPerPageDefault, 
+  FilmSearchResults,
 } from '@/units/film';
 import {filmsMap, genresMap, countriesMap} from '@/data/filmData';
 import {signCompare, delay} from '@/units/utils';
@@ -19,6 +21,7 @@ function getFilm(filmId: FilmId, lang: Lang): (Film | undefined) {
 
   return {
     id: filmRaw.id,
+
     title: lang === Lang.EN ? filmRaw.title_en : filmRaw.title_ru,
     
     genres: filmRaw.genreIds.map(id => { 
@@ -40,6 +43,8 @@ function getFilm(filmId: FilmId, lang: Lang): (Film | undefined) {
         }
       })
       .filter(x => !!x) as Country[],
+
+    year: filmRaw.year,
   }
 }
 
@@ -106,15 +111,11 @@ export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: 
     genreIds,
     countryIds,
     sort = filmSearchSortDefault,
-    page = 1,
-    perPage = 10
+    page = filmSearchPageDefault,
+    perPage = filmSearchPerPageDefault
   } = params;
 
   text = text.toLowerCase();
-
-  if (!isFilmSearchSort(sort)) {
-    sort = filmSearchSortDefault;
-  }
 
   let sortCompareFun: (filmX: Film, filmY: Film) => number;
   switch (sort) {
@@ -127,13 +128,13 @@ export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: 
       sortCompareFun = (filmX, filmY) => -signCompare(filmX.title, filmY.title);
     } break;
 
-    /* case 'date': {
-      sortCompareFun = (filmX, filmY) => signCompare(filmX.date, filmY.date);
+    case 'year': {
+      sortCompareFun = (filmX, filmY) => signCompare(filmX.year, filmY.year);
     } break;
 
-    case 'date_DESC': {
-      sortCompareFun = (filmX, filmY) => -signCompare(filmX.date, filmY.date);
-    } break; */
+    case 'year_DESC': {
+      sortCompareFun = (filmX, filmY) => -signCompare(filmX.year, filmY.year);
+    } break;
   }
 
   page = Math.max(1, page);

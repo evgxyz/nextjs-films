@@ -2,9 +2,11 @@
 import _ from 'lodash';
 
 // film
+export type FilmId = number;
+export type FilmYear = number;
+
 export type GenreId = number;
 export type CountryId = number;
-export type FilmId = number;
 
 export interface Genre {
   id: GenreId,
@@ -21,6 +23,7 @@ export interface Film {
   title: string,
   genres: Genre[],
   countries: Country[],
+  year: FilmYear,
 }
 
 export const filmDefault: Film = { 
@@ -28,6 +31,7 @@ export const filmDefault: Film = {
   title: '',
   genres: [],
   countries: [],
+  year: 0,
 }
 
 //film search
@@ -41,7 +45,7 @@ export const filmSearchOptionsDefault = {
   countries: [],
 }
 
-export const filmSearchSortAll = <const>[
+/* export const filmSearchSortAll = <const>[
   'title', 'title_DESC',
   'date', 'date_DESC', 
 ];
@@ -50,28 +54,30 @@ export type FilmSearchSort = typeof filmSearchSortAll[number];
 
 export function isFilmSearchSort(sort: any) {
   return _.isString(sort) && filmSearchSortAll.includes(sort as FilmSearchSort);
-}
+} */
 
 export interface FilmSearchParams {
   text?: string,
   genreIds?: GenreId[],
   countryIds?: CountryId[],
+  year?: number,
   sort?: string,
   page?: number,
   perPage?: number,
 }
 
 export const filmSearchSortDefault = 'title';
-export const pageDefault = 1;
-export const perPageDefault = 2;
+export const filmSearchPageDefault = 1;
+export const filmSearchPerPageDefault = 2;
 
 export const filmSearchParamsDefault: FilmSearchParams = { 
   text: '',
   genreIds: [],
   countryIds: [],
+  year: 0,
   sort: filmSearchSortDefault,
-  page: pageDefault,
-  perPage: perPageDefault,
+  page: filmSearchPageDefault,
+  perPage: filmSearchPerPageDefault,
 }
 
 export interface FilmSearchResults {

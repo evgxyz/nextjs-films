@@ -2,73 +2,91 @@
 const films = [
   {
     id: 1,
-    title_ru: "Фильм 1",
-    title_en: "Film 1",
+    title_ru: "Буратино",
+    title_en: "Buratino",
     genreIds: [1, 2],
-    countryIds: [1]
+    countryIds: [1],
+    year: 1999
   },
   {
     id: 2,
-    title_ru: "Фильм 2",
-    title_en: "Film 2",
+    title_ru: "Чиполлинно",
+    title_en: "Chipollino",
     genreIds: [2, 3],
-    countryIds: [1, 3]
+    countryIds: [1, 3],
+    year: 1961
   },
   {
     id: 3,
-    title_ru: "Фильм 3",
-    title_en: "Film 3",
+    title_ru: "Винни-пух",
+    title_en: "Vinni-puh",
     genreIds: [3],
-    countryIds: [4]
+    countryIds: [4],
+    year: 1985
   },
   {
     id: 4,
-    title_ru: "Фильм 4",
-    title_en: "Film 4",
+    title_ru: "Чебурашка",
+    title_en: "Cheburashka",
     genreIds: [1],
-    countryIds: [2]
+    countryIds: [2],
+    year: 1990
   },
   {
     id: 5,
-    title_ru: "Фильм 5",
-    title_en: "Film 5",
+    title_ru: "Ну-погоди!",
+    title_en: "Well wait!",
     genreIds: [2],
-    countryIds: [1]
+    countryIds: [1],
+    year: 1976
   },
   {
     id: 6,
-    title_ru: "Фильм 6",
-    title_en: "Film 6",
+    title_ru: "Зеркало",
+    title_en: "Mirror",
     genreIds: [1, 2],
-    countryIds: [3]
+    countryIds: [3],
+    year: 2003
   },
   {
     id: 7,
-    title_ru: "Фильм 7",
-    title_en: "Film 7",
+    title_ru: "Терминатор",
+    title_en: "Terminator",
     genreIds: [1],
-    countryIds: [4]
+    countryIds: [4],
+    year: 1991
   },
   {
     id: 8,
-    title_ru: "Фильм 8",
-    title_en: "Film 8",
+    title_ru: "Матрица",
+    title_en: "The matrix",
     genreIds: [2, 4],
-    countryIds: [1, 4]
+    countryIds: [1, 4],
+    year: 2003
   },
   {
     id: 9,
-    title_ru: "Фильм 9",
-    title_en: "Film 9",
+    title_ru: "Терминатор 2",
+    title_en: "Terminator 2",
     genreIds: [1, 3],
-    countryIds: [1, 2, 4]
+    countryIds: [1, 2, 4],
+    year: 2002
   },
   {
     id: 10,
-    title_ru: "Фильм 10",
-    title_en: "Film 10",
+    title_ru: "Аватар",
+    title_en: "Avatar",
     genreIds: [2, 4],
-    countryIds: [2, 3, 4]
+    countryIds: [2, 3, 4],
+    year: 2007
+  },
+  {
+    id: 11,
+    title_ru: "Аватар 2",
+    title_en: "Avatar 2",
+    genreIds: [2, 4],
+    countryIds: [2, 3, 4],
+    year: 2022
   }
 ];
 

@@ -33,6 +33,8 @@ export function FilmPage() {
         <>
           <h1>{film.title}</h1>
 
+          <div className={css['image']}></div>
+
           <div className={css['year']}>
             { strlang('FILM_YEAR', lang) + ': ' }
             { film.year !== 0 ? film.year.toString() : '-' }

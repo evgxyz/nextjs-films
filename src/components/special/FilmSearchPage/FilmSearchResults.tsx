@@ -62,6 +62,8 @@ function FilmSearchItem({film}: FilmSearchItemProps) {
         </Link>
       </div>
 
+      <div className={css['film-image']}></div>
+
       <div className={css['film-year']}>
         { strlang('FILM_YEAR', lang) + ': ' }
         { film.year !== 0 ? film.year.toString() : '-' }

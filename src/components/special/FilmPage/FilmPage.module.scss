@@ -1,3 +1,10 @@
 
 @import '@/styles/abstract';
 
+.image {
+  width: 120px;
+  height: 150px;
+  background-color: rgb(36, 13, 53);
+  border: 1px solid $color-1;
+  margin-bottom: 5px;
+}

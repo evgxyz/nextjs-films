@@ -4,7 +4,8 @@ import {useAppSelector, useAppDispatch} from '@/store';
 import {useState} from 'react';
 import {
   GenreId, CountryId, 
-  isFilmSearchSort, filmSearchSortDefault, filmSearchSorts, filmSearchSortKeys,  
+  isFilmSearchSort, filmSearchSortDefault, filmSearchSorts, filmSearchSortKeys, 
+  filmSearchQueryTempl, 
 } from '@/units/film';
 import {strlang} from '@/units/lang';
 import {updateFilmSearchParams, fetchFilmSearchResults} from '@/store/filmSearch';
@@ -40,12 +41,15 @@ export function FilmSearchFilter() {
     dispatch(fetchFilmSearchResults());
 
     //update router
-    const query = {...router.query};
+    const query = Object.assign(
+      structuredClone(filmSearchQueryTempl),
+      router.query
+    );
 
     if (genreIds.length > 0) {
       query.genreIds = buildIntArrParam(genreIds);
     } else {
-      delete query.genreIds;
+      query.genreIds = undefined;
     }
 
     query.page = page.toString();

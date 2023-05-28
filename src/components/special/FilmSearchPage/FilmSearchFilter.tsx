@@ -5,7 +5,8 @@ import {useState} from 'react';
 import {
   GenreId, CountryId, 
   isFilmSearchSort, filmSearchSortDefault, filmSearchSorts, filmSearchSortKeys, 
-  filmSearchQueryTempl, 
+  filmSearchQueryTempl,
+  FilmSearchParams, 
 } from '@/units/film';
 import {strlang} from '@/units/lang';
 import {updateFilmSearchParams, fetchFilmSearchResults} from '@/store/filmSearch';
@@ -23,8 +24,7 @@ export function FilmSearchFilter() {
   const [genresExp, setGenresExp] = useState(() => false);
   const [countriesExp, setCountriesExp] = useState(() => false);
 
-  //changeGenre
-  function changeGenre(genreId: GenreId) {
+  const changeGenre = function(genreId: GenreId) {
     const genreIds = [...params.genreIds ?? []];
 
     if (!genreIds.includes(genreId)) {
@@ -40,25 +40,13 @@ export function FilmSearchFilter() {
 
     dispatch(fetchFilmSearchResults());
 
-    //update router
-    const query = Object.assign(
-      structuredClone(filmSearchQueryTempl),
-      router.query
-    );
-
-    if (genreIds.length > 0) {
-      query.genreIds = buildIntArrParam(genreIds);
-    } else {
-      query.genreIds = undefined;
-    }
-
-    query.page = page.toString();
-
-    router.push({query}, undefined, {shallow: true});
+    updateRouterQuery({ 
+      genreIds: genreIds.length > 0 ? buildIntArrParam(genreIds) : undefined,
+      page: page.toString()
+    });
   }
 
-  //changeCountry
-  function changeCountry(countryId: CountryId) {
+  const changeCountry = function(countryId: CountryId) {
     const countryIds = [...params.countryIds ?? []];
 
     if (!countryIds.includes(countryId)) {
@@ -74,18 +62,10 @@ export function FilmSearchFilter() {
 
     dispatch(fetchFilmSearchResults());
 
-    //update router
-    const query = {...router.query};
-
-    if (countryIds.length > 0) {
-      query.countryIds = buildIntArrParam(countryIds);
-    } else {
-      delete query.countryIds;
-    }
-
-    query.page = page.toString();
-
-    router.push({query}, undefined, {shallow: true});
+    updateRouterQuery({ 
+      countryIds: countryIds.length > 0 ? buildIntArrParam(countryIds) : undefined,
+      page: page.toString()
+    });
   }
 
   const changeText = function(ev: React.ChangeEvent<HTMLInputElement>) {
@@ -97,16 +77,9 @@ export function FilmSearchFilter() {
       dispatch(fetchFilmSearchResults());
     }
 
-    //update router
-    const query = {...router.query};
-
-    if (text.length > 0) {
-      query.text = text;
-    } else {
-      delete query.text;
-    }
-
-    router.push({query}, undefined, {shallow: true});
+    updateRouterQuery({ 
+      text: text.length > 0 ? text : undefined
+    });
   }
 
   const changeSort = function(ev: React.ChangeEvent<HTMLSelectElement>) {
@@ -123,17 +96,10 @@ export function FilmSearchFilter() {
 
     dispatch(fetchFilmSearchResults());
 
-    const query = {...router.query};
-
-    if (sort !== filmSearchSortDefault) {
-      query.sort = sort;
-    } else {
-      delete query.sort;
-    }
-
-    query.page = page.toString();
-
-    router.push({query}, undefined, {shallow: true});
+    updateRouterQuery({ 
+      sort: sort !== filmSearchSortDefault ? sort : undefined,
+      page: page.toString()
+    });
   }
 
   const updateResults = function() {
@@ -143,8 +109,23 @@ export function FilmSearchFilter() {
 
     dispatch(fetchFilmSearchResults());
 
-    const query = {...router.query};
-    query.page = page.toString();
+    updateRouterQuery({ 
+      page: page.toString()
+    });
+  }
+
+  const updateRouterQuery = function(updParams: Record<string, string | undefined>) {
+    let query = Object.assign(
+      structuredClone(filmSearchQueryTempl),
+      router.query,
+      updParams
+    );
+
+    query = Object.fromEntries(
+      Object.entries(query)
+      .filter(rec => rec[1] !== undefined)
+    )
+
     router.push({query}, undefined, {shallow: true});
   }
 

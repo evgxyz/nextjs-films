@@ -1,56 +1,11 @@
 
 import {ReqStatus} from '@/units/status';
+import {
+  Film,
+  Genre, GenreId, 
+  Country, CountryId
+} from '@/units/film';
 import _ from 'lodash';
-
-// film
-export type FilmId = number;
-export type FilmYear = number;
-
-export type GenreId = number;
-export type CountryId = number;
-
-export interface Genre {
-  id: GenreId,
-  name: string,
-}
-
-export interface Country {
-  id: CountryId,
-  name: string,
-}
-
-export interface Film {
-  id: FilmId,
-  title: string,
-  genres: Genre[],
-  countries: Country[],
-  year: FilmYear,
-}
-
-// filmPage
-
-export const filmDefault: Film = { 
-  id: 0,
-  title: '',
-  genres: [],
-  countries: [],
-  year: 0,
-}
-
-// filmPage store
-export interface FilmPageState {
-  film: Film,
-  reqStatus: {
-    film: ReqStatus,
-  }
-}
-
-export const filmPageStateDefault: FilmPageState = {
-  film: filmDefault,
-  reqStatus: {
-    film: ReqStatus.NONE
-  },
-}
 
 // filmSearch
 
@@ -128,6 +83,7 @@ export const filmSearchResultsDefault = {
 }
 
 // filmSearch store
+
 export interface FilmSearchState {
   options: FilmSearchOptions,
   params: FilmSearchParams,

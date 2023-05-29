@@ -1,17 +1,8 @@
 
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {Lang, isLang, langDefault} from '@/units/lang';
+import {Lang, isLang} from '@/units/lang';
+import {settingsDefault} from '@/units/settings';
 import cookie from 'js-cookie';
-
-interface Settings {
-  cookies: Record<string, string>,
-  lang: Lang,
-}
-
-const settingsDefault: Settings = {
-  cookies: {},
-  lang: langDefault,
-}
 
 export const settingsSlice = createSlice({
   name: 'settings',
@@ -41,5 +32,3 @@ export const {
 } = settingsSlice.actions;
 
 export const settingsReducer = settingsSlice.reducer;
-
-

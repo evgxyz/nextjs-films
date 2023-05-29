@@ -2,22 +2,12 @@
 import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
 import {RootState} from '@/store';
 import {ReqStatus} from '@/units/status';
-import {Film, FilmId, filmDefault} from '@/units/film';
+import {
+  FilmPageState, filmPageStateDefault,
+  Film, filmDefault, 
+  FilmId
+} from '@/units/film';
 import {apiFetchFilmPage} from '@/api/filmApi';
-
-interface FilmPageState {
-  film: Film,
-  reqStatus: {
-    film: ReqStatus,
-  }
-}
-
-const filmPageStateDefault: FilmPageState = {
-  film: filmDefault,
-  reqStatus: {
-    film: ReqStatus.NONE
-  },
-}
 
 const filmPageSlice = createSlice({
   name: 'filmPage',

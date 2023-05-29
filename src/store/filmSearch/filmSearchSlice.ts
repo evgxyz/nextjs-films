@@ -3,34 +3,15 @@ import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
 import {RootState} from '@/store';
 import {ReqStatus, isReqStatusError, isReqStatusOK} from '@/units/status';
 import {
+  filmSearchStateDefault,
   FilmSearchOptions, filmSearchOptionsDefault,
-  FilmSearchParams, filmSearchParamsDefault,
+  FilmSearchParams, 
   FilmSearchResults, filmSearchResultsDefault
 } from '@/units/film';
 import {
   apiFetchFilmSearchResults, 
   apiFetchFilmSearchOptions,
 } from '@/api/filmApi';
-
-interface FilmSearchState {
-  options: FilmSearchOptions,
-  params: FilmSearchParams,
-  results: FilmSearchResults,
-  reqStatus: {
-    opt: ReqStatus,
-    res: ReqStatus,
-  },
-}
-
-const filmSearchStateDefault: FilmSearchState = {
-  options: filmSearchOptionsDefault,
-  params: filmSearchParamsDefault,
-  results: filmSearchResultsDefault,
-  reqStatus: {
-    opt: ReqStatus.NONE,
-    res: ReqStatus.NONE,
-  },
-}
 
 const filmSearchSlice = createSlice({
   name: 'filmSearch',
@@ -95,7 +76,7 @@ const filmSearchSlice = createSlice({
 });
 
 export const fetchFilmSearchOptions = 
-createAsyncThunk<FilmSearchOptions, void, {state: RootState, rejectValue: ReqStatus}>(
+  createAsyncThunk<FilmSearchOptions, void, {state: RootState, rejectValue: ReqStatus}>(
     'filmSearch/fetchFilmSearchOptions',
     async function (_unused, ThunkAPI) {
       const lang = ThunkAPI.getState().settings.lang;

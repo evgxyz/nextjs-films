@@ -31,7 +31,7 @@ export function FilmPage() {
       title = film.title;
       contentHTML = (
         <>
-          <h1>{film.title}</h1>
+          <h1 className='page-title'>{film.title}</h1>
 
           <div className={css['image']}></div>
 

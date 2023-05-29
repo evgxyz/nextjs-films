@@ -1,4 +1,5 @@
 
+import {ReqStatus} from '@/units/status';
 import _ from 'lodash';
 
 // film
@@ -26,6 +27,8 @@ export interface Film {
   year: FilmYear,
 }
 
+// filmPage
+
 export const filmDefault: Film = { 
   id: 0,
   title: '',
@@ -34,7 +37,23 @@ export const filmDefault: Film = {
   year: 0,
 }
 
-//film search
+// filmPage store
+export interface FilmPageState {
+  film: Film,
+  reqStatus: {
+    film: ReqStatus,
+  }
+}
+
+export const filmPageStateDefault: FilmPageState = {
+  film: filmDefault,
+  reqStatus: {
+    film: ReqStatus.NONE
+  },
+}
+
+// filmSearch
+
 export interface FilmSearchOptions {
   genres: Genre[],
   countries: Country[],
@@ -89,14 +108,6 @@ export const filmSearchParamsDefault: FilmSearchParams = {
   perPage: filmSearchPerPageDefault,
 }
 
-/* export interface FilmSearchQuery {
-  genreIds: GenreId[] | undefined,
-  countryIds: CountryId[] | undefined,
-  year: number | undefined,
-  text: string | undefined,
-  sort: string | undefined,
-} */
-
 export const filmSearchQueryTempl: Record<string, string | undefined> = {
   genreIds: undefined,
   countryIds: undefined,
@@ -115,3 +126,28 @@ export const filmSearchResultsDefault = {
   films: [],
   totalPages: 0,
 }
+
+// filmSearch store
+export interface FilmSearchState {
+  options: FilmSearchOptions,
+  params: FilmSearchParams,
+  results: FilmSearchResults,
+  reqStatus: {
+    opt: ReqStatus,
+    res: ReqStatus,
+  },
+}
+
+export const filmSearchStateDefault: FilmSearchState = {
+  options: filmSearchOptionsDefault,
+  params: filmSearchParamsDefault,
+  results: filmSearchResultsDefault,
+  reqStatus: {
+    opt: ReqStatus.NONE,
+    res: ReqStatus.NONE,
+  },
+}
+
+/* export function getFilmSearchTitle(filmSearchOptions: ) {
+
+} */

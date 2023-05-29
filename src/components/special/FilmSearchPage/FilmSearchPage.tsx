@@ -7,6 +7,7 @@ import {normalizeURL} from '@/units/url';
 import {MainLayout} from '@/components/layouts/MainLayout';
 import {MessageBox} from '@/components/common/MessageBox';
 import {LoadingBox} from '@/components/common/LoadingBox';
+//import {getFilmSearchTitle} from '@/units/film'; 
 import {FilmSearchFilter} from './FilmSearchFilter'; 
 import {FilmSearchResults} from './FilmSearchResults';
 import _ from 'lodash';
@@ -21,12 +22,12 @@ export function FilmSearchPage() {
   const filmSearch = useAppSelector(state => state.filmSearch);
 
   let title = strlang('FILM_SEARCH_TITLE', lang);
+  let filterHTML = <></>;
 
-  let filterHTML = (
-    isReqStatusOK(filmSearch.reqStatus.opt) ? 
-      <FilmSearchFilter /> 
-    : <></>
-  );
+  if (isReqStatusOK(filmSearch.reqStatus.opt)) {
+    //title = getFilmSearchTitle(filmSearch);
+    filterHTML = <FilmSearchFilter />;
+  }
 
   let contentHTML = <></>;
   switch (filmSearch.reqStatus.res) {
@@ -64,7 +65,9 @@ export function FilmSearchPage() {
 
   return (
     <MainLayout pageEnv={pageEnv}>
-      <h1 className='page-title'>{title}</h1>
+      <h1 className='page-title'>
+        {title}
+      </h1>
       {filterHTML}
       {contentHTML}
     </MainLayout>

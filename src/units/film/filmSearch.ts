@@ -86,35 +86,21 @@ export const filmSearchResultsDefault = {
 // filmSearch store
 
 export interface FilmSearchState {
-  options: FilmSearchOptions,
+  options: FilmSearchOptions & {reqStatus: ReqStatus},
   autocompl: {
-    text: Autocompl
-  }
-  params: FilmSearchParams,
-  results: FilmSearchResults,
-  reqStatus: {
-    options: ReqStatus,
-    autocompl: {
-      text: ReqStatus,
-    }
-    results: ReqStatus,
+    text: {value: Autocompl, reqStatus: ReqStatus}
   },
+  params: FilmSearchParams,
+  results: FilmSearchResults & {reqStatus: ReqStatus},
 }
 
 export const filmSearchStateDefault: FilmSearchState = {
-  options: filmSearchOptionsDefault,
+  options: {...filmSearchOptionsDefault, reqStatus: ReqStatus.NONE},
   autocompl: {
-    text: []
+    text: {value: [], reqStatus: ReqStatus.NONE},
   },
   params: filmSearchParamsDefault,
-  results: filmSearchResultsDefault,
-  reqStatus: {
-    options: ReqStatus.NONE,
-    autocompl: {
-      text: ReqStatus.NONE,
-    },
-    results: ReqStatus.NONE,
-  },
+  results: {...filmSearchResultsDefault, reqStatus: ReqStatus.NONE},
 }
 
 export function getFilmSearchParamsStr(filmSearchState: FilmSearchState) {

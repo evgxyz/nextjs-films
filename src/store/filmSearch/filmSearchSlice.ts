@@ -35,63 +35,75 @@ const filmSearchSlice = createSlice({
       .addCase(
         fetchFilmSearchOptions.pending, 
         (state) => {
-          state.options = structuredClone(filmSearchOptionsDefault);
-          state.reqStatus.options = ReqStatus.LOADING;
+          state.options = {
+            ...structuredClone(filmSearchOptionsDefault),
+            reqStatus: ReqStatus.LOADING
+          }
         }
       )
       .addCase(
         fetchFilmSearchOptions.fulfilled, 
         (state, action) => {
-          state.options = action.payload;
-          state.reqStatus.options = ReqStatus.OK;
+          state.options = {
+            ...action.payload,
+            reqStatus: ReqStatus.OK
+          };
         }
       )
       .addCase(
         fetchFilmSearchOptions.rejected, 
         (state, action) => {
-          state.reqStatus.options = action.payload ?? ReqStatus.ERROR;
+          state.options.reqStatus = action.payload ?? ReqStatus.ERROR;
         }
       )
       //fetchFilmSearchTextAutocompl
       .addCase(
         fetchFilmSearchTextAutocompl.pending, 
         (state) => {
-          state.autocompl.text = [];
-          state.reqStatus.autocompl.text = ReqStatus.LOADING;
+          state.autocompl.text = {
+            value: [],
+            reqStatus: ReqStatus.LOADING
+          }
         }
       )
       .addCase(
         fetchFilmSearchTextAutocompl.fulfilled, 
         (state, action) => {
-          state.autocompl.text = action.payload;
-          state.reqStatus.autocompl.text = ReqStatus.OK;
+          state.autocompl.text = {
+            value: action.payload,
+            reqStatus: ReqStatus.OK
+          }
         }
       )
       .addCase(
         fetchFilmSearchTextAutocompl.rejected, 
         (state, action) => {
-          state.reqStatus.autocompl.text = action.payload ?? ReqStatus.ERROR;
+          state.autocompl.text.reqStatus = action.payload ?? ReqStatus.ERROR;
         }
       )
       //fetchFilmSearchResults
       .addCase(
         fetchFilmSearchResults.pending, 
         (state) => {
-          state.results = structuredClone(filmSearchResultsDefault);
-          state.reqStatus.results = ReqStatus.LOADING;
+          state.results = {
+            ...structuredClone(filmSearchResultsDefault),
+            reqStatus: ReqStatus.LOADING
+          }
         }
       )
       .addCase(
         fetchFilmSearchResults.fulfilled, 
         (state, action) => {
-          state.results = action.payload;
-          state.reqStatus.results = ReqStatus.OK;
+          state.results = {
+            ...action.payload,
+            reqStatus: ReqStatus.OK
+          }
         }
       )
       .addCase(
         fetchFilmSearchResults.rejected, 
         (state, action) => {
-          state.reqStatus.results = action.payload ?? ReqStatus.ERROR;
+          state.results.reqStatus = action.payload ?? ReqStatus.ERROR;
         }
       )
   }
@@ -102,7 +114,7 @@ export const fetchFilmSearchOptions =
     'filmSearch/fetchFilmSearchOptions',
     async function (_unused, ThunkAPI) {
       const lang = ThunkAPI.getState().settings.lang;
-      const {reqStatus, options} = await apiFetchFilmSearchOptions(lang);
+      const {options, reqStatus} = await apiFetchFilmSearchOptions(lang);
       if (isReqStatusOK(reqStatus) && options) {
         return ThunkAPI.fulfillWithValue(options)
       } else {
@@ -116,7 +128,7 @@ export const fetchFilmSearchTextAutocompl =
     'filmSearch/fetchFilmSearchTextSugg',
     async function (_unused, ThunkAPI) {
       const text = ThunkAPI.getState().filmSearch.params.text ?? '';
-      const {reqStatus, autocompl} = await apiFetchFilmSearchTextAutocompl(text);
+      const {autocompl, reqStatus} = await apiFetchFilmSearchTextAutocompl(text);
       if (isReqStatusOK(reqStatus) && autocompl) {
         return ThunkAPI.fulfillWithValue(autocompl)
       } else {
@@ -129,14 +141,14 @@ export const fetchFilmSearchResults =
   createAsyncThunk<FilmSearchResults, void, {state: RootState, rejectValue: ReqStatus}>(
     'filmSearch/fetchFilmSearchResults',
     async function (_unused, ThunkAPI) {   
-      const reqStatusOptions = ThunkAPI.getState().filmSearch.reqStatus.options;
-      if (isReqStatusError(reqStatusOptions)) {
-        return ThunkAPI.rejectWithValue(reqStatusOptions);
+      const optionsReqStatus = ThunkAPI.getState().filmSearch.options.reqStatus;
+      if (isReqStatusError(optionsReqStatus)) {
+        return ThunkAPI.rejectWithValue(optionsReqStatus);
       }
 
       const lang = ThunkAPI.getState().settings.lang;
       const params = ThunkAPI.getState().filmSearch.params;
-      const {reqStatus, results} = await apiFetchFilmSearchResults(params, lang);
+      const {results, reqStatus} = await apiFetchFilmSearchResults(params, lang);
       if (isReqStatusOK(reqStatus) && results) {
         return ThunkAPI.fulfillWithValue(results);
       } else {

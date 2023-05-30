@@ -69,7 +69,7 @@ export async function apiFetchFilmPage(filmId: FilmId, lang: Lang):
 }
 
 export async function apiFetchFilmSearchOptions(lang: Lang): 
-  Promise<{reqStatus: ReqStatus} & {options?: FilmSearchOptions}> {
+  Promise<{options: FilmSearchOptions, reqStatus: ReqStatus}> {
 //
   console.log('call apiFetchFilmSearchOptions');
   await delay(1000);
@@ -92,28 +92,29 @@ export async function apiFetchFilmSearchOptions(lang: Lang):
 
   const options = {
     genres,
-    countries 
+    countries,
   }
 
   return {
-    reqStatus: ReqStatus.OK, 
-    options
+    options,
+    reqStatus: ReqStatus.OK,  
   };
 }
 
 export async function apiFetchFilmSearchTextAutocompl(text: string): 
-  Promise<{reqStatus: ReqStatus} & {autocompl?: Autocompl}> {
+  Promise<{autocompl: Autocompl, reqStatus: ReqStatus}> {
 //
   console.log('call apiFetchFilmSearchTextSuggestions');
   await delay(1000);
+  
   return {
+    autocompl: [text, text+'1', text+'2'],
     reqStatus: ReqStatus.OK,
-    autocompl: [text, text+'1', text+'2']
   }
 }
 
 export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: Lang): 
-  Promise<{reqStatus: ReqStatus} & {results?: FilmSearchResults}> {
+  Promise<{results: FilmSearchResults, reqStatus: ReqStatus}> {
 //
   console.log('call apiFetchFilmSearchResults');
   await delay(1000);
@@ -182,7 +183,7 @@ export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: 
   }
 
   return {
-    reqStatus: ReqStatus.OK,
-    results
+    results,
+    reqStatus: ReqStatus.OK
   };
 }

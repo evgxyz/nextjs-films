@@ -98,7 +98,7 @@ FilmSearchNextPage.getInitialProps =
 
     await store.dispatch(fetchFilmSearchResults());
 
-    const reqStatus = store.getState().filmSearch.reqStatus.res;
+    const reqStatus = store.getState().filmSearch.results.reqStatus;
     if (isReqStatusError(reqStatus)) {
       ctx.res && (ctx.res.statusCode = reqStatusToHttpCode(reqStatus));
       return {fromServer: true, initPageStatus: PageStatus.ERROR};

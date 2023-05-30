@@ -219,7 +219,7 @@ export function FilmSearchFilter() {
       <div className={css['text']}>
         <form className={css['text-form']} onSubmit={submitSearch}>
           <input type='text' value={params.text} onChange={changeText} />
-          <div>{autocompl.text.join(', ')}</div>
+          <div>{autocompl.text.value.join(', ')}</div>
           <button type='submit' disabled={!params.text?.length}>
             {strlang('FILM_SEARCH_BUTTON', lang)}
           </button>

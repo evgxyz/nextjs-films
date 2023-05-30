@@ -1,0 +1,16 @@
+
+@import '@/styles/abstract';
+
+.box {
+  margin-bottom: 1rem;
+
+  & .title {
+    margin-bottom: 0;
+    font-size: 1.6rem;
+  }
+  
+  & .subtitle {
+    margin-top: 0.3rem;
+    font-size: 1rem;
+  }
+}

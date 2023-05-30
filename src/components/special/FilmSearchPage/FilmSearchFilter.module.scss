@@ -12,12 +12,10 @@
 
 .genres {
   flex-basis: 12em;
-  color: yellow;
 }
 
 .countries {
   flex-basis: 12em;
-  color: pink;
 }
 
 .dropdown {
@@ -26,6 +24,7 @@
 }
 
 .dropdown .dropdown-btn {
+  color: $color-2;
   padding: 5px;
 }
 

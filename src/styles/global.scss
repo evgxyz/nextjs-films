@@ -48,10 +48,20 @@ body {
   //@include debug-border(blue); 
 }
 
-// заголовок страницы
-.page-title {
-  font-size: x-large;
-}
+// // PageTitle
+// .page-title-box {
+//   margin-bottom: 1rem;
+
+//   & .page-title {
+//     margin-bottom: 0;
+//     font-size: 1.6rem;
+//   }
+  
+//   & .page-subtitle {
+//     margin-top: 0.3rem;
+//     font-size: 1rem;
+//   }
+// }
 
 // ссылка по умолчанию
 a {

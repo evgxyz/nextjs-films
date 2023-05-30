@@ -7,7 +7,7 @@ import {normalizeURL} from '@/units/url';
 import {MainLayout} from '@/components/layouts/MainLayout';
 import {MessageBox} from '@/components/common/MessageBox';
 import {LoadingBox} from '@/components/common/LoadingBox';
-//import {getFilmSearchTitle} from '@/units/film'; 
+import {getFilmSearchParamsStr} from '@/units/film'; 
 import {FilmSearchFilter} from './FilmSearchFilter'; 
 import {FilmSearchResults} from './FilmSearchResults';
 import _ from 'lodash';
@@ -25,7 +25,10 @@ export function FilmSearchPage() {
   let filterHTML = <></>;
 
   if (isReqStatusOK(filmSearch.reqStatus.opt)) {
-    //title = getFilmSearchTitle(filmSearch);
+    const paramsStr = getFilmSearchParamsStr(filmSearch);
+    if (paramsStr !== '') {
+      title += ': ' + paramsStr;
+    }
     filterHTML = <FilmSearchFilter />;
   }
 

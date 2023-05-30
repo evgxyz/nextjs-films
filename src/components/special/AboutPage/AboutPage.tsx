@@ -9,6 +9,7 @@ import {LoadingBox} from '@/components/common/LoadingBox';
 import {Pagination} from '@/components/common/Pagination';
 import _ from 'lodash';
 import css from './AboutPage.module.scss';
+import { PageTitle } from '@/components/layouts/PageTitle';
 
 export function AboutPage() {
 
@@ -25,7 +26,10 @@ export function AboutPage() {
 
   return (
     <MainLayout pageEnv={pageEnv}>
-      <h1 className='page-title'>{title}</h1>
+      <PageTitle 
+        title={title} 
+        subTitle={'This is subtitle'} 
+      />
       <p><Link href='/films?genreIds=2+3&countryIds=1+3'>Films</Link></p>
       <LoadingBox />
       <Pagination 

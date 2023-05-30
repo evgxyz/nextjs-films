@@ -47,7 +47,7 @@ export function FilmPage() {
               ) + ': ' 
             }
             { film.countries.map((country, idx) =>
-                <span key={country.id} className={css['country']}>
+                <span key={country.id}>
                   { (idx > 0 ? ', ': '') + country.name }
                 </span>
               )
@@ -61,7 +61,7 @@ export function FilmPage() {
               ) + ': ' 
             }
             { film.genres.map((genre, idx) =>
-                <span key={genre.id} className={css['genre']}>
+                <span key={genre.id}>
                   { (idx > 0 ? ', ': '') + genre.name }
                 </span>
               )

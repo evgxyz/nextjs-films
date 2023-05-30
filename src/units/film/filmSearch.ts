@@ -104,6 +104,21 @@ export const filmSearchStateDefault: FilmSearchState = {
   },
 }
 
-/* export function getFilmSearchTitle(filmSearchOptions: ) {
+export function getFilmSearchParamsStr(filmSearchState: FilmSearchState) {
 
-} */
+  const {options, params} = filmSearchState;
+
+  let str = '';
+
+  if (str !== '') str += ' & ';
+  str += options.genres
+    .filter(genre => params.genreIds?.includes(genre.id))
+    .map(genre => genre.name).join(', ');
+
+  if (str !== '') str += ' & ';
+  str += options.countries
+    .filter(country => params.countryIds?.includes(country.id))
+    .map(country => country.name).join(', ');
+
+  return str;
+}

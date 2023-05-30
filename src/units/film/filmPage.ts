@@ -16,15 +16,9 @@ export const filmDefault: Film = {
 // filmPage store
 
 export interface FilmPageState {
-  film: Film,
-  reqStatus: {
-    film: ReqStatus,
-  }
+  film: Film & {reqStatus: ReqStatus}
 }
 
 export const filmPageStateDefault: FilmPageState = {
-  film: filmDefault,
-  reqStatus: {
-    film: ReqStatus.NONE
-  },
+  film: {...filmDefault, reqStatus: ReqStatus.NONE}
 }

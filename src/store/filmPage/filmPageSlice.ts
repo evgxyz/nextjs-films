@@ -1,7 +1,7 @@
 
 import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
 import {RootState} from '@/store';
-import {ReqStatus} from '@/units/status';
+import {ReqStatus, isReqStatusOK} from '@/units/status';
 import {
   FilmPageState, filmPageStateDefault,
   Film, filmDefault, 
@@ -25,21 +25,25 @@ const filmPageSlice = createSlice({
       .addCase(
         fetchFilmPage.pending, 
         (state) => {
-          state.reqStatus.film = ReqStatus.LOADING;
+          state.film = {
+            ...structuredClone(filmDefault),
+            reqStatus:ReqStatus.LOADING
+          }
         }
       )
       .addCase(
         fetchFilmPage.fulfilled, 
         (state, action) => {
-          state.film = action.payload;
-          state.reqStatus.film = ReqStatus.OK;
+          state.film = {
+            ...action.payload,
+            reqStatus: ReqStatus.OK
+          }
         }
       )
       .addCase(
         fetchFilmPage.rejected, 
         (state, action) => {
-          state.film = filmDefault;
-          state.reqStatus.film = action.payload ?? ReqStatus.ERROR;
+          state.film.reqStatus = action.payload ?? ReqStatus.ERROR;
         }
       )
   }
@@ -50,8 +54,8 @@ export const fetchFilmPage =
     'filmPage/fetchFilmPage',
     async function ({filmId}, ThunkAPI) {
       const lang = ThunkAPI.getState().settings.lang;
-      const {reqStatus, film} = await apiFetchFilmPage(filmId, lang);
-      if (reqStatus === ReqStatus.OK && film) {
+      const {film, reqStatus} = await apiFetchFilmPage(filmId, lang);
+      if (isReqStatusOK(reqStatus) && film) {
         return ThunkAPI.fulfillWithValue(film)
       } else {
         return ThunkAPI.rejectWithValue(reqStatus)

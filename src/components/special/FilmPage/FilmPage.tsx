@@ -19,7 +19,7 @@ export function FilmPage() {
   let title = '';
   let contentHTML = <></>;
 
-  switch (filmPage.reqStatus.film) {
+  switch (filmPage.film.reqStatus) {
     case ReqStatus.LOADING: {
       contentHTML = (
         <LoadingBox />

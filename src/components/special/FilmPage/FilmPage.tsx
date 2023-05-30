@@ -4,6 +4,7 @@ import {useAppSelector} from '@/store';
 import {ReqStatus} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {MainLayout} from '@/components/layouts/MainLayout';
+import {PageTitle} from '@/components/general/PageTitle';
 import {MessagePage} from '@/components/general/MessagePage';
 import {MessageBox} from '@/components/common/MessageBox';
 import {LoadingBox} from '@/components/common/LoadingBox';
@@ -31,8 +32,8 @@ export function FilmPage() {
       title = film.title;
       contentHTML = (
         <>
-          <h1 className='page-title'>{film.title}</h1>
-
+          <PageTitle title={title} />
+          
           <div className={css['image']}></div>
 
           <div className={css['year']}>

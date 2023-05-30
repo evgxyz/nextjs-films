@@ -5,6 +5,7 @@ import {ReqStatus, isReqStatusOK} from '@/units/status';
 import {strlang} from '@/units/lang';
 import {normalizeURL} from '@/units/url';
 import {MainLayout} from '@/components/layouts/MainLayout';
+import {PageTitle} from '@/components/general/PageTitle';
 import {MessageBox} from '@/components/common/MessageBox';
 import {LoadingBox} from '@/components/common/LoadingBox';
 import {getFilmSearchParamsStr} from '@/units/film'; 
@@ -22,13 +23,11 @@ export function FilmSearchPage() {
   const filmSearch = useAppSelector(state => state.filmSearch);
 
   let title = strlang('FILM_SEARCH_TITLE', lang);
+  let subTitle = '';
   let filterHTML = <></>;
 
   if (isReqStatusOK(filmSearch.reqStatus.opt)) {
-    const paramsStr = getFilmSearchParamsStr(filmSearch);
-    if (paramsStr !== '') {
-      title += ': ' + paramsStr;
-    }
+    subTitle = getFilmSearchParamsStr(filmSearch);
     filterHTML = <FilmSearchFilter />;
   }
 
@@ -59,18 +58,20 @@ export function FilmSearchPage() {
     } break;
   }
 
+  const envTitle = title + (subTitle !== '' ? ': ' + subTitle : '');
   const pageEnv = {
-    title,
-    navStack: [{url, text: title}],
+    title: envTitle,
+    navStack: [{url, text: envTitle}],
     description: 'Film lorem ipsum dolor sit',
     keywords: 'film, lorem, ipsum, dolor'
   }
 
   return (
     <MainLayout pageEnv={pageEnv}>
-      <h1 className='page-title'>
-        {title}
-      </h1>
+      <PageTitle 
+        title={title} 
+        subTitle={subTitle} 
+      />
       {filterHTML}
       {contentHTML}
     </MainLayout>

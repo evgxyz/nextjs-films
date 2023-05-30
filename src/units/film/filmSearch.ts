@@ -105,20 +105,27 @@ export const filmSearchStateDefault: FilmSearchState = {
 }
 
 export function getFilmSearchParamsStr(filmSearchState: FilmSearchState) {
-
   const {options, params} = filmSearchState;
 
   let str = '';
 
-  if (str !== '') str += ' & ';
-  str += options.genres
-    .filter(genre => params.genreIds?.includes(genre.id))
-    .map(genre => genre.name).join(', ');
+  { const s = options.genres
+      .filter(genre => params.genreIds?.includes(genre.id))
+      .map(genre => genre.name).join(', ');
+    if (s !== '') {
+      if (str !== '') str += ' & ';
+      str += s;
+    }
+  }
 
-  if (str !== '') str += ' & ';
-  str += options.countries
-    .filter(country => params.countryIds?.includes(country.id))
-    .map(country => country.name).join(', ');
+  { const s = options.countries
+      .filter(country => params.countryIds?.includes(country.id))
+      .map(country => country.name).join(', ');
+    if (s !== '') {
+      if (str !== '') str += ' & ';
+      str += s;
+    }
+  }
 
   return str;
 }

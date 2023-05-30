@@ -2,6 +2,7 @@
 import {useAppSelector} from '@/store';
 import {strlang} from '@/units/lang';
 import {MainLayout} from '@/components/layouts/MainLayout';
+import {PageTitle} from '@/components/general/PageTitle';
 import Link from '@/next/Link';
 import _ from 'lodash';
 import css from './IndexPage.module.scss';
@@ -20,7 +21,7 @@ export function IndexPage() {
 
   return (
     <MainLayout pageEnv={pageEnv}>
-      <h1 className='page-title'>{title}</h1>
+      <PageTitle title={title} />
       <p><Link href='/films?genreIds=2+3&countryIds=1+3'>Films</Link></p>
       <p><Link href='/about'>About</Link></p>
       <p><Link href='/film/abc'>Wrong url</Link></p>

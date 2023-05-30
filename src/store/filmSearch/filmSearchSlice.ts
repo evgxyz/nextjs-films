@@ -9,8 +9,9 @@ import {
   FilmSearchResults, filmSearchResultsDefault
 } from '@/units/film';
 import {
-  apiFetchFilmSearchResults, 
   apiFetchFilmSearchOptions,
+  apiFetchFilmSearchTextAutocompl,
+  apiFetchFilmSearchResults, 
 } from '@/api/filmApi';
 
 const filmSearchSlice = createSlice({
@@ -51,6 +52,27 @@ const filmSearchSlice = createSlice({
           state.reqStatus.opt = action.payload ?? ReqStatus.ERROR;
         }
       )
+      //fetchFilmSearchTextAutocompl
+      .addCase(
+        fetchFilmSearchTextAutocompl.pending, 
+        (state) => {
+          state.autocompl.text = [];
+          state.reqStatus.autocompl.text = ReqStatus.LOADING;
+        }
+      )
+      .addCase(
+        fetchFilmSearchTextAutocompl.fulfilled, 
+        (state, action) => {
+          state.autocompl.text = action.payload;
+          state.reqStatus.autocompl.text = ReqStatus.OK;
+        }
+      )
+      .addCase(
+        fetchFilmSearchTextAutocompl.rejected, 
+        (state, action) => {
+          state.reqStatus.autocompl.text = action.payload ?? ReqStatus.ERROR;
+        }
+      )
       //fetchFilmSearchResults
       .addCase(
         fetchFilmSearchResults.pending, 
@@ -83,6 +105,20 @@ export const fetchFilmSearchOptions =
       const {reqStatus, options} = await apiFetchFilmSearchOptions(lang);
       if (isReqStatusOK(reqStatus) && options) {
         return ThunkAPI.fulfillWithValue(options)
+      } else {
+        return ThunkAPI.rejectWithValue(reqStatus)
+      } 
+    }
+);
+
+export const fetchFilmSearchTextAutocompl = 
+  createAsyncThunk<string[], void, {state: RootState, rejectValue: ReqStatus}>(
+    'filmSearch/fetchFilmSearchTextSugg',
+    async function (_unused, ThunkAPI) {
+      const text = ThunkAPI.getState().filmSearch.params.text ?? '';
+      const {reqStatus, autocompl} = await apiFetchFilmSearchTextAutocompl(text);
+      if (isReqStatusOK(reqStatus) && autocompl) {
+        return ThunkAPI.fulfillWithValue(autocompl)
       } else {
         return ThunkAPI.rejectWithValue(reqStatus)
       } 

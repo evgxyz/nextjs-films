@@ -9,6 +9,7 @@ import {
   filmSearchPageDefault, filmSearchPerPageDefault, 
   FilmSearchResults,
 } from '@/units/film';
+import {Autocompl} from '@/units/components';
 import {filmsMap, genresMap, countriesMap} from '@/data/filmData';
 import {signCompare, delay} from '@/units/utils';
 import _ from 'lodash';
@@ -98,6 +99,17 @@ export async function apiFetchFilmSearchOptions(lang: Lang):
     reqStatus: ReqStatus.OK, 
     options
   };
+}
+
+export async function apiFetchFilmSearchTextAutocompl(text: string): 
+  Promise<{reqStatus: ReqStatus} & {autocompl?: Autocompl}> {
+//
+  console.log('call apiFetchFilmSearchTextSuggestions');
+  await delay(1000);
+  return {
+    reqStatus: ReqStatus.OK,
+    autocompl: [text, text+'1', text+'2']
+  }
 }
 
 export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: Lang): 

@@ -6,10 +6,13 @@ import {
   GenreId, CountryId, 
   isFilmSearchSort, filmSearchSortDefault, filmSearchSorts, filmSearchSortKeys, 
   filmSearchQueryTempl,
-  FilmSearchParams, 
 } from '@/units/film';
 import {strlang} from '@/units/lang';
-import {updateFilmSearchParams, fetchFilmSearchResults} from '@/store/filmSearch';
+import {
+  updateFilmSearchParams, 
+  fetchFilmSearchTextAutocompl,
+  fetchFilmSearchResults 
+} from '@/store/filmSearch';
 import {buildIntArrParam} from '@/units/url';
 import _ from 'lodash';
 import css from './FilmSearchFilter.module.scss';
@@ -18,7 +21,7 @@ export function FilmSearchFilter() {
 
   const router = useRouter();
   const lang = useAppSelector(state => state.settings.lang);
-  const {options, params} = useAppSelector(state => state.filmSearch);
+  const {options, params, autocompl} = useAppSelector(state => state.filmSearch);
   const dispatch = useAppDispatch();
 
   const [genresExp, setGenresExp] = useState(() => false);
@@ -72,6 +75,8 @@ export function FilmSearchFilter() {
     const text = ev.currentTarget.value;
     
     dispatch(updateFilmSearchParams({text}));
+
+    dispatch(fetchFilmSearchTextAutocompl());
 
     if (text === '') {
       dispatch(fetchFilmSearchResults());
@@ -214,6 +219,7 @@ export function FilmSearchFilter() {
       <div className={css['text']}>
         <form className={css['text-form']} onSubmit={submitSearch}>
           <input type='text' value={params.text} onChange={changeText} />
+          <div>{autocompl.text.join(', ')}</div>
           <button type='submit' disabled={!params.text?.length}>
             {strlang('FILM_SEARCH_BUTTON', lang)}
           </button>

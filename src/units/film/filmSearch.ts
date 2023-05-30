@@ -5,6 +5,7 @@ import {
   Genre, GenreId, 
   Country, CountryId
 } from '@/units/film';
+import {Autocompl} from '@/units/components';
 import _ from 'lodash';
 
 // filmSearch
@@ -87,9 +88,15 @@ export const filmSearchResultsDefault = {
 export interface FilmSearchState {
   options: FilmSearchOptions,
   params: FilmSearchParams,
+  autocompl: {
+    text: Autocompl
+  }
   results: FilmSearchResults,
   reqStatus: {
     opt: ReqStatus,
+    autocompl: {
+      text: ReqStatus,
+    }
     res: ReqStatus,
   },
 }
@@ -97,9 +104,15 @@ export interface FilmSearchState {
 export const filmSearchStateDefault: FilmSearchState = {
   options: filmSearchOptionsDefault,
   params: filmSearchParamsDefault,
+  autocompl: {
+    text: []
+  },
   results: filmSearchResultsDefault,
   reqStatus: {
     opt: ReqStatus.NONE,
+    autocompl: {
+      text: ReqStatus.NONE,
+    },
     res: ReqStatus.NONE,
   },
 }

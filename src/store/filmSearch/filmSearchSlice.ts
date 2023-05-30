@@ -36,20 +36,20 @@ const filmSearchSlice = createSlice({
         fetchFilmSearchOptions.pending, 
         (state) => {
           state.options = structuredClone(filmSearchOptionsDefault);
-          state.reqStatus.opt = ReqStatus.LOADING;
+          state.reqStatus.options = ReqStatus.LOADING;
         }
       )
       .addCase(
         fetchFilmSearchOptions.fulfilled, 
         (state, action) => {
           state.options = action.payload;
-          state.reqStatus.opt = ReqStatus.OK;
+          state.reqStatus.options = ReqStatus.OK;
         }
       )
       .addCase(
         fetchFilmSearchOptions.rejected, 
         (state, action) => {
-          state.reqStatus.opt = action.payload ?? ReqStatus.ERROR;
+          state.reqStatus.options = action.payload ?? ReqStatus.ERROR;
         }
       )
       //fetchFilmSearchTextAutocompl
@@ -78,20 +78,20 @@ const filmSearchSlice = createSlice({
         fetchFilmSearchResults.pending, 
         (state) => {
           state.results = structuredClone(filmSearchResultsDefault);
-          state.reqStatus.res = ReqStatus.LOADING;
+          state.reqStatus.results = ReqStatus.LOADING;
         }
       )
       .addCase(
         fetchFilmSearchResults.fulfilled, 
         (state, action) => {
           state.results = action.payload;
-          state.reqStatus.res = ReqStatus.OK;
+          state.reqStatus.results = ReqStatus.OK;
         }
       )
       .addCase(
         fetchFilmSearchResults.rejected, 
         (state, action) => {
-          state.reqStatus.res = action.payload ?? ReqStatus.ERROR;
+          state.reqStatus.results = action.payload ?? ReqStatus.ERROR;
         }
       )
   }
@@ -129,9 +129,9 @@ export const fetchFilmSearchResults =
   createAsyncThunk<FilmSearchResults, void, {state: RootState, rejectValue: ReqStatus}>(
     'filmSearch/fetchFilmSearchResults',
     async function (_unused, ThunkAPI) {   
-      const reqStatusOpt = ThunkAPI.getState().filmSearch.reqStatus.opt;
-      if (isReqStatusError(reqStatusOpt)) {
-        return ThunkAPI.rejectWithValue(reqStatusOpt);
+      const reqStatusOptions = ThunkAPI.getState().filmSearch.reqStatus.options;
+      if (isReqStatusError(reqStatusOptions)) {
+        return ThunkAPI.rejectWithValue(reqStatusOptions);
       }
 
       const lang = ThunkAPI.getState().settings.lang;

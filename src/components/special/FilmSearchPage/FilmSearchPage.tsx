@@ -26,13 +26,13 @@ export function FilmSearchPage() {
   let subTitle = '';
   let filterHTML = <></>;
 
-  if (isReqStatusOK(filmSearch.reqStatus.opt)) {
+  if (isReqStatusOK(filmSearch.reqStatus.options)) {
     subTitle = getFilmSearchParamsStr(filmSearch);
     filterHTML = <FilmSearchFilter />;
   }
 
   let contentHTML = <></>;
-  switch (filmSearch.reqStatus.res) {
+  switch (filmSearch.reqStatus.results) {
     case ReqStatus.LOADING: {
       contentHTML = (
         <LoadingBox />

@@ -9,7 +9,7 @@ import {LoadingBox} from '@/components/common/LoadingBox';
 import {Pagination} from '@/components/common/Pagination';
 import _ from 'lodash';
 import css from './AboutPage.module.scss';
-import { PageTitle } from '@/components/layouts/PageTitle';
+import { PageTitle } from '@/components/general/PageTitle';
 
 export function AboutPage() {
 

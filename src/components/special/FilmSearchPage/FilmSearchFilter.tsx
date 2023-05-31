@@ -14,9 +14,10 @@ import {
   fetchFilmSearchResults 
 } from '@/store/filmSearch';
 import {buildIntArrParam} from '@/units/url';
+import {InputAutocompl} from '@/components/common/InputAutocompl';
 import _ from 'lodash';
 import css from './FilmSearchFilter.module.scss';
-import { AutocomplBox } from '@/components/common/AutocomplBox';
+
 
 export function FilmSearchFilter() {
 
@@ -63,9 +64,11 @@ export function FilmSearchFilter() {
     });
   }
 
-  const changeText = function(ev: React.ChangeEvent<HTMLInputElement>) {
-    setTextAutocomplExp(true);
-    const text = ev.currentTarget.value;
+  const textOnFocus = function() {
+    dispatch(fetchFilmSearchTextAutocompl());
+  }
+
+  const textOnChange = function(text: string) {
     dispatch(updateFilmSearchParams({text}));
     dispatch(fetchFilmSearchTextAutocompl());
     if (text === '') {
@@ -76,27 +79,12 @@ export function FilmSearchFilter() {
     });
   }
 
-  const autocomplSetText = function(text: string) {
-    console.log('call autocomplSetText');
+  const textOnSelect = function(text: string) {
     dispatch(updateFilmSearchParams({text}));
     dispatch(fetchFilmSearchResults());
     updateRouterQuery({ 
       text: text.length > 0 ? text : undefined
     });
-    setTextAutocomplExp(false);
-  }
-
-  const onFocusText = function() {
-    dispatch(fetchFilmSearchTextAutocompl());
-    setTextAutocomplExp(true);
-  }
-
-  const onBlurText = function(ev: React.FocusEvent) {
-    console.log('ev:', ev)
-    if (!ev.relatedTarget?.closest('.' + css['text-autocompl'])) {
-      console.log('call onBlurText2');
-      setTextAutocomplExp(false);
-    }
   }
 
   const changeSort = function(ev: React.ChangeEvent<HTMLSelectElement>) {
@@ -220,24 +208,13 @@ export function FilmSearchFilter() {
 
       <div className={css['text']}>
         <form className={css['text-form']} onSubmit={submitSearch}>
-          <input type='text' 
-            value={params.text} 
-            onChange={changeText}
-            onFocus={onFocusText}
-            onBlur={onBlurText}
+          <InputAutocompl 
+            value={params.text}
+            autocompl={autocompl.text.value}
+            callbackOnFocus={textOnFocus}
+            callbackOnChange={textOnChange}
+            callbackOnSelect={textOnSelect}
           />
-          <div 
-            className={[
-              css['text-autocompl'], 
-              textAutocomplExp ? css['--exp'] : ''
-            ].join(' ')}
-            tabIndex={0}
-          >
-            <AutocomplBox 
-              autocompl={autocompl.text.value} 
-              setValue={autocomplSetText}
-            />
-          </div>
           <button type='submit' disabled={!params.text?.length}>
             {strlang('FILM_SEARCH_BUTTON', lang)}
           </button>

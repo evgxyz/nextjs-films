@@ -1,0 +1,25 @@
+
+@import '@/styles/abstract';
+
+.body {
+  position: relative;
+  display: inline-block;
+}
+
+.list {
+  position: absolute;
+  display: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: $bg-color-2;
+
+  & li {
+    list-style-type: none;
+    padding: 5px;
+  }
+}
+
+.list.--exp {
+  display: block;
+}

@@ -1,4 +1,5 @@
 
+import {useState} from 'react';
 import {Autocompl} from '@/units/components';
 import css from './AutocomplBox.module.scss';
 
@@ -8,6 +9,9 @@ interface AutocomplBoxProps {
 }
 
 export function AutocomplBox({autocompl, setValue}: AutocomplBoxProps) {
+
+  const [expFlag, setExpFlag] = useState(() => false);
+
   return (
     <div className={css['body']}>
       <ul className={css['list']}>

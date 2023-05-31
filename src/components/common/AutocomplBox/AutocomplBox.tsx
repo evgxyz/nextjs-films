@@ -4,15 +4,15 @@ import css from './AutocomplBox.module.scss';
 
 interface AutocomplBoxProps {
   autocompl: Autocompl,
-  callback: (value: string) => void
+  setValue: (value: string) => void
 }
 
-export function AutocomplBox({autocompl, callback}: AutocomplBoxProps) {  
+export function AutocomplBox({autocompl, setValue}: AutocomplBoxProps) {
   return (
-    <div className={css['box']}>
+    <div className={css['body']}>
       <ul className={css['list']}>
         { autocompl.map((item, idx) =>
-            <li key={idx} onClick={() => callback(item)}>
+            <li key={idx} onClick={() => setValue(item)}>
               {item}
             </li>
           )

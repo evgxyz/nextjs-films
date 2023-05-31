@@ -58,3 +58,15 @@
 .dropdown.--exp .dropdown-list {
   height: auto;
 }
+
+.text-autocompl {
+  height: 0;
+  overflow: hidden;
+  display: none;
+  
+}
+
+.text-autocompl.--exp {
+  height: auto;
+  display: inline-block;
+}

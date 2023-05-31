@@ -27,6 +27,7 @@ export function FilmSearchFilter() {
 
   const [genresExp, setGenresExp] = useState(() => false);
   const [countriesExp, setCountriesExp] = useState(() => false);
+  const [textAutocomplExp, setTextAutocomplExp] = useState(() => false);
 
   const changeGenre = function(genreId: GenreId) {
     const genreIds = [...params.genreIds ?? []];
@@ -63,6 +64,7 @@ export function FilmSearchFilter() {
   }
 
   const changeText = function(ev: React.ChangeEvent<HTMLInputElement>) {
+    setTextAutocomplExp(true);
     const text = ev.currentTarget.value;
     dispatch(updateFilmSearchParams({text}));
     dispatch(fetchFilmSearchTextAutocompl());
@@ -74,12 +76,27 @@ export function FilmSearchFilter() {
     });
   }
 
-  const autocomplText = function(text: string) {
+  const autocomplSetText = function(text: string) {
+    console.log('call autocomplSetText');
     dispatch(updateFilmSearchParams({text}));
     dispatch(fetchFilmSearchResults());
     updateRouterQuery({ 
       text: text.length > 0 ? text : undefined
     });
+    setTextAutocomplExp(false);
+  }
+
+  const onFocusText = function() {
+    dispatch(fetchFilmSearchTextAutocompl());
+    setTextAutocomplExp(true);
+  }
+
+  const onBlurText = function(ev: React.FocusEvent) {
+    console.log('ev:', ev)
+    if (!ev.relatedTarget?.closest('.' + css['text-autocompl'])) {
+      console.log('call onBlurText2');
+      setTextAutocomplExp(false);
+    }
   }
 
   const changeSort = function(ev: React.ChangeEvent<HTMLSelectElement>) {
@@ -203,16 +220,27 @@ export function FilmSearchFilter() {
 
       <div className={css['text']}>
         <form className={css['text-form']} onSubmit={submitSearch}>
-          <input type='text' value={params.text} onChange={changeText} />
+          <input type='text' 
+            value={params.text} 
+            onChange={changeText}
+            onFocus={onFocusText}
+            onBlur={onBlurText}
+          />
+          <div 
+            className={[
+              css['text-autocompl'], 
+              textAutocomplExp ? css['--exp'] : ''
+            ].join(' ')}
+            tabIndex={0}
+          >
+            <AutocomplBox 
+              autocompl={autocompl.text.value} 
+              setValue={autocomplSetText}
+            />
+          </div>
           <button type='submit' disabled={!params.text?.length}>
             {strlang('FILM_SEARCH_BUTTON', lang)}
           </button>
-          <div>
-            <AutocomplBox 
-              autocompl={autocompl.text.value} 
-              callback={autocomplText}
-            />
-          </div>
         </form>
       </div>
 

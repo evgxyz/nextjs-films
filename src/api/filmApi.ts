@@ -104,11 +104,18 @@ export async function apiFetchFilmSearchOptions(lang: Lang):
 export async function apiFetchFilmSearchTextAutocompl(text: string): 
   Promise<{autocompl: Autocompl, reqStatus: ReqStatus}> {
 //
-  console.log('call apiFetchFilmSearchTextSuggestions');
+  console.log('call apiFetchFilmSearchTextAutocompl');
   await delay(1000);
+
+  text = text.toLowerCase();
+
+  const films = Array.from(filmsMap.values());
+  const titles: string[] = [];
+  films.forEach(filmRaw => titles.push(filmRaw.title_ru, filmRaw.title_en));
+  const autocompl = titles.filter(title => title.toLowerCase().includes(text));
   
   return {
-    autocompl: [text, text+'1', text+'2'],
+    autocompl: autocompl.slice(0, 5),
     reqStatus: ReqStatus.OK,
   }
 }

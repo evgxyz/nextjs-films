@@ -16,6 +16,7 @@ import {
 import {buildIntArrParam} from '@/units/url';
 import _ from 'lodash';
 import css from './FilmSearchFilter.module.scss';
+import { AutocomplBox } from '@/components/common/AutocomplBox';
 
 export function FilmSearchFilter() {
 
@@ -29,20 +30,15 @@ export function FilmSearchFilter() {
 
   const changeGenre = function(genreId: GenreId) {
     const genreIds = [...params.genreIds ?? []];
-
     if (!genreIds.includes(genreId)) {
       genreIds.push(genreId);
     } else {
       _.pull(genreIds, genreId);
     }
     genreIds.sort();
-
     const page = 1;
-
     dispatch(updateFilmSearchParams({genreIds, page}));
-
     dispatch(fetchFilmSearchResults());
-
     updateRouterQuery({ 
       genreIds: genreIds.length > 0 ? buildIntArrParam(genreIds) : undefined,
       page: page.toString()
@@ -51,20 +47,15 @@ export function FilmSearchFilter() {
 
   const changeCountry = function(countryId: CountryId) {
     const countryIds = [...params.countryIds ?? []];
-
     if (!countryIds.includes(countryId)) {
       countryIds.push(countryId);
     } else {
       _.pull(countryIds, countryId);
     }
     countryIds.sort();
-
     const page = 1;
-
     dispatch(updateFilmSearchParams({countryIds, page}));
-
     dispatch(fetchFilmSearchResults());
-
     updateRouterQuery({ 
       countryIds: countryIds.length > 0 ? buildIntArrParam(countryIds) : undefined,
       page: page.toString()
@@ -73,34 +64,33 @@ export function FilmSearchFilter() {
 
   const changeText = function(ev: React.ChangeEvent<HTMLInputElement>) {
     const text = ev.currentTarget.value;
-    
     dispatch(updateFilmSearchParams({text}));
-
     dispatch(fetchFilmSearchTextAutocompl());
-
     if (text === '') {
       dispatch(fetchFilmSearchResults());
     }
+    updateRouterQuery({ 
+      text: text.length > 0 ? text : undefined
+    });
+  }
 
+  const autocomplText = function(text: string) {
+    dispatch(updateFilmSearchParams({text}));
+    dispatch(fetchFilmSearchResults());
     updateRouterQuery({ 
       text: text.length > 0 ? text : undefined
     });
   }
 
   const changeSort = function(ev: React.ChangeEvent<HTMLSelectElement>) {
-    ev.preventDefault();
-    
+    ev.preventDefault(); 
     const sort = ev.target.value;
     if (!isFilmSearchSort(sort)) {
       return;
     }
-
     const page = 1;
-
     dispatch(updateFilmSearchParams({sort, page}));
-
     dispatch(fetchFilmSearchResults());
-
     updateRouterQuery({ 
       sort: sort !== filmSearchSortDefault ? sort : undefined,
       page: page.toString()
@@ -109,11 +99,8 @@ export function FilmSearchFilter() {
 
   const updateResults = function() {
     const page = 1;
-
     dispatch(updateFilmSearchParams({page}));
-
     dispatch(fetchFilmSearchResults());
-
     updateRouterQuery({ 
       page: page.toString()
     });
@@ -125,12 +112,10 @@ export function FilmSearchFilter() {
       router.query,
       updParams
     );
-
     query = Object.fromEntries(
       Object.entries(query)
       .filter(rec => rec[1] !== undefined)
     )
-
     router.push({query}, undefined, {shallow: true});
   }
 
@@ -219,10 +204,15 @@ export function FilmSearchFilter() {
       <div className={css['text']}>
         <form className={css['text-form']} onSubmit={submitSearch}>
           <input type='text' value={params.text} onChange={changeText} />
-          <div>{autocompl.text.value.join(', ')}</div>
           <button type='submit' disabled={!params.text?.length}>
             {strlang('FILM_SEARCH_BUTTON', lang)}
           </button>
+          <div>
+            <AutocomplBox 
+              autocompl={autocompl.text.value} 
+              callback={autocomplText}
+            />
+          </div>
         </form>
       </div>
 

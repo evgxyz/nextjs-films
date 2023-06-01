@@ -18,7 +18,6 @@ import {InputAutocompl} from '@/components/common/InputAutocompl';
 import _ from 'lodash';
 import css from './FilmSearchFilter.module.scss';
 
-
 export function FilmSearchFilter() {
 
   const router = useRouter();
@@ -28,7 +27,6 @@ export function FilmSearchFilter() {
 
   const [genresExp, setGenresExp] = useState(() => false);
   const [countriesExp, setCountriesExp] = useState(() => false);
-  const [textAutocomplExp, setTextAutocomplExp] = useState(() => false);
 
   const changeGenre = function(genreId: GenreId) {
     const genreIds = [...params.genreIds ?? []];
@@ -71,9 +69,9 @@ export function FilmSearchFilter() {
   const textOnChange = function(text: string) {
     dispatch(updateFilmSearchParams({text}));
     dispatch(fetchFilmSearchTextAutocompl());
-    if (text === '') {
+    /* if (text === '') {
       dispatch(fetchFilmSearchResults());
-    }
+    } */
     updateRouterQuery({ 
       text: text.length > 0 ? text : undefined
     });
@@ -215,7 +213,7 @@ export function FilmSearchFilter() {
             callbackOnChange={textOnChange}
             callbackOnSelect={textOnSelect}
           />
-          <button type='submit' disabled={!params.text?.length}>
+          <button type='submit'>
             {strlang('FILM_SEARCH_BUTTON', lang)}
           </button>
         </form>

@@ -109,13 +109,18 @@ export async function apiFetchFilmSearchTextAutocompl(text: string):
 
   text = text.toLowerCase();
 
-  const films = Array.from(filmsMap.values());
-  const titles: string[] = [];
-  films.forEach(filmRaw => titles.push(filmRaw.title_ru, filmRaw.title_en));
-  const autocompl = titles.filter(title => title.toLowerCase().includes(text));
+  let autocompl: Autocompl = [];
+  
+  if (text.trim() !== '') {
+    const films = Array.from(filmsMap.values());
+    const titles: string[] = [];
+    films.forEach(filmRaw => titles.push(filmRaw.title_ru, filmRaw.title_en));
+    autocompl = titles.filter(title => title.toLowerCase().includes(text));
+    autocompl = autocompl.slice(0, 5);
+  }
   
   return {
-    autocompl: autocompl.slice(0, 5),
+    autocompl, 
     reqStatus: ReqStatus.OK,
   }
 }

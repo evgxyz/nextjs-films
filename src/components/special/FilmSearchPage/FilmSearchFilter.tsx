@@ -1,7 +1,6 @@
 
 import {useRouter} from 'next/router';
 import {useAppSelector, useAppDispatch} from '@/store';
-import {useState} from 'react';
 import {
   GenreId, CountryId, 
   isFilmSearchSort, filmSearchSortDefault, filmSearchSorts, filmSearchSortKeys, 
@@ -26,8 +25,6 @@ export function FilmSearchFilter() {
   const {options, params, autocompl} = useAppSelector(state => state.filmSearch);
   const dispatch = useAppDispatch();
 
-  const [countriesExp, setCountriesExp] = useState(() => false);
-
   const genreOnChange = function(genreId: GenreId) {
     const genreIds = [...params.genreIds ?? []];
     if (!genreIds.includes(genreId)) {
@@ -45,7 +42,7 @@ export function FilmSearchFilter() {
     });
   }
 
-  const changeCountry = function(countryId: CountryId) {
+  const countryOnChange = function(countryId: CountryId) {
     const countryIds = [...params.countryIds ?? []];
     if (!countryIds.includes(countryId)) {
       countryIds.push(countryId);
@@ -127,16 +124,6 @@ export function FilmSearchFilter() {
     updateResults();
   }
 
-  const toggleCountries = function() {
-    setCountriesExp(exp => !exp);
-  }
-
-  const onBlurCountries = function(ev: React.FocusEvent) {
-    if (ev.relatedTarget?.closest('.' + css['dropdown']) !== ev.currentTarget) {
-      setCountriesExp(false);
-    }
-  }
-
   return (
     <div className={css['body']}>
 
@@ -147,34 +134,15 @@ export function FilmSearchFilter() {
           checkedIds={params.genreIds}
           callbackOnChange={genreOnChange}
         />
-
       </div>
 
       <div className={css['countries']}>
-        <div 
-          className={[css['dropdown'], countriesExp ? css['--exp'] : ''].join(' ')}
-          tabIndex={0}
-          onBlur={onBlurCountries}
-        >
-          <div className={css['dropdown-btn']} onClick={toggleCountries}>
-            {strlang('FILM_SEARCH_COUNTRIES', lang)}
-            <span className={css['dropdown-btn__icon']}></span>
-          </div>
-          <ul className={css['dropdown-list']}>
-            { options.countries.map(country =>
-                <li key={country.id}>
-                  <label>
-                    <input type='checkbox' 
-                      checked={params.countryIds?.includes(country.id)} 
-                      onChange={() => {changeCountry(country.id)}}
-                    />
-                    {country.name}
-                  </label>
-                </li>
-              )
-            }
-          </ul>
-        </div>
+        <CheckboxList 
+          title={strlang('FILM_SEARCH_COUNTRIES', lang)}
+          options={options.countries}
+          checkedIds={params.countryIds}
+          callbackOnChange={countryOnChange}
+        />
       </div>
 
       <div className={css['text']}>

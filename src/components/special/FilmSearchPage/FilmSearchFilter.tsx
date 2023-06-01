@@ -26,7 +26,6 @@ export function FilmSearchFilter() {
   const {options, params, autocompl} = useAppSelector(state => state.filmSearch);
   const dispatch = useAppDispatch();
 
-  //const [genresExp, setGenresExp] = useState(() => false);
   const [countriesExp, setCountriesExp] = useState(() => false);
 
   const genreOnChange = function(genreId: GenreId) {
@@ -128,16 +127,6 @@ export function FilmSearchFilter() {
     updateResults();
   }
 
-  /* const toggleGenres = function() {
-    setGenresExp(exp => !exp);
-  }
-
-  const onBlurGenres = function(ev: React.FocusEvent) {
-    if (ev.relatedTarget?.closest('.' + css['dropdown']) !== ev.currentTarget) {
-      setGenresExp(false);
-    }
-  } */
-
   const toggleCountries = function() {
     setCountriesExp(exp => !exp);
   }
@@ -152,31 +141,6 @@ export function FilmSearchFilter() {
     <div className={css['body']}>
 
       <div className={css['genres']}>
-        {/* <div 
-          className={[css['dropdown'], genresExp ? css['--exp'] : ''].join(' ')}
-          tabIndex={0}
-          onBlur={onBlurGenres}
-        >
-          <div className={css['dropdown-btn']} onClick={toggleGenres}>
-            {strlang('FILM_SEARCH_GENRES', lang)}
-            <span className={css['dropdown-btn__icon']}></span>
-          </div>
-          <ul className={css['dropdown-list']}>
-            { options.genres.map(genre =>
-                <li key={genre.id}>
-                  <label>
-                    <input type='checkbox' 
-                      checked={params.genreIds?.includes(genre.id)} 
-                      onChange={() => {changeGenre(genre.id)}}
-                    />
-                    {genre.name}
-                  </label>
-                </li>
-              )
-            }
-          </ul>
-        </div> */}
-
         <CheckboxList 
           title={strlang('FILM_SEARCH_GENRES', lang)}
           options={options.genres}

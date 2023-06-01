@@ -20,32 +20,32 @@ export function CheckboxList<IdType extends (number | string)>(
   } = props;
 
   const elemId = useId();
-  const [expand, setExpand] = useState(true);
+  const [openFlag, setOpenFlag] = useState(false);
 
   const itemOnChange = function(itemId: IdType) {
     callbackOnChange(itemId);
   }
 
   const titleOnClick = function() {
-    setExpand(st => !st);
+    setOpenFlag(st => !st);
   }
 
   const bodyOnBlur = function(ev: React.FocusEvent) {
     if (!ev.relatedTarget?.closest('#' + elemId.replace(/:/g, '\\:'))) {
-      setExpand(false);
+      setOpenFlag(false);
     }
   }
 
   return (
     <div 
       id={elemId}
-      className={[css['body'], expand ? css['--expand'] : ''].join(' ')}
+      className={[css['body'], openFlag ? css['--open'] : css['--closed']].join(' ')}
       tabIndex={0}
       onBlur={bodyOnBlur}
     >
       <div className={css['title']} onClick={titleOnClick}>
         {title}
-        <span className={css['title-icon']}></span>
+        <span className={css['title__icon']}></span>
       </div>
       <ul className={css['list']}>
         { options.map(item =>

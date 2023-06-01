@@ -8,7 +8,6 @@
 
 .list {
   position: absolute;
-  display: none;
   margin: 0;
   padding: 0;
   width: 100%;
@@ -20,6 +19,6 @@
   }
 }
 
-.list.--exp {
-  display: block;
+.--closed .list {
+  display: none;
 }

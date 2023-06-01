@@ -21,43 +21,43 @@ export function InputAutocompl(props: InputAutocomplProps) {
     callbackOnSelect,
   } = props;
 
-  const id = useId();
-  const [expFlag, setExpFlag] = useState(false);
+  const elemId = useId();
+  const [openFlag, setOpenFlag] = useState(false);
 
   const inputOnFocus = function() {
     callbackOnFocus();
-    setExpFlag(true);
+    setOpenFlag(true);
   }
 
   const inputOnBlur = function(ev: React.FocusEvent) {
-    if (!ev.relatedTarget?.closest('#' + id.replace(/:/g, '\\:'))) {
-      setExpFlag(false);
+    if (!ev.relatedTarget?.closest('#' + elemId.replace(/:/g, '\\:'))) {
+      setOpenFlag(false);
     }
   }
 
   const inputOnChange = function(ev: React.ChangeEvent<HTMLInputElement>) {
     const value = ev.currentTarget.value;
     callbackOnChange(value);
-    setExpFlag(true);
+    setOpenFlag(true);
   }
 
   const itemOnClick = function(value: string) {
     callbackOnSelect(value);
-    setExpFlag(false);
+    setOpenFlag(false);
   }
 
   return (
-    <div id={id} className={css['body']}>
+    <div 
+      id={elemId} 
+      className={[css['body'], openFlag ? css['--open'] : css['--closed']].join(' ')}
+    >
       <input type='text' 
         value={value} 
         onChange={inputOnChange}
         onFocus={inputOnFocus}
         onBlur={inputOnBlur}
       />
-      <ul 
-        className={[css['list'], expFlag ? css['--exp'] : ''].join(' ')}
-        tabIndex={0}
-      >
+      <ul className={css['list']} tabIndex={0}>
         { autocompl.map((item, idx) =>
             <li key={idx} onClick={() => itemOnClick(item)}>
               {item}

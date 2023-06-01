@@ -15,6 +15,7 @@ import {
 } from '@/store/filmSearch';
 import {buildIntArrParam} from '@/units/url';
 import {InputAutocompl} from '@/components/common/InputAutocompl';
+import {CheckboxList} from '@/components/common/CheckboxList';
 import _ from 'lodash';
 import css from './FilmSearchFilter.module.scss';
 
@@ -25,10 +26,10 @@ export function FilmSearchFilter() {
   const {options, params, autocompl} = useAppSelector(state => state.filmSearch);
   const dispatch = useAppDispatch();
 
-  const [genresExp, setGenresExp] = useState(() => false);
+  //const [genresExp, setGenresExp] = useState(() => false);
   const [countriesExp, setCountriesExp] = useState(() => false);
 
-  const changeGenre = function(genreId: GenreId) {
+  const genreOnChange = function(genreId: GenreId) {
     const genreIds = [...params.genreIds ?? []];
     if (!genreIds.includes(genreId)) {
       genreIds.push(genreId);
@@ -127,7 +128,7 @@ export function FilmSearchFilter() {
     updateResults();
   }
 
-  const toggleGenres = function() {
+  /* const toggleGenres = function() {
     setGenresExp(exp => !exp);
   }
 
@@ -135,7 +136,7 @@ export function FilmSearchFilter() {
     if (ev.relatedTarget?.closest('.' + css['dropdown']) !== ev.currentTarget) {
       setGenresExp(false);
     }
-  }
+  } */
 
   const toggleCountries = function() {
     setCountriesExp(exp => !exp);
@@ -151,7 +152,7 @@ export function FilmSearchFilter() {
     <div className={css['body']}>
 
       <div className={css['genres']}>
-        <div 
+        {/* <div 
           className={[css['dropdown'], genresExp ? css['--exp'] : ''].join(' ')}
           tabIndex={0}
           onBlur={onBlurGenres}
@@ -174,7 +175,15 @@ export function FilmSearchFilter() {
               )
             }
           </ul>
-        </div>
+        </div> */}
+
+        <CheckboxList 
+          title={strlang('FILM_SEARCH_GENRES', lang)}
+          options={options.genres}
+          checkedIds={params.genreIds}
+          callbackOnChange={genreOnChange}
+        />
+
       </div>
 
       <div className={css['countries']}>

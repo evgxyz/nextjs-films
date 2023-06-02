@@ -125,7 +125,7 @@ export const fetchFilmSearchOptions =
 
 export const fetchFilmSearchTextAutocompl = 
   createAsyncThunk<string[], void, {state: RootState, rejectValue: ReqStatus}>(
-    'filmSearch/fetchFilmSearchTextSugg',
+    'filmSearch/fetchFilmSearchTextAutocompl',
     async function (_unused, ThunkAPI) {
       const text = ThunkAPI.getState().filmSearch.params.text ?? '';
       const {autocompl, reqStatus} = await apiFetchFilmSearchTextAutocompl(text);

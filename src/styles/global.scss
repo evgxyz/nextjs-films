@@ -48,21 +48,6 @@ body {
   //@include debug-border(blue); 
 }
 
-// // PageTitle
-// .page-title-box {
-//   margin-bottom: 1rem;
-
-//   & .page-title {
-//     margin-bottom: 0;
-//     font-size: 1.6rem;
-//   }
-  
-//   & .page-subtitle {
-//     margin-top: 0.3rem;
-//     font-size: 1rem;
-//   }
-// }
-
 // ссылка по умолчанию
 a {
   color: $color-2;
@@ -73,7 +58,58 @@ a {
   }
 }
 
-select {
+input {
+  padding: 0.3rem;
   font-size: 1rem;
+  color: $color-1;
+  background-color: $bg-color-1; 
+  border: 1px solid $brd-color-2; 
+  outline: none; 
+
+  &:focus::placeholder { opacity: 0; }
 }
+
+select {
+  padding: 0.3rem;
+  font-size: 1rem;
+  color: $color-1;
+  background-color: $bg-color-1; 
+  border: 1px solid $brd-color-2; 
+  outline: none; 
+}
+
+textarea {
+  font-size: 1rem;
+  padding: 0.2rem;
+}
+
+button {
+  padding: 0.3rem;
+  font-size: 1rem;
+  color: $color-1;
+  background-color: $bg-color-1; 
+  border: 1px solid $brd-color-2; 
+  outline: none; 
+
+  &:hover {  
+    color: $color-2;
+    background-color: $bg-color-2; 
+    border-color: $brd-color-2; 
+    cursor: pointer; 
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: $color-1;
+  -webkit-box-shadow: inset 0 0 0 1000px $bg-color-1;
+}
+
 

@@ -3,7 +3,7 @@
 
 .body {
   display: flex;
-  padding: 5px;
+  padding: 10px;
   border: 1px solid $brd-color-1;
   justify-content: space-between;
   align-items: center;
@@ -11,62 +11,30 @@
 }
 
 .genres {
-  flex-basis: 12em;
+  flex-basis: 10em;
 }
 
 .countries {
+  flex-basis: 10em;
+}
+
+.text {
   flex-basis: 12em;
 }
 
-.dropdown {
-  position: relative;
-  width: 100%;
+.text-form {
+  white-space: nowrap;
 }
 
-.dropdown .dropdown-btn {
-  color: $color-2;
-  padding: 5px;
-}
+.text-input {
+  display: inline-block;
 
-.dropdown .dropdown-btn__icon {
-  margin-left: 0.2em;
-}
-
-.dropdown .dropdown-btn__icon::after {
-  content: ' ▼';
-}
-
-.dropdown.--exp .dropdown-btn__icon::after {
-  content: ' ▲';
-}
-
-.dropdown .dropdown-list {
-  position: absolute;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 0;
-  overflow: hidden;
-  background-color: $bg-color-2;
-
-  & li {
-    list-style-type: none;
-    padding: 5px;
+  & input:focus {
+    background-color: $bg-color-2; 
   }
 }
 
-.dropdown.--exp .dropdown-list {
-  height: auto;
-}
-
-.text-autocompl {
-  height: 0;
-  overflow: hidden;
-  display: none;
-  
-}
-
-.text-autocompl.--exp {
-  height: auto;
+.text-btn {
   display: inline-block;
+  margin-left: -1px;
 }

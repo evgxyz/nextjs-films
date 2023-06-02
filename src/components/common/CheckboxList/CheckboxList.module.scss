@@ -4,7 +4,6 @@
 .body {
   position: relative;
   width: 100%;
-  border: 1px solid $brd-color-2;
 }
 
 .body.--open {
@@ -12,9 +11,13 @@
 }
 
 .title {
+  display: flex;
+  justify-content: space-between;
   color: $color-2;
   padding: 5px;
+  border: 1px solid $brd-color-2;
   user-select: none;
+  cursor: pointer;
 }
 
 .title__icon {
@@ -22,11 +25,11 @@
   user-select: none;
 }
 
-.title-icon::after {
+.title__icon::after {
   content: ' ▲';
 }
 
-.--closed .title-icon::after {
+.--closed .title__icon::after {
   content: ' ▼';
 }
 
@@ -38,6 +41,8 @@
   height: auto;
   overflow: hidden;
   background-color: $bg-color-2;
+  border: 1px solid $brd-color-3;
+  border-top: none;
 
   & li {
     list-style-type: none;

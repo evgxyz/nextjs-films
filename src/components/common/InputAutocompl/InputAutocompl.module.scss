@@ -12,10 +12,16 @@
   padding: 0;
   width: 100%;
   background-color: $bg-color-2;
+  border: 1px solid $brd-color-3;
+  border-top: none;
 
   & li {
     list-style-type: none;
     padding: 5px;
+
+    &:hover {
+      background-color: $bg-color-3;
+    }
   }
 }
 

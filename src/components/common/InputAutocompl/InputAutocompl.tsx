@@ -57,14 +57,16 @@ export function InputAutocompl(props: InputAutocomplProps) {
         onFocus={inputOnFocus}
         onBlur={inputOnBlur}
       />
-      <ul className={css['list']} tabIndex={0}>
-        { autocompl.map((item, idx) =>
-            <li key={idx} onClick={() => itemOnClick(item)}>
-              {item}
-            </li>
-          )
-        }
-      </ul>
+      { autocompl.length > 0 &&
+        <ul className={css['list']} tabIndex={0}>
+          { autocompl.map((item, idx) =>
+              <li key={idx} onClick={() => itemOnClick(item)}>
+                {item}
+              </li>
+            )
+          }
+        </ul>
+      }
     </div>
   );
 }

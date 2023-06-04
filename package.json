@@ -9,7 +9,8 @@
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "devall": "concurrently --kill-others \"npm run dev\" \"npm run storybook\""
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",

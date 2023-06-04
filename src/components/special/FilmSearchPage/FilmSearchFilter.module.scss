@@ -11,30 +11,38 @@
 }
 
 .genres {
-  flex-basis: 10em;
+  flex-basis: 12em;
+  flex-grow: 1;
 }
 
 .countries {
-  flex-basis: 10em;
+  flex-basis: 12em;
+  flex-grow: 1;
 }
 
 .text {
   flex-basis: 12em;
-}
+  flex-grow: 1;
 
-.text-form {
-  white-space: nowrap;
-}
+  &__form {
+    display: flex;
+  }
+  
+  &__input {
+    & input:focus {
+      background-color: $bg-color-2; 
+    }
+  }
 
-.text-input {
-  display: inline-block;
-
-  & input:focus {
-    background-color: $bg-color-2; 
+  &__btn {
+    display: inline-block;
+    margin-left: -1px;
   }
 }
 
-.text-btn {
-  display: inline-block;
-  margin-left: -1px;
+.sort {
+  flex-basis: 8em;
+  flex-grow: 1;
+
+  & select { width: 100%; }
 }

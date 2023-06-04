@@ -7,6 +7,13 @@ const meta: Meta<typeof CheckboxList> = {
   title: 'CheckboxList',
   component: CheckboxList,
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <div style={{width: '12rem'}}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export default meta;

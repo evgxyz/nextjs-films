@@ -146,8 +146,8 @@ export function FilmSearchFilter() {
       </div>
 
       <div className={css['text']}>
-        <form className={css['text-form']} onSubmit={submitSearch}>
-          <div className={css['text-input']}>
+        <form className={css['text__form']} onSubmit={submitSearch}>
+          <div className={css['text__input']}>
             <InputAutocompl 
               value={params.text}
               autocompl={autocompl.text.value}
@@ -156,14 +156,13 @@ export function FilmSearchFilter() {
               callbackOnSelect={textOnSelect}
             />
           </div>
-          <button type='submit' className={css['text-btn']}>
+          <button type='submit' className={css['text__btn']}>
             {strlang('FILM_SEARCH_BUTTON', lang)}
           </button>
         </form>
       </div>
 
       <div className={css['sort']}>
-        { strlang('FILM_SEARCH_SORT', lang) + ': ' }
         <select value={params.sort} onChange={changeSort}>
           { filmSearchSorts.map(sort => 
               <option key={sort} value={sort}>

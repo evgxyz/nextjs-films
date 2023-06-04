@@ -1,27 +1,32 @@
 
-@import '@/styles/abstract';
+$color: black;
+$bg-color: white;
+$bg-color-open: silver;
+$bg-color-hover: lightblue;
+$brd-color: gray;
+$padding: 5px;
 
 .body {
   position: relative;
+  box-sizing: border-box;
   width: 100%;
 }
 
 .body.--open {
-  background-color: $bg-color-2;
+  background-color: $bg-color-open;
 }
 
 .title {
   display: flex;
   justify-content: space-between;
-  color: $color-2;
-  padding: 5px;
-  border: 1px solid $brd-color-2;
+  color: $color;
+  padding: $padding;
+  border: 1px solid $brd-color;
   user-select: none;
   cursor: pointer;
 }
 
 .title__icon {
-  margin-left: 0.2em;
   user-select: none;
 }
 
@@ -40,16 +45,16 @@
   width: 100%;
   height: auto;
   overflow: hidden;
-  background-color: $bg-color-2;
-  border: 1px solid $brd-color-3;
+  background-color: $bg-color;
+  border: 1px solid $brd-color;
   border-top: none;
 
   & li {
     list-style-type: none;
-    padding: 5px;
+    padding: $padding;
 
     &:hover {
-      background-color: $bg-color-3;
+      background-color: $bg-color-hover;
     }
   }
 }

@@ -14,7 +14,7 @@ import {
 } from '@/store/filmSearch';
 import {buildIntArrParam} from '@/units/url';
 import {InputAutocompl} from '@/components/common/InputAutocompl';
-import {CheckboxList} from '@/components/common/CheckboxList';
+import {CheckboxList, CheckboxListCss} from '@/components/common/CheckboxList';
 import _ from 'lodash';
 import css from './FilmSearchFilter.module.scss';
 
@@ -133,6 +133,7 @@ export function FilmSearchFilter() {
           options={options.genres}
           checkedIds={params.genreIds}
           callbackOnChange={genreOnChange}
+          css={CheckboxListCss}
         />
       </div>
 
@@ -142,6 +143,7 @@ export function FilmSearchFilter() {
           options={options.countries}
           checkedIds={params.countryIds}
           callbackOnChange={countryOnChange}
+          css={CheckboxListCss}
         />
       </div>
 

@@ -1,24 +1,22 @@
 
 import {useState, useId} from 'react';
-import css from './CheckboxList.module.scss';
 
 interface CheckboxListProps<IdType extends (number | string)> {
   title: string,
   options: {id: IdType, name: string}[],
   checkedIds?: IdType[],
   callbackOnChange: (id: IdType) => void,
+  css: {readonly [key: string]: string},
 }
 
-export function CheckboxList<IdType extends (number | string)>(
-  props: CheckboxListProps<IdType>) {
+export function CheckboxList<IdType extends (number | string)>({
+  title,
+  options,
+  checkedIds = [],
+  callbackOnChange,
+  css
+}: CheckboxListProps<IdType>) {
 //
-  const {
-    title,
-    options,
-    checkedIds = [],
-    callbackOnChange
-  } = props;
-
   const elemId = useId();
   const [openFlag, setOpenFlag] = useState(false);
 

@@ -3,7 +3,7 @@ import {useState, useId} from 'react';
 import {Autocompl} from '@/units/components';
 
 interface InputAutocomplProps {
-  value: string | undefined,
+  value: string,
   autocompl: Autocompl,
   callbackOnFocus: () => void,
   callbackOnChange: (value: string) => void,

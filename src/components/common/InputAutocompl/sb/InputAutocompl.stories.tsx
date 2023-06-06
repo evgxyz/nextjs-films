@@ -21,32 +21,41 @@ export default meta;
 
 type Story = StoryObj<typeof InputAutocompl>;
 
-/* 
-const InputAutocomplFC = (props: React.ComponentProps<typeof InputAutocompl>) => {
-  
-  const [checkedIds, setCheckedIds] = useState(props.checkedIds ?? []);
 
-  const callbackOnChange = (itemId: typeof checkedIds[number]) => {
-    setCheckedIds(checkedIds => {
-      checkedIds = [...checkedIds];
-      if (!checkedIds.includes(itemId)) {
-        checkedIds.push(itemId);
-      } else {
-        _.pull(checkedIds, itemId);
-      }
-      checkedIds.sort();
-      return checkedIds;
-    });
+const InputAutocomplFC = (props: React.ComponentProps<typeof InputAutocompl>) => {
+  const [value, setValue] = useState(props.value);
+  const [autocompl, setAutocompl] = useState(props.autocompl);
+
+  const callbackOnChange = (value: string) => {
+    setValue(value);
+    const autocompl = 
+      (value !== '') ?
+        [1, 2, 3, 4].map(i => value + '-' + i.toString()) 
+      : [];
+    setAutocompl(autocompl);
   } 
+
+  const callbackOnFocus = () => {
+    const value = props.value;
+    setValue(value);
+    const autocompl = 
+      (value !== '') ?
+        [1, 2, 3, 4].map(i => value + '-' + i.toString()) 
+      : [];
+    setAutocompl(autocompl);
+  }
 
   return (
     <InputAutocompl 
       {...props}
-      checkedIds={checkedIds}
+      value={value}
+      autocompl={autocompl}
+      callbackOnFocus={callbackOnFocus}
       callbackOnChange={callbackOnChange}
+      callbackOnSelect={callbackOnChange}
     />
   );
-}*/
+}
 
 export const Default: Story = {
   args: {
@@ -58,6 +67,6 @@ export const Default: Story = {
     css: InputAutocomplCss
   },
   render: (args) => (
-    <InputAutocompl {...args} />
+    <InputAutocomplFC {...args} />
   )
 };

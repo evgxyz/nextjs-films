@@ -151,7 +151,7 @@ export function FilmSearchFilter() {
         <form className={css['text__form']} onSubmit={submitSearch}>
           <div className={css['text__input']}>
             <InputAutocompl 
-              value={params.text}
+              value={params.text ?? ''}
               autocompl={autocompl.text.value}
               callbackOnFocus={textOnFocus}
               callbackOnChange={textOnChange}

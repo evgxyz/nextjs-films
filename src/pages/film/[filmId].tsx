@@ -69,7 +69,7 @@ FilmNextPage.getInitialProps = wrapper.getInitialPageProps(store => async(ctx) =
 
     await store.dispatch(fetchFilmPage({filmId}));
 
-    const reqStatus = store.getState().filmPage.reqStatus.film;
+    const reqStatus = store.getState().filmPage.film.reqStatus;
     if (isReqStatusError(reqStatus)) {
       ctx.res && (ctx.res.statusCode = reqStatusToHttpCode(reqStatus));
       return {fromServer: true, initPageStatus: PageStatus.ERROR};

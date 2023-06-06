@@ -1,7 +1,6 @@
 
 import {useState, useId} from 'react';
 import {Autocompl} from '@/units/components';
-import css from './InputAutocompl.module.scss';
 
 interface InputAutocomplProps {
   value: string | undefined,
@@ -9,16 +8,17 @@ interface InputAutocomplProps {
   callbackOnFocus: () => void,
   callbackOnChange: (value: string) => void,
   callbackOnSelect: (value: string) => void,
+  css: {readonly [key: string]: string},
 }
 
 export function InputAutocompl(props: InputAutocomplProps) {
-
   const {
     value,
     autocompl, 
     callbackOnFocus, 
     callbackOnChange, 
     callbackOnSelect,
+    css
   } = props;
 
   const elemId = useId();
@@ -52,6 +52,7 @@ export function InputAutocompl(props: InputAutocomplProps) {
       className={[css['body'], openFlag ? css['--open'] : css['--closed']].join(' ')}
     >
       <input type='text' 
+        className={css['input']}
         value={value} 
         onChange={inputOnChange}
         onFocus={inputOnFocus}

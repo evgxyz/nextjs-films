@@ -13,8 +13,8 @@ import {
   fetchFilmSearchResults 
 } from '@/store/filmSearch';
 import {buildIntArrParam} from '@/units/url';
-import {InputAutocompl} from '@/components/common/InputAutocompl';
 import {CheckboxList, CheckboxListCss} from '@/components/common/CheckboxList';
+import {InputAutocompl, InputAutocomplCss} from '@/components/common/InputAutocompl';
 import _ from 'lodash';
 import css from './FilmSearchFilter.module.scss';
 
@@ -156,6 +156,7 @@ export function FilmSearchFilter() {
               callbackOnFocus={textOnFocus}
               callbackOnChange={textOnChange}
               callbackOnSelect={textOnSelect}
+              css={InputAutocomplCss}
             />
           </div>
           <button type='submit' className={css['text__btn']}>

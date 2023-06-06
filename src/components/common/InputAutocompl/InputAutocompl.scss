@@ -1,51 +1,37 @@
 
 .body {
   position: relative;
+  display: inline-block;
   width: $width;
   font-size: 1rem;
 }
 
-.body.--open {
-  background-color: $bg-color-focus;
-}
-
-.title {
-  display: flex;
-  height: $height;
-  justify-content: space-between;
-  color: $color;
+.input {
+  display: block;
+  width: 100%;
   padding: $padding;
+  font-size: 1rem;
   border: 1px solid $brd-color;
-  user-select: none;
-  cursor: pointer;
-}
+  outline: none;
+  box-shadow: none; 
 
-.--open .title {
-  border: 1px solid $brd-color-focus;
-}
-
-.title__icon {
-  user-select: none;
-}
-
-.title__icon::after {
-  content: ' ▲';
-}
-
-.--closed .title__icon::after {
-  content: ' ▼';
+  &:focus {
+    background-color: $bg-color-focus;
+    border: 1px solid $brd-color-focus;
+  }
 }
 
 .list {
   position: absolute;
-  margin: 0;
-  padding: 0;
   width: 100%;
   height: auto;
   overflow: hidden;
+  margin: 0;
+  padding: 0;
   background-color: $bg-color;
   border: 1px solid $brd-color;
   border-top: none;
+  cursor: default;
 
   & li {
     list-style-type: none;

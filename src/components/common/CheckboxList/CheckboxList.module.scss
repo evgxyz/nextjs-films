@@ -4,11 +4,13 @@
 $width: 100%;
 $height: 2rem;
 $padding: 0.3rem;
-$item-padding: 0.3em;
 $color: $color-1;
 $bg-color: $bg-color-1;
-$bg-color-open: $bg-color-2;
-$bg-color-hover: $bg-color-3;
+$bg-color-focus: $bg-color-2;
 $brd-color: $brd-color-2;
+$brd-color-focus: $brd-color-2;
+$item-padding: 0.3em;
+$item-color-hover: $color-2;
+$item-bg-color-hover: $bg-color-2;
 
 @import './CheckboxList.scss';

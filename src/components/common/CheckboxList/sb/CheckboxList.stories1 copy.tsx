@@ -11,6 +11,7 @@ const meta: Meta<typeof CheckboxList> = {
   decorators: [
     (Story: StoryFn) => (
       <div style={{width: '12rem'}}>
+        <pre>{'Story='+JSON.stringify(Story)}</pre>
         <Story />
       </div>
     ),
@@ -21,13 +22,13 @@ export default meta;
 
 type Story = StoryObj<typeof CheckboxList>;
 
-const CheckboxListFC = (props: React.ComponentProps<typeof CheckboxList>) => {
+const wrapper = () => {
   
-  const [checkedIds, setCheckedIds] = useState(props.checkedIds ?? []);
+  const [checkedIds, setCheckedIds] = useState();
 
   const callbackOnChange = (itemId: typeof checkedIds[number]) => {
     setCheckedIds(checkedIds => {
-      checkedIds = [...checkedIds];
+      console.log('call callbackOnChange')
       if (!checkedIds.includes(itemId)) {
         checkedIds.push(itemId);
       } else {
@@ -40,9 +41,7 @@ const CheckboxListFC = (props: React.ComponentProps<typeof CheckboxList>) => {
 
   return (
     <CheckboxList 
-      {...props}
-      checkedIds={checkedIds}
-      callbackOnChange={callbackOnChange}
+      {...{...props, checkedIds, callbackOnChange}}
     />
   );
 }
@@ -54,14 +53,12 @@ export const Default: Story = {
       {id: 1, name: 'Option 1'},
       {id: 2, name: 'Option 2'},
       {id: 3, name: 'Option 3'},
-      {id: 4, name: 'Option 4'},
-      {id: 5, name: 'Option 5'},
     ],
     checkedIds: [1, 3],
     callbackOnChange: () => {},
     css: CheckboxListCss
   },
   render: (args) => (
-    <CheckboxListFC {...args} />
-  )
+    <CheckboxList {...args}/>
+  ),
 };

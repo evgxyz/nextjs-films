@@ -7,9 +7,12 @@ interface MessagePageProps {
   type: 'INFO' | 'WARN' | 'ERROR',
   title: string,
   text?: string,
+  redirect?: {url: string, delay: number}
 }
 
-export function MessagePage({type = 'INFO', title, text}: MessagePageProps) {
+export function MessagePage(props: MessagePageProps) {
+
+  const title = props.title;
 
   const pageEnv = {
     title,
@@ -18,7 +21,7 @@ export function MessagePage({type = 'INFO', title, text}: MessagePageProps) {
 
   return (
     <MainLayout pageEnv={pageEnv}>
-      <MessageBox type={type} title={title} text={text} />
+      <MessageBox {...props} />
     </MainLayout>
   )
 }

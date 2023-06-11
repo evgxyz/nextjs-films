@@ -10,38 +10,51 @@ import {MainLayout} from '@/components/layouts/MainLayout';
 import {LoadingBox} from '@/components/common/LoadingBox';
 import {MessageBox} from '@/components/common/MessageBox';
 import {PageTitle} from '@/components/general/PageTitle';
-import {AccRegInfo} from '@/units/acc';
+import {AccRegInfo, AccRegStatus} from '@/units/acc';
 import {queryAccReg} from '@/store/acc';
 import {RegForm} from './RegForm'; 
 import _ from 'lodash';
-import css from './RegPage.module.scss';
+//import css from './RegPage.module.scss';
 
 export function RegPage() {
 
   const router = useRouter();
   const lang = useAppSelector(state => state.settings.lang);
-  const accReg = useAppSelector(state => state.acc.accReg);
+  const accRegResult = useAppSelector(state => state.acc.accReg.accRegResult);
+  const rootState = useAppSelector(state => state);
+
+  console.log('RegPage: rootState:', rootState);
 
   const title = strlang('REG_PAGE_TITLE', lang);
   let contentHTML = <></>;
 
-  switch (accReg.reqStatus) {
+  switch (accRegResult.reqStatus) {
     default: {
-      contentHTML = (
-        <RegForm />
-      )
+      switch (accRegResult.accRegStatus) {
+        default: {
+          contentHTML = 
+            <RegForm />
+        } break;
+        
+        case AccRegStatus.CREATED: {
+          contentHTML =
+            <MessageBox 
+              type={'INFO'} 
+              title={strlang('ACCOUNT_CREATED_TITLE', lang)} 
+              text={strlang('ACCOUNT_CREATED_TEXT', lang)}
+            />
+        } break;
+      }
     } break;
 
     case ReqStatus.LOADING: {
-      contentHTML = (
+      contentHTML = 
         <LoadingBox />
-      )
     } break;
 
     case ReqStatus.ERROR: {
-      contentHTML = (
+      contentHTML = 
         <MessageBox type={'ERROR'} title={strlang('ERROR', lang)} />
-      )
     } break;
   }
   
@@ -53,9 +66,7 @@ export function RegPage() {
   return (
     <MainLayout pageEnv={pageEnv}>
       <PageTitle title={title} />
-      <div className={css['body']}>
-        <RegForm />
-      </div>
+      {contentHTML}
     </MainLayout>
   )
 }

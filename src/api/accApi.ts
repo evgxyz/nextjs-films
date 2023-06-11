@@ -14,7 +14,7 @@ export async function apiQueryAccReg(accRegInfo: AccRegInfo):
   //create acc
   const accRegResult: AccRegResult = {
     login: accRegInfo.login,
-    accRegStatus: AccRegStatus.OK
+    accRegStatus: AccRegStatus.CREATED
   }
 
   if (accRegResult) {

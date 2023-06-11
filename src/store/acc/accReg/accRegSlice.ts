@@ -2,7 +2,6 @@
 import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
 import {RootState} from '@/store';
 import {ReqStatus, isReqStatusOK} from '@/units/status';
-import {Lang, isLang} from '@/units/lang';
 import {
   AccRegInfo, 
   AccRegResult, 
@@ -19,7 +18,7 @@ export const accRegSlice = createSlice({
 
   reducers: {
     updateAccRegResult: (state, action: PayloadAction<Partial<AccRegResult>>) => {
-      state = Object.assign(state, action.payload);
+      state.accRegResult = Object.assign(state.accRegResult, action.payload);
     },
   },
 
@@ -28,7 +27,7 @@ export const accRegSlice = createSlice({
       .addCase(
         queryAccReg.pending, 
         (state) => {
-          state = {
+          state.accRegResult = {
             ...structuredClone(accRegResultDefault),
             reqStatus: ReqStatus.LOADING
           }
@@ -37,7 +36,7 @@ export const accRegSlice = createSlice({
       .addCase(
         queryAccReg.fulfilled, 
         (state, action) => {
-          state = {
+          state.accRegResult = {
             ...action.payload,
             reqStatus: ReqStatus.OK
           }
@@ -46,7 +45,7 @@ export const accRegSlice = createSlice({
       .addCase(
         queryAccReg.rejected, 
         (state, action) => {
-          state.reqStatus = action.payload ?? ReqStatus.ERROR;
+          state.accRegResult.reqStatus = action.payload ?? ReqStatus.ERROR;
         }
       )
   }

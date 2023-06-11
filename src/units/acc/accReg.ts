@@ -25,11 +25,13 @@ export const accRegResultDefault: AccRegResult = {
 }
 
 //reg store
-export interface AccRegState extends AccRegResult {
-  reqStatus: ReqStatus
+export interface AccRegState {
+  accRegResult: AccRegResult & {reqStatus: ReqStatus}
 }
 
 export const accRegStateDefault: AccRegState = {
-  ...accRegResultDefault, 
-  reqStatus: ReqStatus.NONE
+  accRegResult: {
+    ...accRegResultDefault, 
+    reqStatus: ReqStatus.NONE
+  }
 }

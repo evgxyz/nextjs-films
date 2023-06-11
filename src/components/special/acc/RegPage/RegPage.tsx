@@ -32,11 +32,12 @@ export function RegPage() {
         } break;
         
         case AccRegStatus.CREATED: {
-          contentHTML =
+          contentHTML = 
             <MessageBox 
               type={'INFO'} 
               title={strlang('ACCOUNT_CREATED_TITLE', lang)} 
               text={strlang('ACCOUNT_CREATED_TEXT', lang)}
+              redirect={{url: '/acc/login', delay: 1000}}
             />
         } break;
       }

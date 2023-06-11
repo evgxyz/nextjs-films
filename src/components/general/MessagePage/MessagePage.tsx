@@ -1,5 +1,6 @@
 
 import {MainLayout} from '@/components/layouts/MainLayout';
+import {MessageBox} from '@/components/common/MessageBox';
 import css from './MessagePage.module.scss';
 
 interface MessagePageProps {
@@ -17,10 +18,7 @@ export function MessagePage({type = 'INFO', title, text}: MessagePageProps) {
 
   return (
     <MainLayout pageEnv={pageEnv}>
-      <div className={[css['body'], css[type.toLowerCase()]].join(' ')}>
-        <h1 className={css['title']}>{title}</h1>
-        { text && <div className={css['text']}>{text}</div> }
-      </div>
+      <MessageBox type={type} title={title} text={text} />
     </MainLayout>
   )
 }

@@ -4,16 +4,26 @@
 .body {
   padding: 10px;
 
+  & .title {
+    margin: 0;
+  }
+
+  & .text {
+    margin-top: 1em;
+  }
+
+  & .link {
+    margin-top: 1em;
+  }
+
   &.info {
     border: 1px solid $color-ok;
 
     & .title {
-      margin: 0;
       color: $color-ok;
     }
   
     & .text {
-      margin-top: 1em;
       color: $color-ok;
     }
   }

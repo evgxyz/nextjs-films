@@ -8,10 +8,12 @@
     border: 1px solid $color-ok;
 
     & .title {
+      margin: 0;
       color: $color-ok;
     }
   
     & .text {
+      margin-top: 1em;
       color: $color-ok;
     }
   }

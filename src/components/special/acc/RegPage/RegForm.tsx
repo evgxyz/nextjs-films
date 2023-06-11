@@ -16,9 +16,6 @@ export function RegForm() {
   const [login, setLogin] = useState('');
   const [passw, setPassw] = useState('');
 
-  const rootState = useAppSelector(state => state);
-  console.log('RegForm: rootState:', rootState);
-
   const loginOnInput = function(ev: React.ChangeEvent<HTMLInputElement>) {
     setLogin(ev.currentTarget.value);
   }
@@ -46,8 +43,6 @@ export function RegForm() {
   return (
     <div className={css['body']}>
       <form className={css['form']} onSubmit={accRegOnSubmit}>
-
-        {'accRegResult='+JSON.stringify(accRegResult)}
 
         { errorMsg !== '' && 
           <div className={css['error-msg']}>

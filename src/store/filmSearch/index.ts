@@ -1,2 +1,2 @@
 
-export * from './filmSearchSlice'
+export * from './filmSearchSlice';

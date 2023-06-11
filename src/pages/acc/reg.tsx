@@ -1,6 +1,6 @@
 
 import {NextPage} from 'next';
-import {RegPage} from '@/components/special/account/RegPage';
+import {RegPage} from '@/components/special/acc/RegPage';
 
 const RegNextPage: NextPage = function() {
   return (

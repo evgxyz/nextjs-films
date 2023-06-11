@@ -1,7 +1,4 @@
 
-import {ReqStatus} from '@/units/status';
-import _ from 'lodash';
-
 // film general
 
 export type FilmId = number;

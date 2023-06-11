@@ -27,7 +27,7 @@ const filmPageSlice = createSlice({
         (state) => {
           state.film = {
             ...structuredClone(filmDefault),
-            reqStatus:ReqStatus.LOADING
+            reqStatus: ReqStatus.LOADING
           }
         }
       )

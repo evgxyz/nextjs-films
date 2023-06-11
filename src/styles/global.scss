@@ -62,7 +62,8 @@ a {
   }
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="password"] {
   height: 2rem;
   padding: 0.3rem 0.4rem;
   font-size: 1rem;

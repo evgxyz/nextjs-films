@@ -32,7 +32,6 @@ export function UserMenuTray() {
 
   return (
     <div className={css['body']}>
-      { strlang('SELECT_LANG', lang) + ': ' }
       <select value={lang} onChange={changeLang}>
         { langs.map(lang => 
             <option key={lang} value={lang}>

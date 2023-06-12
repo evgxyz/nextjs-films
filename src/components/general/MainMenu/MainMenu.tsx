@@ -10,11 +10,9 @@ export function MainMenu() {
   
   return (
     <div className={css['body']}>
-      <p>
-        <Link href='/'>Home</Link>{' | '}
-        <Link href='/films'>Films</Link>{' | '}
-        <Link href='/about'>About</Link>
-      </p>
+        <Link href='/'>{strlang('INDEX_PAGE_TITLE', lang)}</Link>{' | '}
+        <Link href='/films'>{strlang('FILM_SEARCH_SHORT_TITLE', lang)}</Link>{' | '}
+        <Link href='/about'>{strlang('ABOUT_PAGE_SHORT_TITLE', lang)}</Link>
     </div>
   )
 }

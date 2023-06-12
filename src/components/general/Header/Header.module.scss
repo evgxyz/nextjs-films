@@ -1,6 +1,30 @@
 
 @import '@/styles/abstract';
 
-.header {
-  @include debug-border(blue)
+// .body {
+//   padding: 10px;
+// }
+
+.top-line {
+  display: flex;
+  margin: 5px 0;
+  justify-content: center;
+  align-items: top;
+}
+
+.middle-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: top;
+  padding: 10px;
+  border: 1px solid $brd-color-1;
+}
+
+.logo-box {
+  height: 80px;
+
+  & .logo-image {
+    width: auto;
+    height: 100%;
+  }
 }

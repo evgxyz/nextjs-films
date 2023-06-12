@@ -1,6 +1,9 @@
 
 @import '@/styles/abstract';
 
-.footer {
-  color: green;
+.body {
+  display: flex;
+  padding: 10px;
+  border: 1px solid $brd-color-1;
+  justify-content: center;
 }

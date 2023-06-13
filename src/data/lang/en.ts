@@ -1,6 +1,6 @@
 
 const langDictEN = {
-  APP_NAME: 'Super site',
+  APP_NAME: 'FilmSite',
 
   LOADING: 'Loading...',
   WRONG_URL: 'Wrong URL',

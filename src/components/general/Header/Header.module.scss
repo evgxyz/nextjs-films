@@ -20,10 +20,23 @@
   border: 1px solid $brd-color-1;
 }
 
-.logo-box {
-  height: 80px;
+.logo-box-link, .logo-box-link:hover {
+  text-decoration: none;
+}
 
-  & .logo-image {
+.logo-box {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: $color-2;
+}
+
+.logo {
+  height: 60px;
+
+  & .logo-img {
     width: auto;
     height: 100%;
   }

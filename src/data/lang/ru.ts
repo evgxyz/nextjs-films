@@ -1,6 +1,6 @@
 
 const langDictRU = {
-  APP_NAME: 'Супер сайт',
+  APP_NAME: 'КиноСайт',
 
   LOADING: 'Загрузка...',
   WRONG_URL: 'Неправильный URL',

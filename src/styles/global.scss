@@ -45,6 +45,9 @@ body {
 // основное содержание страницы
 .page-main {
   flex-grow: 1;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid $brd-color-1;
   //@include debug-border(green);
 }
 

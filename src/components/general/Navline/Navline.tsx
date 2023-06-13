@@ -22,7 +22,6 @@ export function Navline({pageEnv}: NavlineProps) {
 
   return (
     <div className={css['body']}>
-      {/* <pre>{'Navline: pageEnv:' + JSON.stringify(navStack)}</pre> */}
       <ul className={css['list']}>
         { navStack.map((item, idx) =>
             <li key={idx}>

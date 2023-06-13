@@ -1,11 +1,12 @@
 
 @import '@/styles/abstract';
 
-.box {
+.body {
+  margin: 0;
   margin-bottom: 1em;
 
   & .title {
-    margin-bottom: 0;
+    margin: 0;
     font-size: 1.6em;
   }
   

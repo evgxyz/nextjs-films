@@ -43,7 +43,8 @@ export const filmSearchSortKeys = <const>{
 export interface FilmSearchParams {
   genreIds?: GenreId[],
   countryIds?: CountryId[],
-  year?: number,
+  yearFrom?: number,
+  yearTo?: number,
   text?: string,
   sort?: string,
   page?: number,
@@ -57,7 +58,8 @@ export const filmSearchPerPageDefault = 4;
 export const filmSearchParamsDefault: FilmSearchParams = { 
   genreIds: [],
   countryIds: [],
-  year: 0,
+  yearFrom: undefined,
+  yearTo: undefined,
   text: '',
   sort: filmSearchSortDefault,
   page: filmSearchPageDefault,
@@ -67,7 +69,8 @@ export const filmSearchParamsDefault: FilmSearchParams = {
 export const filmSearchQueryTempl: Record<string, string | undefined> = {
   genreIds: undefined,
   countryIds: undefined,
-  year: undefined,
+  yearFrom: undefined,
+  yearTo: undefined,
   text: undefined,
   sort: undefined,
   page: undefined,

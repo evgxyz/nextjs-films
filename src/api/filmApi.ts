@@ -132,9 +132,11 @@ export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: 
   await delay(1000);
 
   let {
-    text = '',
     genreIds,
     countryIds,
+    yearFrom,
+    yearTo,
+    text = '',
     sort = filmSearchSortDefault,
     page = filmSearchPageDefault,
     perPage = filmSearchPerPageDefault
@@ -173,6 +175,9 @@ export async function apiFetchFilmSearchResults(params: FilmSearchParams, lang: 
       //countries
       ( !countryIds || countryIds.length == 0 || 
         _.intersection(countryIds, filmRaw.countryIds).length > 0 ) &&
+      //years
+      ( !yearFrom || filmRaw.year >= yearFrom ) && 
+      ( !yearTo || filmRaw.year <= yearTo ) &&
       //text
       ( text === '' || 
         filmRaw.title_ru.toLowerCase().includes(text) || 

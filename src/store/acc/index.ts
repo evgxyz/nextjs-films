@@ -1,10 +1,13 @@
 
-import {combineReducers} from "@reduxjs/toolkit";
+import {combineReducers} from '@reduxjs/toolkit';
 
-export * from './accReg/accRegSlice';
+export * from './accRegSlice';
+import {accRegReducer} from './accRegSlice';
 
-import {accRegReducer} from './accReg/accRegSlice';
+export * from './accLoginSlice';
+import {accLoginReducer} from './accLoginSlice';
 
 export const accReducer = combineReducers({
-  accReg: accRegReducer
+  accReg: accRegReducer,
+  accLogin: accLoginReducer
 });

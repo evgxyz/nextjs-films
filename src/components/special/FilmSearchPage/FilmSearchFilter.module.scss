@@ -11,20 +11,17 @@
   column-gap: 10px;
 }
 
-.genres {
-  flex-basis: 12em;
-  flex-grow: 1;
-}
+// .genres {
+//   flex-shrink: 1;
+//   flex-grow: 1;
+// }
 
-.countries {
-  flex-basis: 12em;
-  flex-grow: 1;
-}
+// .countries {
+//   flex-shrink: 1;
+//   flex-grow: 1;
+// }
 
 .text {
-  flex-basis: 12em;
-  flex-grow: 1;
-
   &__form {
     display: flex;
   }

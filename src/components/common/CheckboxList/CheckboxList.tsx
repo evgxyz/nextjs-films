@@ -45,20 +45,22 @@ export function CheckboxList<IdType extends (number | string)>({
         {title}
         <span className={css['title__icon']}></span>
       </div>
-      <ul className={css['list']}>
-        { options.map(item =>
-            <li key={item.id}>
-              <label>
-                <input type='checkbox' 
-                  checked={checkedIds.includes(item.id)} 
-                  onChange={() => {itemOnChange(item.id)}}
-                />
-                {item.name}
-              </label>
-            </li>
-          )
-        }
-      </ul>
+      <div className={css['list-wrapper']}>
+        <ul className={css['list']}>
+          { options.map(item =>
+              <li key={item.id}>
+                <label>
+                  <input type='checkbox' 
+                    checked={checkedIds.includes(item.id)} 
+                    onChange={() => {itemOnChange(item.id)}}
+                  />
+                  {item.name}
+                </label>
+              </li>
+            )
+          }
+        </ul>
+      </div>
     </div>
   );
 }

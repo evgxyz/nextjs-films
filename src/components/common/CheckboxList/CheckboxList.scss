@@ -1,6 +1,6 @@
 
 .body {
-  position: relative;
+  display: block;
   width: $width;
   font-size: 1rem;
   background-color: $bg-color;
@@ -26,6 +26,7 @@
 }
 
 .title__icon {
+  margin-left: 0.5em;
   user-select: none;
 }
 
@@ -37,20 +38,24 @@
   content: ' ▼';
 }
 
+.list-wrapper {
+  position: relative;
+}
+
 .list {
   position: absolute;
+  top: 1px;
   margin: 0;
+  max-height: $list-max-height;
+  overflow: auto;
   padding: 0;
-  width: 100%;
-  height: auto;
-  overflow: hidden;
   background-color: $item-bg-color;
   border: 1px solid $brd-color;
-  border-top: none;
 
   & li {
     list-style-type: none;
     padding: $item-padding;
+    white-space: nowrap;
 
     &:hover {
       color: $item-color-hover;

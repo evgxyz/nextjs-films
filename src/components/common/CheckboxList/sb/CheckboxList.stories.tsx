@@ -10,7 +10,7 @@ const meta: Meta<typeof CheckboxList> = {
   component: CheckboxList,
   decorators: [
     (Story: StoryFn) => (
-      <div style={{width: '12rem'}}>
+      <div style={{display: 'inline-block'}}>
         <Story />
       </div>
     ),

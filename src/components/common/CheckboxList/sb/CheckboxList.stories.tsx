@@ -39,11 +39,16 @@ const CheckboxListFC = (props: React.ComponentProps<typeof CheckboxList>) => {
   }
 
   return (
-    <CheckboxList 
-      {...props}
-      checkedIds={checkedIds}
-      callbackOnChange={callbackOnChange}
-    />
+    <>
+      <div style={{marginBottom: '10px'}}>
+        {'checkedIds: ' + JSON.stringify(checkedIds)}
+      </div>
+      <CheckboxList 
+        {...props}
+        checkedIds={checkedIds}
+        callbackOnChange={callbackOnChange}
+      />
+    </>
   );
 }
 

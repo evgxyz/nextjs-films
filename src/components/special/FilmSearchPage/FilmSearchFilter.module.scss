@@ -12,13 +12,9 @@
 }
 
 // .genres {
-//   flex-shrink: 1;
-//   flex-grow: 1;
 // }
 
 // .countries {
-//   flex-shrink: 1;
-//   flex-grow: 1;
 // }
 
 .text {
@@ -27,6 +23,8 @@
   }
   
   &__input {
+    width: 13em;
+
     & input:focus {
       background-color: $bg-color-2; 
     }

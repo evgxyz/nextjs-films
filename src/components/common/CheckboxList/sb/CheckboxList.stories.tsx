@@ -8,13 +8,13 @@ import _ from 'lodash';
 const meta: Meta<typeof CheckboxList> = {
   title: 'CheckboxList',
   component: CheckboxList,
-  decorators: [
+  /* decorators: [
     (Story: StoryFn) => (
       <div style={{display: 'inline-block'}}>
         <Story />
       </div>
     ),
-  ],
+  ], */
 };
 
 export default meta;
@@ -43,11 +43,13 @@ const CheckboxListFC = (props: React.ComponentProps<typeof CheckboxList>) => {
       <div style={{marginBottom: '10px'}}>
         {'checkedIds: ' + JSON.stringify(checkedIds)}
       </div>
-      <CheckboxList 
-        {...props}
-        checkedIds={checkedIds}
-        callbackOnChange={callbackOnChange}
-      />
+      <div style={{display: 'inline-block'}}>
+        <CheckboxList 
+          {...props}
+          checkedIds={checkedIds}
+          callbackOnChange={callbackOnChange}
+        />
+      </div>
     </>
   );
 }

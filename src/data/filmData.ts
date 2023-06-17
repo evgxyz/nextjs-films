@@ -2,6 +2,7 @@
 const films = [
   {
     id: 1,
+    title_orig: "Буратино",
     title_ru: "Буратино",
     title_en: "Buratino",
     genreIds: [1, 2],
@@ -10,6 +11,7 @@ const films = [
   },
   {
     id: 2,
+    title_orig: "Чиполлинно",
     title_ru: "Чиполлинно",
     title_en: "Chipollino",
     genreIds: [2, 3],
@@ -18,6 +20,7 @@ const films = [
   },
   {
     id: 3,
+    title_orig: "Винни-пух",
     title_ru: "Винни-пух",
     title_en: "Vinni-puh",
     genreIds: [3],
@@ -26,6 +29,7 @@ const films = [
   },
   {
     id: 4,
+    title_orig: "Чебурашка",
     title_ru: "Чебурашка",
     title_en: "Cheburashka",
     genreIds: [1],
@@ -34,6 +38,7 @@ const films = [
   },
   {
     id: 5,
+    title_orig: "Ну-погоди!",
     title_ru: "Ну-погоди!",
     title_en: "Well wait!",
     genreIds: [2],
@@ -42,14 +47,16 @@ const films = [
   },
   {
     id: 6,
-    title_ru: "Зеркало",
-    title_en: "Mirror",
+    title_orig: "Home Alone",
+    title_ru: "Один дома",
+    title_en: "Home Alone",
     genreIds: [1, 2],
     countryIds: [3],
     year: 2003
   },
   {
     id: 7,
+    title_orig: "Terminator",
     title_ru: "Терминатор",
     title_en: "Terminator",
     genreIds: [1],
@@ -58,6 +65,7 @@ const films = [
   },
   {
     id: 8,
+    title_orig: "The matrix",
     title_ru: "Матрица",
     title_en: "The matrix",
     genreIds: [2, 4],
@@ -66,6 +74,7 @@ const films = [
   },
   {
     id: 9,
+    title_orig: "Terminator 2",
     title_ru: "Терминатор 2",
     title_en: "Terminator 2",
     genreIds: [1, 3],
@@ -74,6 +83,7 @@ const films = [
   },
   {
     id: 10,
+    title_orig: "Avatar",
     title_ru: "Аватар",
     title_en: "Avatar",
     genreIds: [2, 4],
@@ -82,6 +92,7 @@ const films = [
   },
   {
     id: 11,
+    title_orig: "Avatar 2",
     title_ru: "Аватар 2",
     title_en: "Avatar 2",
     genreIds: [2, 4],

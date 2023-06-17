@@ -17,6 +17,7 @@ export function FilmPage() {
   const filmPage = useAppSelector(state => state.filmPage);
 
   let title = '';
+  let subTitle = '';
   let contentHTML = <></>;
 
   switch (filmPage.film.reqStatus) {
@@ -30,9 +31,13 @@ export function FilmPage() {
     case ReqStatus.OK: {
       const film = filmPage.film;
       title = film.title;
+      subTitle = film.title_orig !== title ? film.title_orig : '';
       contentHTML = (
         <>
-          <PageTitle title={title} />
+          <PageTitle 
+            title={title} 
+            subTitle={subTitle} 
+          />
           
           <div className={css['image']}></div>
 
@@ -89,7 +94,10 @@ export function FilmPage() {
 
   const pageEnv = {
     title,
-    navStack: [{url: router.asPath, text: title}],
+    navStack: [
+      {url: '/films', text: strlang('FILM_SEARCH_SHORT_TITLE', lang)}, 
+      {url: router.asPath, text: title}
+    ],
     description: 'Film lorem ipsum dolor sit',
     keywords: 'film, lorem, ipsum, dolor'
   }

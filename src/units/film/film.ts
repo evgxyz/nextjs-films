@@ -20,6 +20,7 @@ export interface Country {
 export interface Film {
   id: FilmId,
   title: string,
+  title_orig: string,
   genres: Genre[],
   countries: Country[],
   year: FilmYear,

@@ -30,15 +30,16 @@ export function AboutPage() {
         title={title} 
         subTitle={'This is subtitle'} 
       />
-      <p><Link href='/films?genreIds=2+3&countryIds=1+3'>Films</Link></p>
-      <LoadingBox />
-      <Pagination 
-        baseUrl={'/films?genreIds=2+3&countryIds=1+3'} 
-        paramName={'page'} 
-        start={1} 
-        end={10} 
-        curr={6}
-      />
+      <p>Lorem ipsum dolor sit, 
+        amet consectetur adipisicing elit. 
+        Cupiditate nesciunt adipisci voluptatem ipsa alias iste dolorem officiis nisi 
+        voluptatibus, iusto laborum minima illo ipsum placeat amet error incidunt tempora
+        blanditiis?</p>
+      <p>Lorem ipsum dolor sit, 
+        amet consectetur adipisicing elit. 
+        Cupiditate nesciunt adipisci voluptatem ipsa alias iste dolorem officiis nisi 
+        voluptatibus, iusto laborum minima illo ipsum placeat amet error incidunt tempora
+        blanditiis?</p>
       <p>Lorem ipsum dolor sit, 
         amet consectetur adipisicing elit. 
         Cupiditate nesciunt adipisci voluptatem ipsa alias iste dolorem officiis nisi 

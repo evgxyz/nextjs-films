@@ -25,6 +25,8 @@ function getFilm(filmId: FilmId, lang: Lang): (Film | undefined) {
 
     title: lang === Lang.EN ? filmRaw.title_en : filmRaw.title_ru,
     
+    title_orig: filmRaw.title_orig,
+    
     genres: filmRaw.genreIds.map(id => { 
         const genreRaw = genresMap.get(id);
         if (!genreRaw) return undefined;
@@ -105,7 +107,7 @@ export async function apiFetchFilmSearchTextAutocompl(text: string):
   Promise<{autocompl: Autocompl, reqStatus: ReqStatus}> {
 //
   console.log('call apiFetchFilmSearchTextAutocompl');
-  await delay(1000);
+  await delay(500);
 
   text = text.toLowerCase();
 

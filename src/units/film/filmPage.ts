@@ -8,6 +8,7 @@ import _ from 'lodash';
 export const filmDefault: Film = { 
   id: 0,
   title: '',
+  title_orig: '',
   genres: [],
   countries: [],
   year: 0,

@@ -11,6 +11,12 @@
   column-gap: 10px;
 }
 
+.search-options {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
 // .genres {
 // }
 
@@ -37,8 +43,7 @@
 }
 
 .sort {
-  flex-basis: 8em;
-  flex-grow: 1;
+  flex-basis: 10em;
 
   & select { width: 100%; }
 }

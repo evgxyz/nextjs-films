@@ -127,42 +127,44 @@ export function FilmSearchFilter() {
   return (
     <div className={css['body']}>
 
-      <div className={css['genres']}>
-        <CheckboxList 
-          title={strlang('FILM_SEARCH_GENRES', lang)}
-          options={options.genres}
-          checkedIds={params.genreIds}
-          callbackOnChange={genreOnChange}
-          css={CheckboxListCss}
-        />
-      </div>
+      <div className={css['search-options']}>
+        <div className={css['genres']}>
+          <CheckboxList 
+            title={strlang('FILM_SEARCH_GENRES', lang)}
+            options={options.genres}
+            checkedIds={params.genreIds}
+            callbackOnChange={genreOnChange}
+            css={CheckboxListCss}
+          />
+        </div>
 
-      <div className={css['countries']}>
-        <CheckboxList 
-          title={strlang('FILM_SEARCH_COUNTRIES', lang)}
-          options={options.countries}
-          checkedIds={params.countryIds}
-          callbackOnChange={countryOnChange}
-          css={CheckboxListCss}
-        />
-      </div>
+        <div className={css['countries']}>
+          <CheckboxList 
+            title={strlang('FILM_SEARCH_COUNTRIES', lang)}
+            options={options.countries}
+            checkedIds={params.countryIds}
+            callbackOnChange={countryOnChange}
+            css={CheckboxListCss}
+          />
+        </div>
 
-      <div className={css['text']}>
-        <form className={css['text__form']} onSubmit={submitSearch}>
-          <div className={css['text__input']}>
-            <InputAutocompl 
-              value={params.text ?? ''}
-              autocompl={autocompl.text.value}
-              callbackOnFocus={textOnFocus}
-              callbackOnChange={textOnChange}
-              callbackOnSelect={textOnSelect}
-              css={InputAutocomplCss}
-            />
-          </div>
-          <button type='submit' className={css['text__btn']}>
-            {strlang('FILM_SEARCH_BUTTON', lang)}
-          </button>
-        </form>
+        <div className={css['text']}>
+          <form className={css['text__form']} onSubmit={submitSearch}>
+            <div className={css['text__input']}>
+              <InputAutocompl 
+                value={params.text ?? ''}
+                autocompl={autocompl.text.value}
+                callbackOnFocus={textOnFocus}
+                callbackOnChange={textOnChange}
+                callbackOnSelect={textOnSelect}
+                css={InputAutocomplCss}
+              />
+            </div>
+            <button type='submit' className={css['text__btn']}>
+              {strlang('FILM_SEARCH_BUTTON', lang)}
+            </button>
+          </form>
+        </div>
       </div>
 
       <div className={css['sort']}>

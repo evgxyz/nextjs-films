@@ -8,8 +8,7 @@ import {useDispatch, useSelector, TypedUseSelectorHook} from 'react-redux';
 import {createWrapper, HYDRATE} from 'next-redux-wrapper';
 import {settingsReducer} from './settings';
 import {userReducer} from './user';
-import {filmSearchReducer} from './filmSearch';
-import {filmPageReducer} from './filmPage';
+import {filmSearchReducer, filmPageReducer} from './film';
 
 const combinedReducer = combineReducers({
   settings: settingsReducer,

@@ -13,7 +13,7 @@ import {
   setFilmSearchParams, 
   fetchFilmSearchResults,
   fetchFilmSearchOptions
-} from '@/store/filmSearch';
+} from '@/store/film/filmSearch';
 import {MessagePage} from '@/components/general/MessagePage';
 import {FilmSearchPage} from '@/components/special/film/FilmSearchPage';
 

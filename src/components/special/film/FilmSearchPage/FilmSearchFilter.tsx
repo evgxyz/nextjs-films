@@ -11,7 +11,7 @@ import {
   updateFilmSearchParams, 
   fetchFilmSearchTextAutocompl,
   fetchFilmSearchResults 
-} from '@/store/filmSearch';
+} from '@/store/film/filmSearch';
 import {buildIntArrParam} from '@/units/url';
 import {CheckboxList, CheckboxListCss} from '@/components/common/CheckboxList';
 import {InputAutocompl, InputAutocomplCss} from '@/components/common/InputAutocompl';

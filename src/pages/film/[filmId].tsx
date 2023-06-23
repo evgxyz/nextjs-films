@@ -9,7 +9,7 @@ import {FilmId} from '@/units/film';
 import {parseIntParam} from '@/units/url';
 import {isReqStatusError, reqStatusToHttpCode} from '@/units/status';
 import {strlang} from '@/units/lang';
-import {fetchFilmPage} from '@/store/filmPage';
+import {fetchFilmPage} from '@/store/film/filmPage';
 import {MessagePage} from '@/components/general/MessagePage';
 import {FilmPage} from '@/components/special/film/FilmPage';
 

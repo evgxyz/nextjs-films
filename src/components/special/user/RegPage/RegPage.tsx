@@ -9,7 +9,7 @@ import {MainLayout} from '@/components/layouts/MainLayout';
 import {LoadingBox} from '@/components/common/LoadingBox';
 import {MessageBox} from '@/components/common/MessageBox';
 import {PageTitle} from '@/components/general/PageTitle';
-import {AccRegStatus} from '@/units/acc';
+import {UserRegStatus} from '@/units/user';
 import {RegForm} from './RegForm'; 
 import _ from 'lodash';
 //import css from './RegPage.module.scss';
@@ -18,26 +18,26 @@ export function RegPage() {
 
   const router = useRouter();
   const lang = useAppSelector(state => state.settings.lang);
-  const accRegResult = useAppSelector(state => state.acc.accReg.accRegResult);
+  const userRegResult = useAppSelector(state => state.user.userReg.userRegResult);
 
   const title = strlang('REG_PAGE_TITLE', lang);
   let contentHTML = <></>;
 
-  switch (accRegResult.reqStatus) {
+  switch (userRegResult.reqStatus) {
     default: {
-      switch (accRegResult.accRegStatus) {
+      switch (userRegResult.userRegStatus) {
         default: {
           contentHTML = 
             <RegForm />
         } break;
         
-        case AccRegStatus.CREATED: {
+        case UserRegStatus.CREATED: {
           contentHTML = 
             <MessageBox 
               type={'INFO'} 
               title={strlang('ACCOUNT_CREATED_TITLE', lang)} 
               text={strlang('ACCOUNT_CREATED_TEXT', lang)}
-              redirect={{url: '/acc/login', delay: 1000}}
+              redirect={{url: '/user/login', delay: 1000}}
             />
         } break;
       }

@@ -7,13 +7,13 @@ import {
 import {useDispatch, useSelector, TypedUseSelectorHook} from 'react-redux';
 import {createWrapper, HYDRATE} from 'next-redux-wrapper';
 import {settingsReducer} from './settings';
-import {accReducer} from './acc';
+import {userReducer} from './user';
 import {filmSearchReducer} from './filmSearch';
 import {filmPageReducer} from './filmPage';
 
 const combinedReducer = combineReducers({
   settings: settingsReducer,
-  acc: accReducer,
+  user: userReducer,
   filmSearch: filmSearchReducer,
   filmPage: filmPageReducer,
 });

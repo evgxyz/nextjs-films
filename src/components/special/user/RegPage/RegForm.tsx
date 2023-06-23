@@ -2,15 +2,15 @@
 import {useState} from 'react';
 import {useAppSelector, useAppDispatch} from '@/store';
 import {strlang} from '@/units/lang';
-import {AccRegInfo, AccRegStatus} from '@/units/acc';
-import {queryAccReg} from '@/store/acc';
+import {UserRegInfo, UserRegStatus} from '@/units/user';
+import {queryUserReg} from '@/store/user';
 import _ from 'lodash';
 import css from './RegForm.module.scss';
 
 export function RegForm() {
 
   const lang = useAppSelector(state => state.settings.lang);
-  const accRegResult = useAppSelector(state => state.acc.accReg.accRegResult);
+  const userRegResult = useAppSelector(state => state.user.userReg.userRegResult);
   const dispatch = useAppDispatch();
 
   const [login, setLogin] = useState('');
@@ -24,25 +24,25 @@ export function RegForm() {
     setPassw(ev.currentTarget.value);
   }
 
-  const accRegOnSubmit = async function(ev: React.FormEvent) {
+  const userRegOnSubmit = async function(ev: React.FormEvent) {
     ev.preventDefault();
-    await dispatch(queryAccReg({login, passw} as AccRegInfo));
+    await dispatch(queryUserReg({login, passw} as UserRegInfo));
   }
 
   let errorMsg = '';
-  switch (accRegResult.accRegStatus) {
-    case AccRegStatus.LOGIN_OCCUPIED: {
+  switch (userRegResult.userRegStatus) {
+    case UserRegStatus.LOGIN_OCCUPIED: {
       errorMsg = strlang('REG_LOGIN_OCCUPIED', lang);
     } break;
 
-    case AccRegStatus.ERROR: {
+    case UserRegStatus.ERROR: {
       errorMsg = strlang('REG_ERROR', lang);
     } break;
   }
 
   return (
     <div className={css['body']}>
-      <form className={css['form']} onSubmit={accRegOnSubmit}>
+      <form className={css['form']} onSubmit={userRegOnSubmit}>
 
         { errorMsg !== '' && 
           <div className={css['error-msg']}>

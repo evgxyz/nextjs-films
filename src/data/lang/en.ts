@@ -19,7 +19,7 @@ const langDictEN = {
   ABOUT_PAGE_TITLE: 'About site',
 
   FILM_SEARCH_SHORT_TITLE: 'Films',
-  FILM_SEARCH_TITLE: 'Film search',
+  FILM_SEARCH_TITLE: 'Films',
   FILM_SEARCH_GENRES: 'Genres',
   FILM_SEARCH_COUNTRIES: 'Countries',
 

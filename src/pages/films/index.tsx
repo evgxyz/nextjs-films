@@ -15,7 +15,7 @@ import {
   fetchFilmSearchOptions
 } from '@/store/filmSearch';
 import {MessagePage} from '@/components/general/MessagePage';
-import {FilmSearchPage} from '@/components/special/FilmSearchPage';
+import {FilmSearchPage} from '@/components/special/film/FilmSearchPage';
 
 interface FilmSearchNextPageProps extends NextPageProps {};
 

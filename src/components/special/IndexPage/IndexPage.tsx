@@ -22,15 +22,10 @@ export function IndexPage() {
   return (
     <MainLayout pageEnv={pageEnv}>
       <PageTitle title={title} />
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, explicabo sequi doloremque perferendis laboriosam deleniti saepe voluptatibus odio blanditiis facilis, ad tempora suscipit amet laborum cum omnis. Dolorum, aliquam debitis.</p>
       <p><Link href='/films?genreIds=2+3&countryIds=1+3'>Films</Link></p>
       <p><Link href='/about'>About</Link></p>
       <p><Link href='/film/abc'>Wrong url</Link></p>
-      <ul>
-        { _.range(1, 6).map(i => 
-            <li key={i}><Link href={`/film/${i}`}>{`Film ${i}`}</Link></li>
-          )
-        }
-      </ul>
     </MainLayout>
   )
 }

@@ -1,0 +1,36 @@
+
+import mysql from 'mysql2/promise';
+
+const dbConn = mysql.createConnection({
+  host: 'localhost',
+  database: 'filmsite',
+  user: 'filmsite',
+  password: 'matreshkin123'
+});
+
+export async function dbQuery(query: string) {
+  let result = null;
+
+  try {
+    dbConn.connect(error => {
+      if (error) {
+        console.log('Datsbase connetion error: ' + error);
+        return {error};
+      } else {
+        console.log('Datsbase connetion OK')
+      }
+    });
+
+    result = dbConn.query(query, (error, result) => {
+      if (error) {
+        console.log('Datsbase query error: ' + error);
+        return {error};
+      } else {
+        return result;
+      }
+    });
+  } 
+  catch (error) {
+    return {error};
+  }
+}

@@ -51,10 +51,10 @@ function getFilm(filmId: FilmId, lang: Lang): (Film | undefined) {
   }
 }
 
-export async function apiFetchFilmPage(filmId: FilmId, lang: Lang): 
+export async function apiFetchFilm(filmId: FilmId, lang: Lang): 
   Promise<{reqStatus: ReqStatus} & {film?: Film}> {
 //
-  console.log('call apiFetchFilmPage');
+  console.log('call apiFetchFilm');
   await delay(1000);
 
   const film = getFilm(filmId, lang);

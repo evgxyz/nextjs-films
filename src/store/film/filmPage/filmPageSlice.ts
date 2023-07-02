@@ -7,7 +7,7 @@ import {
   Film, filmDefault, 
   FilmId
 } from '@/units/film';
-import {apiFetchFilmPage} from '@/api/filmApi';
+import {apiFetchFilm} from '@/api/filmApi';
 
 const filmPageSlice = createSlice({
   name: 'filmPage',
@@ -54,7 +54,7 @@ export const fetchFilmPage =
     'filmPage/fetchFilmPage',
     async function ({filmId}, ThunkAPI) {
       const lang = ThunkAPI.getState().settings.lang;
-      const {film, reqStatus} = await apiFetchFilmPage(filmId, lang);
+      const {film, reqStatus} = await apiFetchFilm(filmId, lang);
       if (isReqStatusOK(reqStatus) && film) {
         return ThunkAPI.fulfillWithValue(film)
       } else {

@@ -51,6 +51,25 @@ function getFilm(filmId: FilmId, lang: Lang): (Film | undefined) {
   }
 }
 
+/* export async function apiFetchFilm(filmId: FilmId, lang: Lang): 
+  Promise<{reqStatus: ReqStatus} & {film?: Film}> {
+//
+  console.log('call apiFetchFilm');
+  await delay(1000);
+
+  const film = getFilm(filmId, lang);
+  if (film) {
+    return {
+      reqStatus: ReqStatus.OK, 
+      film
+    }
+  } else {
+    return {
+      reqStatus: ReqStatus.NOT_FOUND
+    }
+  }
+} */
+
 export async function apiFetchFilm(filmId: FilmId, lang: Lang): 
   Promise<{reqStatus: ReqStatus} & {film?: Film}> {
 //

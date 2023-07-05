@@ -12,6 +12,7 @@ import {
 import {Autocompl} from '@/units/components';
 import {filmsMap, genresMap, countriesMap} from '@/data/filmData';
 import {signCompare, delay} from '@/units/utils';
+import axios from 'axios';
 import _ from 'lodash';
 
 function getFilm(filmId: FilmId, lang: Lang): (Film | undefined) {
@@ -76,16 +77,30 @@ export async function apiFetchFilm(filmId: FilmId, lang: Lang):
   console.log('call apiFetchFilm');
   await delay(1000);
 
-  const film = getFilm(filmId, lang);
-  if (film) {
+  let queryURL = `http://localhost:3000/api/film/getFilm?filmId=${filmId}&lang=${lang}`;
+
+  let fetchError = false;
+  let fetchData = null;
+  try {
+    const resp = await axios.get(queryURL);
+    fetchData = resp.data;
+  }
+  catch (errorResp) {
+    fetchError = true;
+  }
+
+  if (fetchError) {
+    return {reqStatus: ReqStatus.ERROR}
+  }
+
+  if (fetchData) {
+    console.log('fetchData:', JSON.stringify(fetchData));
     return {
       reqStatus: ReqStatus.OK, 
-      film
+      film: fetchData
     }
   } else {
-    return {
-      reqStatus: ReqStatus.NOT_FOUND
-    }
+    return {reqStatus: ReqStatus.NOT_FOUND}
   }
 }
 

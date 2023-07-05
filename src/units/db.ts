@@ -13,8 +13,6 @@ export async function dbQuery(queryStr: string, values?: any) {
     const dbConn = await mysql.createConnection(dbConnConfig);
     const execResult = await dbConn.execute(queryStr, values);
 
-    console.log('execResult:', execResult);
-
     const queryResult = execResult[0] as Record<string, unknown>[];
 
     return {

@@ -46,33 +46,37 @@ export function FilmPage() {
             { film.year !== 0 ? film.year.toString() : '-' }
           </div>
 
-          <div className={css['countries']}>
-            { strlang( 
-                film.countries.length > 1 ? 'FILM_COUNTRIES' : 'FILM_COUNTRY', 
-                lang
-              ) + ': ' 
-            }
-            { film.countries.map((country, idx) =>
-                <span key={country.id}>
-                  { (idx > 0 ? ', ': '') + country.name }
-                </span>
-              )
-            }
-          </div>
+          { film.countries.length > 0 &&
+            <div className={css['countries']}>
+              { strlang( 
+                  film.countries.length > 1 ? 'FILM_COUNTRIES' : 'FILM_COUNTRY', 
+                  lang
+                ) + ': ' 
+              }
+              { film.countries.map((country, idx) =>
+                  <span key={country.id}>
+                    { (idx > 0 ? ', ': '') + country.name }
+                  </span>
+                )
+              }
+            </div>
+          }
 
-          <div className={css['genres']}>
-            { strlang( 
-                film.genres.length > 1 ? 'FILM_GENRES' : 'FILM_GENRE', 
-                lang
-              ) + ': ' 
-            }
-            { film.genres.map((genre, idx) =>
-                <span key={genre.id}>
-                  { (idx > 0 ? ', ': '') + genre.name }
-                </span>
-              )
-            }
-          </div>
+          { film.genres.length > 0 &&
+            <div className={css['genres']}>
+              { strlang( 
+                  film.genres.length > 1 ? 'FILM_GENRES' : 'FILM_GENRE', 
+                  lang
+                ) + ': ' 
+              }
+              { film.genres.map((genre, idx) =>
+                  <span key={genre.id}>
+                    { (idx > 0 ? ', ': '') + genre.name }
+                  </span>
+                )
+              }
+            </div>
+          }
         </>
       )
     } 

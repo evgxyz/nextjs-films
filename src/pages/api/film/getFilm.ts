@@ -44,18 +44,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const result = queryResult?.[0];
 
-  if (!result) {
-    return res.status(400).json({error: 'Not found'});
-  }
-
-  const film = {
+  const film = result ? {
     id: result.id,
     title: result.title,
     title_orig: result.title_orig,
-    genres: result.film_genres,
-    countries: result.film_countries,
+    genres: result.film_genres ?? [],
+    countries: result.film_countries ?? [],
     year: result.year,
-  } as Film;
+  } as Film : null;
 
   res.status(200).json(film);
 }

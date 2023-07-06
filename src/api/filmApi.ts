@@ -78,7 +78,6 @@ export async function apiFetchFilm(filmId: FilmId, lang: Lang):
   await delay(1000);
 
   let queryURL = `http://localhost:3000/api/film/getFilm?filmId=${filmId}&lang=${lang}`;
-
   let fetchError = false;
   let fetchData = null;
   try {
@@ -94,7 +93,7 @@ export async function apiFetchFilm(filmId: FilmId, lang: Lang):
   }
 
   if (fetchData) {
-    console.log('fetchData:', JSON.stringify(fetchData));
+    //console.log('fetchData:', JSON.stringify(fetchData));
     return {
       reqStatus: ReqStatus.OK, 
       film: fetchData

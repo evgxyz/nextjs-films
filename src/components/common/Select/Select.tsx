@@ -2,15 +2,15 @@
 import {useState, useId} from 'react';
 
 interface SelectProps {
-  value: string,
-  options: string[],
+  current: {value: string, text: string},
+  options: {value: string, text: string}[],
   callbackOnSelect: (value: string) => void,
   css: {readonly [key: string]: string},
 }
 
 export function Select(props: SelectProps) {
   const {
-    value,
+    current,
     options, 
     callbackOnSelect,
     css
@@ -46,15 +46,15 @@ export function Select(props: SelectProps) {
         onClick={titleOnClick}
         tabIndex={0}
       >
-        {value}
+        {current.text}
         <span className={css['title__icon']}></span>
       </div>
       <div className={css['list-wrapper']}>
         { options && options.length > 0 &&
           <ul className={css['list']} tabIndex={0}>
-            { options.map((item, idx) =>
-                <li key={idx} onClick={() => itemOnClick(item)}>
-                  {item}
+            { options.map(item =>
+                <li key={item.value} onClick={() => itemOnClick(item.value)}>
+                  {item.text}
                 </li>
               )
             }

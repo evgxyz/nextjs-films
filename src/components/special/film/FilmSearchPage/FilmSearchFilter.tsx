@@ -15,6 +15,7 @@ import {
 import {buildIntArrParam} from '@/units/url';
 import {CheckboxList, CheckboxListCss} from '@/components/common/CheckboxList';
 import {InputAutocompl, InputAutocomplCss} from '@/components/common/InputAutocompl';
+import {Select, SelectCss} from '@/components/common/Select';
 import _ from 'lodash';
 import css from './FilmSearchFilter.module.scss';
 

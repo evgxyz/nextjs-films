@@ -26,8 +26,13 @@ export function AboutPage() {
     keywords: 'about, lorem, ipsum, dolor'
   }
 
-  const [value, setValue] = useState('Пункт 1');
-  const options = ['Пункт 1', 'Пункт 2', 'Пункт 3'];
+  const optionsRaw = ['a', 'b', 'c'];
+  const options = optionsRaw.map(value => ({value, text: 'Пункт ' + value}));
+  const [current, setCurrent] = useState({value: 'a', text: 'Пункт a'});
+
+  const onSelect = function(value: string) {
+    setCurrent({value, text: 'Пункт ' + value});
+  }
 
   return (
     <MainLayout pageEnv={pageEnv}>
@@ -36,9 +41,9 @@ export function AboutPage() {
         subTitle={'This is subtitle'} 
       />
       <Select
-        value={value} 
+        current={current} 
         options={options}
-        callbackOnSelect={value => {setValue(value)}}
+        callbackOnSelect={value => {onSelect(value)}}
         css={SelectCss}
       />
       <p>Lorem ipsum dolor sit, 

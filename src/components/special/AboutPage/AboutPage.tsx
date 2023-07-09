@@ -28,10 +28,10 @@ export function AboutPage() {
 
   const optionsRaw = ['a', 'b', 'c'];
   const options = optionsRaw.map(value => ({value, text: 'Пункт ' + value}));
-  const [text, setText] = useState('Пункт a');
+  const [value, setValue] = useState('a');
 
   const onSelect = function(value: string) {
-    setText('Пункт ' + value);
+    setValue(value);
   }
 
   return (
@@ -41,7 +41,7 @@ export function AboutPage() {
         subTitle={'This is subtitle'} 
       />
       <Select
-        text={text} 
+        value={value} 
         options={options}
         callbackOnSelect={value => {onSelect(value)}}
         css={SelectCss}

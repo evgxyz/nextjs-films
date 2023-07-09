@@ -2,7 +2,7 @@
 import {useState, useId} from 'react';
 
 interface SelectProps {
-  text: string,
+  value?: string,
   options: {value: string, text: string}[],
   callbackOnSelect: (value: string) => void,
   css: {readonly [key: string]: string},
@@ -10,7 +10,7 @@ interface SelectProps {
 
 export function Select(props: SelectProps) {
   const {
-    text,
+    value,
     options, 
     callbackOnSelect,
     css
@@ -18,6 +18,8 @@ export function Select(props: SelectProps) {
 
   const elemId = useId();
   const [openFlag, setOpenFlag] = useState(false);
+
+  const title = options.find(item => item.value === value)?.text ?? options[0]?.text ?? '';
 
   const titleOnClick = function() {
     setOpenFlag(st => !st);
@@ -46,7 +48,7 @@ export function Select(props: SelectProps) {
         onClick={titleOnClick}
         tabIndex={0}
       >
-        {text}
+        {title}
         <span className={css['title__icon']}></span>
       </div>
       <div className={css['list-wrapper']}>

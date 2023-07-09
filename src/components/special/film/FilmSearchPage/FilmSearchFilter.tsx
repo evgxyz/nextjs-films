@@ -192,10 +192,7 @@ export function FilmSearchFilter() {
           }
         </select> */}
         <Select
-          text={params.sort ? 
-            strlang(filmSearchSortKeys[params.sort as FilmSearchSort], lang) 
-            : ''
-          } 
+          value={params.sort} 
           options={filmSearchSorts.map(sort => 
             ({
               value: sort, 

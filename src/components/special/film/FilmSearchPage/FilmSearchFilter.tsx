@@ -5,6 +5,7 @@ import {
   GenreId, CountryId, 
   isFilmSearchSort, filmSearchSortDefault, filmSearchSorts, filmSearchSortKeys, 
   filmSearchQueryTempl,
+  FilmSearchSort,
 } from '@/units/film';
 import {strlang} from '@/units/lang';
 import {
@@ -83,9 +84,22 @@ export function FilmSearchFilter() {
     });
   }
 
-  const changeSort = function(ev: React.ChangeEvent<HTMLSelectElement>) {
+  /* const changeSort = function(ev: React.ChangeEvent<HTMLSelectElement>) {
     ev.preventDefault(); 
     const sort = ev.target.value;
+    if (!isFilmSearchSort(sort)) {
+      return;
+    }
+    const page = 1;
+    dispatch(updateFilmSearchParams({sort, page}));
+    dispatch(fetchFilmSearchResults());
+    updateRouterQuery({ 
+      sort: sort !== filmSearchSortDefault ? sort : undefined,
+      page: page.toString()
+    });
+  } */
+
+  const changeSort = function(sort: string) {
     if (!isFilmSearchSort(sort)) {
       return;
     }
@@ -169,14 +183,28 @@ export function FilmSearchFilter() {
       </div>
 
       <div className={css['sort']}>
-        <select value={params.sort} onChange={changeSort}>
+        {/* <select value={params.sort} onChange={changeSort}>
           { filmSearchSorts.map(sort => 
               <option key={sort} value={sort}>
                 { strlang(filmSearchSortKeys[sort], lang)}
               </option>
             )
           }
-        </select>
+        </select> */}
+        <Select
+          text={params.sort ? 
+            strlang(filmSearchSortKeys[params.sort as FilmSearchSort], lang) 
+            : ''
+          } 
+          options={filmSearchSorts.map(sort => 
+            ({
+              value: sort, 
+              text: strlang(filmSearchSortKeys[sort], lang)
+            })
+          )}
+          callbackOnSelect={value => {changeSort(value)}}
+          css={SelectCss}
+        />
       </div>
 
     </div>

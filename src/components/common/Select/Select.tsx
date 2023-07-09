@@ -2,7 +2,7 @@
 import {useState, useId} from 'react';
 
 interface SelectProps {
-  current: {value: string, text: string},
+  text: string,
   options: {value: string, text: string}[],
   callbackOnSelect: (value: string) => void,
   css: {readonly [key: string]: string},
@@ -10,7 +10,7 @@ interface SelectProps {
 
 export function Select(props: SelectProps) {
   const {
-    current,
+    text,
     options, 
     callbackOnSelect,
     css
@@ -46,7 +46,7 @@ export function Select(props: SelectProps) {
         onClick={titleOnClick}
         tabIndex={0}
       >
-        {current.text}
+        {text}
         <span className={css['title__icon']}></span>
       </div>
       <div className={css['list-wrapper']}>

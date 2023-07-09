@@ -1,0 +1,52 @@
+
+.body {
+  display: inline-block;
+  width: $width;
+  font-size: 1rem;
+}
+
+.title {
+  width: 100%;
+  padding: $padding;
+  font-size: 1rem;
+  border: 1px solid $brd-color;
+  outline: none;
+  box-shadow: none; 
+
+  &:focus {
+    background-color: $bg-color-focus;
+    border: 1px solid $brd-color-focus;
+  }
+}
+
+.list-wrapper {
+  position: relative;
+}
+
+.list {
+  position: absolute;
+  top: 1px;
+  margin: 0;
+  max-height: $list-max-height;
+  overflow: auto;
+  padding: 0;
+  background-color: $bg-color;
+  border: 1px solid $brd-color;
+  cursor: default;
+
+  & li {
+    list-style-type: none;
+    padding: $item-padding;
+    white-space: nowrap;
+
+    &:hover {
+      color: $item-color-hover;
+      background-color: $item-bg-color-hover;
+    }
+  }
+}
+
+.--closed .list {
+  height: 0;
+  border: none;
+}

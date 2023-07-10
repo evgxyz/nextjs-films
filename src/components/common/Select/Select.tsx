@@ -19,7 +19,8 @@ export function Select(props: SelectProps) {
   const elemId = useId();
   const [openFlag, setOpenFlag] = useState(false);
 
-  const title = options.find(item => item.value === value)?.text ?? options[0]?.text ?? '';
+  const title = options.find(item => item.value === value)?.text 
+    ?? options[0]?.text ?? '';
 
   const titleOnClick = function() {
     setOpenFlag(st => !st);

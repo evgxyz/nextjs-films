@@ -1,5 +1,5 @@
 
-import {NextApiRequest, NextApiResponse} from 'next';
+/* import {NextApiRequest, NextApiResponse} from 'next';
 import {dbQuery, dbEscape} from '@/units/db';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -19,4 +19,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } else {
     res.status(500).json({error: 'Fetch data error'});
   }
-}
+} */

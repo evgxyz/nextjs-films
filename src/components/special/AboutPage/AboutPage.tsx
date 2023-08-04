@@ -43,7 +43,7 @@ export function AboutPage() {
       <Select
         value={value} 
         options={options}
-        callbackOnSelect={value => {onSelect(value)}}
+        onSelect={value => {onSelect(value)}}
         css={SelectCss}
       />
       <p>Lorem ipsum dolor sit, 

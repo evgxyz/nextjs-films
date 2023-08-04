@@ -4,7 +4,7 @@ import {useState, useId} from 'react';
 interface SelectProps {
   value?: string,
   options: {value: string, text: string}[],
-  callbackOnSelect: (value: string) => void,
+  onSelect: (value: string) => void,
   css: {readonly [key: string]: string},
 }
 
@@ -12,35 +12,36 @@ export function Select(props: SelectProps) {
   const {
     value,
     options, 
-    callbackOnSelect,
+    onSelect,
     css
   } = props;
 
   const elemId = useId();
-  const [openFlag, setOpenFlag] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const title = options.find(item => item.value === value)?.text 
+  const title = options
+    .find(item => item.value === value)?.text 
     ?? options[0]?.text ?? '';
 
   const titleOnClick = function() {
-    setOpenFlag(st => !st);
+    setIsOpen(isOpen => !isOpen);
   }
 
   const itemOnClick = function(value: string) {
-    callbackOnSelect(value);
-    setOpenFlag(false);
+    onSelect(value);
+    setIsOpen(false);
   }
 
   const bodyOnBlur = function(ev: React.FocusEvent) {
     if (!ev.relatedTarget?.closest('#' + elemId.replace(/:/g, '\\:'))) {
-      setOpenFlag(false);
+      setIsOpen(false);
     }
   }
 
   return (
     <div 
       id={elemId} 
-      className={[css['body'], openFlag ? css['--open'] : css['--closed']].join(' ')}
+      className={[css['body'], isOpen ? css['--open'] : css['--closed']].join(' ')}
       tabIndex={0}
       onBlur={bodyOnBlur}
     >

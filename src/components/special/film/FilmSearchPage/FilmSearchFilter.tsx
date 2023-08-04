@@ -198,7 +198,7 @@ export function FilmSearchFilter() {
               text: strlang(filmSearchSortKeys[sort], lang)
             })
           )}
-          callbackOnSelect={value => {changeSort(value)}}
+          onSelect={value => {changeSort(value)}}
           css={SelectCss}
         />
       </div>

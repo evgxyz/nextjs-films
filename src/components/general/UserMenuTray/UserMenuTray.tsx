@@ -45,7 +45,7 @@ export function UserMenuTray() {
             text: strlang(langKeys[lang])
           })
         )}
-        callbackOnSelect={changeLang}
+        onSelect={changeLang}
         css={SelectCss}
       />
     </div>

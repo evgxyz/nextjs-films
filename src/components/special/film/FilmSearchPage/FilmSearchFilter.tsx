@@ -148,7 +148,7 @@ export function FilmSearchFilter() {
             title={strlang('FILM_SEARCH_GENRES', lang)}
             options={options.genres}
             checkedIds={params.genreIds}
-            callbackOnChange={genreOnChange}
+            onChange={genreOnChange}
             css={CheckboxListCss}
           />
         </div>
@@ -158,7 +158,7 @@ export function FilmSearchFilter() {
             title={strlang('FILM_SEARCH_COUNTRIES', lang)}
             options={options.countries}
             checkedIds={params.countryIds}
-            callbackOnChange={countryOnChange}
+            onChange={countryOnChange}
             css={CheckboxListCss}
           />
         </div>

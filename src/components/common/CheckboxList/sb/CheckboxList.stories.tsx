@@ -21,7 +21,7 @@ export default meta;
 
 type Story = StoryObj<typeof CheckboxList>;
 
-const CheckboxListFC = (props: React.ComponentProps<typeof CheckboxList>) => {
+const CheckboxListWrapped = (props: React.ComponentProps<typeof CheckboxList>) => {
   
   const [checkedIds, setCheckedIds] = useState(props.checkedIds ?? []);
 
@@ -47,7 +47,7 @@ const CheckboxListFC = (props: React.ComponentProps<typeof CheckboxList>) => {
         <CheckboxList 
           {...props}
           checkedIds={checkedIds}
-          callbackOnChange={callbackOnChange}
+          onChange={callbackOnChange}
         />
       </div>
     </>
@@ -65,10 +65,10 @@ export const Default: Story = {
       {id: 5, name: 'Option 5'},
     ],
     checkedIds: [1, 3],
-    callbackOnChange: () => {},
+    onChange: () => {},
     css: CheckboxListCss
   },
   render: (args) => (
-    <CheckboxListFC {...args} />
+    <CheckboxListWrapped {...args} />
   )
 };

@@ -1,5 +1,3 @@
 
 export * from './CheckboxList';
-
-import css from './CheckboxList.module.scss';
-export {css as CheckboxListCss};
+export {default as CheckboxListCss} from './CheckboxList.module.scss';

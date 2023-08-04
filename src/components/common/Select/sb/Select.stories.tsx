@@ -20,7 +20,7 @@ export default meta;
 
 type Story = StoryObj<typeof Select>;
 
-const SelectWrapper = (props: React.ComponentProps<typeof Select>) => {
+const SelectWrapped = (props: React.ComponentProps<typeof Select>) => {
   const [value, setValue] = useState(props.value);
 
   const onSelect = (value: string) => {
@@ -51,9 +51,10 @@ export const Default: Story = {
       {value: '3', text: 'Option 3'},
       {value: '4', text: 'Option 4'}
     ],
+    onSelect: () => {},
     css: SelectCss
   },
   render: (args) => (
-    <SelectWrapper {...args} />
+    <SelectWrapped {...args} />
   )
 };

@@ -5,7 +5,7 @@ interface CheckboxListProps<IdType extends (number | string)> {
   title: string,
   options: {id: IdType, name: string}[],
   checkedIds?: IdType[],
-  callbackOnChange: (id: IdType) => void,
+  onChange: (id: IdType) => void,
   css: {readonly [key: string]: string},
 }
 
@@ -13,7 +13,7 @@ export function CheckboxList<IdType extends (number | string)>({
   title,
   options,
   checkedIds = [],
-  callbackOnChange,
+  onChange,
   css
 }: CheckboxListProps<IdType>) {
 //
@@ -21,7 +21,7 @@ export function CheckboxList<IdType extends (number | string)>({
   const [openFlag, setOpenFlag] = useState(false);
 
   const itemOnChange = function(itemId: IdType) {
-    callbackOnChange(itemId);
+    onChange(itemId);
   }
 
   const titleOnClick = function() {

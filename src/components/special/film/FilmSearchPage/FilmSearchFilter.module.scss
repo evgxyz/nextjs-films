@@ -13,8 +13,10 @@
 
 .search-options {
   display: flex;
+  flex-grow: 1;
   align-items: center;
   column-gap: 10px;
+  //@include debug-border(red)
 }
 
 .genres {
@@ -26,12 +28,15 @@
 }
 
 .text {
+  flex-grow: 1;
+
   &__form {
     display: flex;
   }
   
   &__input {
-    width: 13em;
+    flex-grow: 1;
+    min-width: 13em;
 
     & input:focus {
       background-color: $bg-color-2; 
@@ -45,7 +50,5 @@
 }
 
 .sort {
-  flex-basis: 10em;
-
-  & select { width: 100%; }
+  display: inline-block;
 }

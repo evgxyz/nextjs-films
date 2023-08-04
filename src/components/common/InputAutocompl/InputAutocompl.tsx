@@ -5,9 +5,9 @@ import {Autocompl} from '@/units/components';
 interface InputAutocomplProps {
   value: string,
   autocompl: Autocompl,
-  callbackOnFocus: () => void,
-  callbackOnChange: (value: string) => void,
-  callbackOnSelect: (value: string) => void,
+  onFocus: () => void,
+  onChange: (value: string) => void,
+  onSelect: (value: string) => void,
   css: {readonly [key: string]: string},
 }
 
@@ -15,41 +15,41 @@ export function InputAutocompl(props: InputAutocomplProps) {
   const {
     value,
     autocompl, 
-    callbackOnFocus, 
-    callbackOnChange, 
-    callbackOnSelect,
+    onFocus, 
+    onChange, 
+    onSelect,
     css
   } = props;
 
   const elemId = useId();
-  const [openFlag, setOpenFlag] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const inputOnFocus = function() {
-    callbackOnFocus();
-    setOpenFlag(true);
+    onFocus();
+    setIsOpen(true);
   }
 
   const inputOnBlur = function(ev: React.FocusEvent) {
     if (!ev.relatedTarget?.closest('#' + elemId.replace(/:/g, '\\:'))) {
-      setOpenFlag(false);
+      setIsOpen(false);
     }
   }
 
   const inputOnChange = function(ev: React.ChangeEvent<HTMLInputElement>) {
     const value = ev.currentTarget.value;
-    callbackOnChange(value);
-    setOpenFlag(true);
+    onChange(value);
+    setIsOpen(true);
   }
 
   const itemOnClick = function(value: string) {
-    callbackOnSelect(value);
-    setOpenFlag(false);
+    onSelect(value);
+    setIsOpen(false);
   }
 
   return (
     <div 
       id={elemId} 
-      className={[css['body'], openFlag ? css['--open'] : css['--closed']].join(' ')}
+      className={[css['body'], isOpen ? css['--open'] : css['--closed']].join(' ')}
     >
       <input type='text' 
         className={css['input']}

@@ -3,7 +3,6 @@ import type {Meta, StoryObj, StoryFn} from '@storybook/react';
 
 import {InputAutocompl, InputAutocomplCss} from '.';
 import {useState} from 'react';
-import _ from 'lodash';
 
 const meta: Meta<typeof InputAutocompl> = {
   title: 'InputAutocompl',
@@ -21,26 +20,25 @@ export default meta;
 
 type Story = StoryObj<typeof InputAutocompl>;
 
-
-const InputAutocomplFC = (props: React.ComponentProps<typeof InputAutocompl>) => {
+const InputAutocomplWrapped = (props: React.ComponentProps<typeof InputAutocompl>) => {
   const [value, setValue] = useState(props.value);
   const [autocompl, setAutocompl] = useState(props.autocompl);
 
-  const callbackOnChange = (value: string) => {
+  const onChange = (value: string) => {
     setValue(value);
     const autocompl = 
-      (value !== '') ?
-        [1, 2, 3, 4].map(i => value + '-' + i.toString()) 
+      (value !== '')
+      ? [1, 2, 3, 4].map(i => value + '-' + i.toString()) 
       : [];
     setAutocompl(autocompl);
   } 
 
-  const callbackOnFocus = () => {
+  const onFocus = () => {
     const value = props.value;
     setValue(value);
     const autocompl = 
-      (value !== '') ?
-        [1, 2, 3, 4].map(i => value + '-' + i.toString()) 
+      (value !== '')
+      ? [1, 2, 3, 4].map(i => value + '-' + i.toString()) 
       : [];
     setAutocompl(autocompl);
   }
@@ -50,9 +48,9 @@ const InputAutocomplFC = (props: React.ComponentProps<typeof InputAutocompl>) =>
       {...props}
       value={value}
       autocompl={autocompl}
-      callbackOnFocus={callbackOnFocus}
-      callbackOnChange={callbackOnChange}
-      callbackOnSelect={callbackOnChange}
+      onFocus={onFocus}
+      onChange={onChange}
+      onSelect={onChange}
     />
   );
 }
@@ -61,12 +59,12 @@ export const Default: Story = {
   args: {
     value: 'text',
     autocompl: ['suggest 1', 'suggest 2', 'suggest 3'],
-    callbackOnFocus: () => {},
-    callbackOnChange: () => {},
-    callbackOnSelect: () => {},
+    onFocus: () => {},
+    onChange: () => {},
+    onSelect: () => {},
     css: InputAutocomplCss
   },
   render: (args) => (
-    <InputAutocomplFC {...args} />
+    <InputAutocomplWrapped {...args} />
   )
 };

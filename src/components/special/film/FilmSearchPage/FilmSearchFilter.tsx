@@ -169,9 +169,9 @@ export function FilmSearchFilter() {
               <InputAutocompl 
                 value={params.text ?? ''}
                 autocompl={autocompl.text.value}
-                callbackOnFocus={textOnFocus}
-                callbackOnChange={textOnChange}
-                callbackOnSelect={textOnSelect}
+                onFocus={textOnFocus}
+                onChange={textOnChange}
+                onSelect={textOnSelect}
                 css={InputAutocomplCss}
               />
             </div>

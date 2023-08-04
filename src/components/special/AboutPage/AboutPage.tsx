@@ -25,26 +25,12 @@ export function AboutPage() {
     description: 'About lorem ipsum dolor sit',
     keywords: 'about, lorem, ipsum, dolor'
   }
-
-  const optionsRaw = ['a', 'b', 'c'];
-  const options = optionsRaw.map(value => ({value, text: 'Пункт ' + value}));
-  const [value, setValue] = useState('a');
-
-  const onSelect = function(value: string) {
-    setValue(value);
-  }
-
+  
   return (
     <MainLayout pageEnv={pageEnv}>
       <PageTitle 
         title={title} 
         subTitle={'This is subtitle'} 
-      />
-      <Select
-        value={value} 
-        options={options}
-        onSelect={value => {onSelect(value)}}
-        css={SelectCss}
       />
       <p>Lorem ipsum dolor sit, 
         amet consectetur adipisicing elit. 

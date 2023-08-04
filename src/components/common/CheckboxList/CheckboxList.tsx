@@ -18,26 +18,26 @@ export function CheckboxList<IdType extends (number | string)>({
 }: CheckboxListProps<IdType>) {
 //
   const elemId = useId();
-  const [openFlag, setOpenFlag] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const itemOnChange = function(itemId: IdType) {
     onChange(itemId);
   }
 
   const titleOnClick = function() {
-    setOpenFlag(st => !st);
+    setIsOpen(st => !st);
   }
 
   const bodyOnBlur = function(ev: React.FocusEvent) {
     if (!ev.relatedTarget?.closest('#' + elemId.replace(/:/g, '\\:'))) {
-      setOpenFlag(false);
+      setIsOpen(false);
     }
   }
 
   return (
     <div 
       id={elemId}
-      className={[css['body'], openFlag ? css['--open'] : css['--closed']].join(' ')}
+      className={[css['body'], isOpen ? css['--open'] : css['--closed']].join(' ')}
       tabIndex={0}
       onBlur={bodyOnBlur}
     >

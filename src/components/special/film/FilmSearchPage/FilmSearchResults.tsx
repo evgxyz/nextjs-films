@@ -2,7 +2,7 @@
 import {useAppSelector} from '@/store';
 import {strlang} from '@/units/lang';
 import Link from '@/next/Link';
-import {Film} from '@/units/film';
+import {Film, filmSearchPerPageDefault} from '@/units/film';
 import {Pagination} from '@/components/common/Pagination';
 import _ from 'lodash';
 import css from './FilmSearchResults.module.scss';
@@ -34,12 +34,15 @@ export function FilmSearchResults({url}: FilmSearchResultsProps) {
   return (
     <div className={css['body']}>
       {pagination}
+
       <div className={css['film-list']}>
-        { filmSearch.results.films.map(film => 
+        { 
+          filmSearch.results.films.map(film => 
             <FilmSearchItem key={film.id} film={film} />
           )
         }
       </div>
+
       {pagination}
     </div>
   )

@@ -53,7 +53,7 @@ export interface FilmSearchParams {
 
 export const filmSearchSortDefault = 'title';
 export const filmSearchPageDefault = 1;
-export const filmSearchPerPageDefault = 3;
+export const filmSearchPerPageDefault = 6;
 
 export const filmSearchParamsDefault: FilmSearchParams = { 
   genreIds: [],

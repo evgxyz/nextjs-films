@@ -5,6 +5,10 @@
   font-size: 1rem;
 }
 
+.input-wrapper {
+  position: relative;
+}
+
 .input {
   width: 100%;
   padding: $padding;
@@ -16,6 +20,27 @@
   &:focus {
     background-color: $bg-color-focus;
     border: 1px solid $brd-color-focus;
+  }
+}
+
+.input-clear {
+  position: absolute;
+  display: flex;
+  right: 5px;
+  top: calc(50% - 10px);
+  width: 20px;
+  height: 20px;
+  background-color: rgb(255,255,255,0.4);
+  border-radius: 50%;
+  justify-content: center;
+  cursor: pointer;
+
+  &::after {
+    align-self: center;
+    position: relative;
+    top: 0;
+    left: -0.5px;
+    content: '✖';
   }
 }
 

@@ -41,6 +41,11 @@ export function InputAutocompl(props: InputAutocomplProps) {
     setIsOpen(true);
   }
 
+  const inputClearOnClick = function() {
+    onChange('');
+    setIsOpen(false);
+  }
+
   const itemOnClick = function(value: string) {
     onSelect(value);
     setIsOpen(false);
@@ -51,13 +56,19 @@ export function InputAutocompl(props: InputAutocomplProps) {
       id={elemId} 
       className={[css['body'], isOpen ? css['--open'] : css['--closed']].join(' ')}
     >
-      <input type='text' 
-        className={css['input']}
-        value={value} 
-        onChange={inputOnChange}
-        onFocus={inputOnFocus}
-        onBlur={inputOnBlur}
-      />
+      <div className={css['input-wrapper']}>
+        <input type='text' 
+          style={{paddingRight: '1.8em'}}
+          className={css['input']}
+          value={value} 
+          onChange={inputOnChange}
+          onFocus={inputOnFocus}
+          onBlur={inputOnBlur}
+        />
+        { value !== '' && 
+          <div className={css['input-clear']} onClick={inputClearOnClick}></div> 
+        }
+      </div>
       <div className={css['list-wrapper']}>
         { autocompl.length > 0 &&
           <ul className={css['list']} tabIndex={0}>

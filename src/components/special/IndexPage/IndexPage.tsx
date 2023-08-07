@@ -22,9 +22,7 @@ export function IndexPage() {
   return (
     <MainLayout pageEnv={pageEnv}>
       <PageTitle title={title} />
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, explicabo sequi doloremque perferendis laboriosam deleniti saepe voluptatibus odio blanditiis facilis, ad tempora suscipit amet laborum cum omnis. Dolorum, aliquam debitis.</p>
-      <p><Link href='/films?genreIds=2+3&countryIds=1+3'>Films</Link></p>
-      <p><Link href='/about'>About</Link></p>
+      <p><a href={process.env.STORYBOOK_URL ?? '/'}>Storybook</a></p>
       <p><Link href='/film/abc'>Wrong url</Link></p>
     </MainLayout>
   )

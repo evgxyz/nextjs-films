@@ -52,7 +52,7 @@ function getFilm(filmId: FilmId, lang: Lang): (Film | undefined) {
   }
 }
 
-/* export async function apiFetchFilm(filmId: FilmId, lang: Lang): 
+export async function apiFetchFilm(filmId: FilmId, lang: Lang): 
   Promise<{reqStatus: ReqStatus} & {film?: Film}> {
 //
   console.log('call apiFetchFilm');
@@ -69,9 +69,9 @@ function getFilm(filmId: FilmId, lang: Lang): (Film | undefined) {
       reqStatus: ReqStatus.NOT_FOUND
     }
   }
-} */
+}
 
-export async function apiFetchFilm(filmId: FilmId, lang: Lang): 
+/* export async function apiFetchFilm(filmId: FilmId, lang: Lang): 
   Promise<{reqStatus: ReqStatus} & {film?: Film}> {
 //
   console.log('call apiFetchFilm');
@@ -101,7 +101,7 @@ export async function apiFetchFilm(filmId: FilmId, lang: Lang):
   } else {
     return {reqStatus: ReqStatus.NOT_FOUND}
   }
-}
+} */
 
 export async function apiFetchFilmSearchOptions(lang: Lang): 
   Promise<{options: FilmSearchOptions, reqStatus: ReqStatus}> {

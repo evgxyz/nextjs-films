@@ -8,7 +8,13 @@ const dbConnConfig = {
   password: 'matreshkin123'
 };
 
-export async function dbQuery(queryStr: string, values?: any) {
+export async function dbQuery(queryStr: string, values?: any): Promise<{
+  queryResult: Record<string, unknown>[];
+  queryError?: undefined;
+} | {
+  queryResult?: undefined;
+  queryError: number;
+}> {
   try {
     const dbConn = await mysql.createConnection(dbConnConfig);
     const execResult = await dbConn.execute(queryStr, values);

@@ -77,7 +77,7 @@ export async function apiFetchFilm(filmId: FilmId, lang: Lang):
   console.log('call apiFetchFilm');
   await delay(1000);
 
-  let queryURL = `http://localhost:3000/api/film/getFilm?filmId=${filmId}&lang=${lang}`;
+  let queryURL = `${process.env.BASE_URL}/api/film/getFilm?filmId=${filmId}&lang=${lang}`;
   let fetchError = false;
   let fetchData = null;
   try {

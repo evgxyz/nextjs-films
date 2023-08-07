@@ -26,20 +26,13 @@
 .input-clear {
   position: absolute;
   display: flex;
-  right: 5px;
-  top: calc(50% - 10px);
-  width: 20px;
-  height: 20px;
-  background-color: rgb(255,255,255,0.4);
-  border-radius: 50%;
+  right: 0.5em;
+  top: calc(50% - 0.7em);
   justify-content: center;
   cursor: pointer;
 
   &::after {
     align-self: center;
-    position: relative;
-    top: 0;
-    left: -0.5px;
     content: '✖';
   }
 }

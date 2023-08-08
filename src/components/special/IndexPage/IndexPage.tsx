@@ -22,7 +22,7 @@ export function IndexPage() {
   return (
     <MainLayout pageEnv={pageEnv}>
       <PageTitle title={title} />
-      <p><a href={process.env.STORYBOOK_URL ?? '/'}>Storybook</a></p>
+      <p><a href={process.env.STORYBOOK_URL ?? '/'} target='_blank'>Storybook</a></p>
       <p><Link href='/film/abc'>Wrong url</Link></p>
     </MainLayout>
   )

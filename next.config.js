@@ -1,14 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
-  webpack(webpackConfig) {
+  reactStrictMode: true,
+  /* webpack(webpackConfig) {
     return {
       ...webpackConfig,
       optimization: {
         minimize: false
       }
     };
-  }
+  } */
 }
 
 module.exports = nextConfig

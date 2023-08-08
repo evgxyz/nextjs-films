@@ -42,13 +42,13 @@ export function InputAutocompl(props: InputAutocomplProps) {
     setIsOpen(true);
   }
 
-  const inputClearOnClick = function() {
-    onChange('');
+  const itemOnClick = function(value: string) {
+    onSelect(value);
     setIsOpen(false);
   }
 
-  const itemOnClick = function(value: string) {
-    onSelect(value);
+  const inputClearOnClick = function() {
+    onSelect('');
     setIsOpen(false);
   }
 

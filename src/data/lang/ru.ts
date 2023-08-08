@@ -17,6 +17,7 @@ const langDictRU = {
 
   ABOUT_PAGE_SHORT_TITLE: 'О сайте',
   ABOUT_PAGE_TITLE: 'О сайте',
+  ABOUT_PAGE_SUBTITLE: 'Подзаголовок',
 
   FILM_SEARCH_SHORT_TITLE: 'Фильмы',
   FILM_SEARCH_TITLE: 'Фильмы',

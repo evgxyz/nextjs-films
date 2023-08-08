@@ -1,6 +1,7 @@
 
 import {useState, useId} from 'react';
 import {Autocompl} from '@/units/components';
+import sha1 from 'js-sha1';
 
 interface InputAutocomplProps {
   value: string,
@@ -72,8 +73,8 @@ export function InputAutocompl(props: InputAutocomplProps) {
       <div className={css['list-wrapper']}>
         { autocompl.length > 0 &&
           <ul className={css['list']} tabIndex={0}>
-            { autocompl.map((item, idx) =>
-                <li key={idx} onClick={() => itemOnClick(item)}>
+            { autocompl.map(item =>
+                <li key={sha1(item)} onClick={() => itemOnClick(item)}>
                   {item}
                 </li>
               )

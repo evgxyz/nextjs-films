@@ -17,6 +17,7 @@ const langDictEN = {
 
   ABOUT_PAGE_SHORT_TITLE: 'About',
   ABOUT_PAGE_TITLE: 'About site',
+  ABOUT_PAGE_SUBTITLE: 'Subtitle',
 
   FILM_SEARCH_SHORT_TITLE: 'Films',
   FILM_SEARCH_TITLE: 'Films',

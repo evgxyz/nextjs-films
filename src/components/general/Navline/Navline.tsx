@@ -3,6 +3,7 @@ import {useAppSelector} from '@/store';
 import {PageEnv} from '@/units/page-env';
 import {strlang} from '@/units/lang';
 import Link from '@/next/Link';
+import sha1 from 'js-sha1';
 import css from './Navline.module.scss';
 
 interface NavlineProps {
@@ -13,7 +14,7 @@ export function Navline({pageEnv}: NavlineProps) {
 
   const lang = useAppSelector(state => state.settings.lang);
 
-  const {navStack = []} = pageEnv;
+  const navStack = [...(pageEnv.navStack ?? [])];
 
   navStack.unshift({
     url: '/', 
@@ -23,11 +24,11 @@ export function Navline({pageEnv}: NavlineProps) {
   return (
     <div className={css['body']}>
       <ul className={css['list']}>
-        { navStack.map((item, idx) =>
-            <li key={idx}>
+        { navStack.map(item =>
+            <li key={sha1(item.url + item.text)}>
               { 
-                item.url ? 
-                  <Link href={item.url}>{item.text}</Link>
+                item.url 
+                ? <Link href={item.url}>{item.text}</Link>
                 : item.text
               }
             </li>

@@ -48,7 +48,7 @@ export function InputAutocompl(props: InputAutocomplProps) {
   }
 
   const inputClearOnClick = function() {
-    onSelect('');
+    onChange('');
     setIsOpen(false);
   }
 

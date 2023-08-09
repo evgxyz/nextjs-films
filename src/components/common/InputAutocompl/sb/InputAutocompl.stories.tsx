@@ -57,8 +57,8 @@ const InputAutocomplWrapped = (props: React.ComponentProps<typeof InputAutocompl
 
 export const Default: Story = {
   args: {
-    value: 'text',
-    autocompl: ['suggest 1', 'suggest 2', 'suggest 3'],
+    value: '',
+    autocompl: [],
     onFocus: () => {},
     onChange: () => {},
     onSelect: () => {},

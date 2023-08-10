@@ -3,19 +3,23 @@
 
 .body {
   display: flex;
-  padding: 10px;
-  background-color: $bg-color-0;
-  border: 1px solid $brd-color-1;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   column-gap: 10px;
+  row-gap: 10px;
+  padding: 10px;
+  background-color: $bg-color-0;
+  border: 1px solid $brd-color-1;
 }
 
 .search-options {
   display: flex;
   flex-grow: 1;
+  flex-wrap: wrap;
   align-items: center;
   column-gap: 10px;
+  row-gap: 10px;
   //@include debug-border(red)
 }
 
@@ -36,7 +40,7 @@
   
   &__input {
     flex-grow: 1;
-    min-width: 13em;
+    //min-width: 13em;
 
     & input:focus {
       background-color: $bg-color-2; 
